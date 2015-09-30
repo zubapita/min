@@ -1,0 +1,29 @@
+{extends file='cmn/layout/index.tpl'}
+
+{block name="head"}
+	<!-- Write meta tag and link tag here. -->
+	<!-- <link rel="stylesheet" href="/cmn/css/style_name.css" type="text/css" media="screen"> -->
+{/block}	
+
+{block name="title"}<!--{$className}-->{/block}
+
+<!-- Ajax search form -->
+{block name="body"}
+<div class="container">
+<div class="page-header">
+	<div class="row">
+		<div class="col-lg-12">
+		<h1><!--{$className}--> Data</h1>
+		<section id="<!--{$className}-->Data">
+			<div id="dataArea"></div>
+		</section>
+		</div><!-- /col-lg-12 -->
+	</div><!-- /row -->
+</div><!-- /page-header -->
+</div><!-- /container -->
+{/block}	
+
+{block name="footer"}
+	<!-- Write loading javascript tag here. -->
+	<!-- <script src="" type="text/javascript" charset="utf-8"></script> -->
+{/block}
