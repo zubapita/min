@@ -62,13 +62,13 @@ bin以下にアプリの作成、利用のためのコマンド群がありま�
 「/Users/mydir/workspace/testApp」が作成され、その下に必要なファイル一式がコピーされます。
 アプリのディレクトリに移動して、Composerで必要なライブラリをインストールします。
 
->$ cd /Users/mydir/workspace/testApp
+>$ cd /Users/mydir/workspace/testApp    
 >$ composer install
 
 インストールするライブラリは、composer.jsonを編集して調整します。
 Minアプリの動作に最低限必要なのは以下の3行です。
->"smarty/smarty": "v3.1.21",
->"validator/livr": "dev-master",
+>"smarty/smarty": "v3.1.21",    
+>"validator/livr": "dev-master",    
 >"php-console/php-console": "3.*",
 
 ### データベースのモデルを作成する
@@ -84,13 +84,15 @@ MinではデフォルトではPDOをオーバーライドした独自のクラ�
 #### データベースのクラスを作成する
 
 MySQLのデータベース「test」のクラスを作成し、
-ユーザー名：testuser
-パスワード：gh67L*K0
+* ユーザー名：testuser
+* パスワード：gh67L*K0
 の場合、
 
 >$ ./makeDbClassFile.php -d test -s mysql -u testuser -p gh67L*K0
 
-クラスファイルが model/_def/db/test.php に作成されます。
+クラスファイルが
+* model/_def/db/test.php
+ に作成されます。
 
 #### テーブルのクラスを作成する
 
@@ -98,14 +100,18 @@ MySQLのデータベース「test」のクラスを作成し、
 
 > ./makeTableClassFiles.php -d test
 
-クラスファイルが model/_def/db/test/ 以下に作成されます。
+クラスファイルが
+* model/_def/db/test/
+以下に作成されます。
 
 
 * データベース「test」のテーブル「users」のクラスを作成する。
 
 > ./makeTableClassFiles.php -d test -t users
 
-クラスファイルが model/_def/db/test/users.php に作成されます。
+クラスファイルが
+* model/_def/db/test/users.php
+に作成されます。
 
 #### テーブルのモデルを作成する
 
@@ -115,8 +121,8 @@ MySQLのデータベース「test」のクラスを作成し、
 
 
 クラスファイルが 
-model/test/UsersList.php
-model/test/UsersRecord.php
+* model/test/UsersList.php
+* model/test/UsersRecord.php
 に作成されます。
 
 model/test/UsersList.php は、usersテーブルから一覧データを取得したり、検索結果を取得するためのクラスです。
@@ -161,65 +167,65 @@ https://github.com/koorchik/LIVR
 /makeNewCtlAndView.php に -m でモデル名を、-p でページ名を指定します。
 
 
-* テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する
+* テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する *
 
 >$ ./makeNewCtlAndView.php -m UsersList -p users
 
 コントローラーのクラスファイルが
-controller/users/usersCtl.php
+* controller/users/usersCtl.php
 に作成されます。
 
 ビューのテンプレートが
-view/users/index.html
+* view/users/index.html
 に作成されます。
 
-テンプレートはSmartyのルールで記述されています。
+テンプレートはSmartyのルールで記述されています。    
 またテーブル表示のパーツが view/users/includes/ 内にあります。
 
 このページには
-http://test.mysite.jp/users/
+* http://test.mysite.jp/users/
 でアクセスできます。
 
 
-* テーブルへのデータ挿入や更新を目的としたビューとコントローラーを作成する
+* テーブルへのデータ挿入や更新を目的としたビューとコントローラーを作成する *
 
 >$ ./makeNewCtlAndView.php -m UsersRecord -p users/record
 
 コントローラーのクラスファイルが
-controller/users/record/usersRecordCtl.php
+* controller/users/record/usersRecordCtl.php
 に作成されます。
 
 ビューのテンプレートが
-view/users/record/index.html
-view/users/record/add.html
-view/users/record/edit.html
+* view/users/record/index.html
+* view/users/record/add.html
+* view/users/record/edit.html
 に作成されます。
 
-テンプレートはSmartyのルールで記述されています。
+テンプレートはSmartyのルールで記述されています。    
 またフォーム表示のパーツが view/users/record/includes/ 内にあります。
 
 これらのページには
-http://test.mysite.jp/users/record/
-http://test.mysite.jp/users/record/add.html
-http://test.mysite.jp/users/record/edit.html
+* http://test.mysite.jp/users/record/
+* http://test.mysite.jp/users/record/add.html
+* http://test.mysite.jp/users/record/edit.html
 でアクセスできます。
 
-* テーブルを使用しないビューとコントローラーを作成する
+* テーブルを使用しないビューとコントローラーを作成する *
 
 >$ ./makeNewCtlAndView.php -p about
 
 コントローラーのクラスファイルが
-controller/about/aboutCtl.php
+* controller/about/aboutCtl.php
 に作成されます。
 
 ビューのテンプレートが
-view/about/index.html
+* view/about/index.html
 に作成されます。
 
 テンプレートはSmartyのルールで記述されています。
 
 このページには
-http://test.mysite.jp/about/
+* http://test.mysite.jp/about/
 でアクセスできます。
 
 
