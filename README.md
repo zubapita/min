@@ -241,6 +241,18 @@ https://github.com/koorchik/LIVR
 でアクセスできます。
 
 
+以下、更新予定
+
+### Ajaxによるデータベース操作
+
+### ログインフォームの作り方
+
+### 画像のAjaxアップロード
+
+### Google Maps連動
+
+### Twitter連動
+
 
 
 
