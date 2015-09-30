@@ -167,7 +167,7 @@ https://github.com/koorchik/LIVR
 /makeNewCtlAndView.php に -m でモデル名を、-p でページ名を指定します。
 
 
-*テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する*
+**テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する**
 
 >$ ./makeNewCtlAndView.php -m UsersList -p users
 
@@ -187,7 +187,7 @@ https://github.com/koorchik/LIVR
 でアクセスできます。
 
 
-*テーブルへのデータ挿入や更新を目的としたビューとコントローラーを作成する*
+**テーブルへのデータ挿入や更新を目的としたビューとコントローラーを作成する**
 
 >$ ./makeNewCtlAndView.php -m UsersRecord -p users/record
 
@@ -210,7 +210,7 @@ https://github.com/koorchik/LIVR
 * http://test.mysite.jp/users/record/edit.html
 でアクセスできます。
 
-*テーブルを使用しないビューとコントローラーを作成する*
+**テーブルを使用しないビューとコントローラーを作成する**
 
 >$ ./makeNewCtlAndView.php -p about
 
