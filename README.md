@@ -163,6 +163,7 @@ https://github.com/koorchik/LIVR
 ### Webのビューとコントローラーを作成する
 
 **前提：このWebアプリのURLをhttp://test.mysite.jp/だとします。**
+
 なお、Webアプリとして動かすためには、etc/local_vh.conf を参考にVirtualHostを設定してください。    
 基本は、htdocsがDocumentRootになるようにして、etc/rewrite.conf をincludeすれば動くはずです。    
 また、var/compiledに apacheが書き込めるようにしてください。
