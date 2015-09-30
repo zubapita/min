@@ -10,7 +10,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 	public function __construct()
 	{
 		parent::__construct();
-		echo "\nmake New Quicty Application.\n\n";
+		echo "\nmake New Min Application.\n\n";
 	}
 
 	public function main()

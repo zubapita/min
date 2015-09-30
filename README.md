@@ -162,9 +162,15 @@ https://github.com/koorchik/LIVR
 
 ### Webのビューとコントローラーを作成する
 
-前提：このWebアプリのURLをhttp://test.mysite.jp/だとします。
+**前提：このWebアプリのURLをhttp://test.mysite.jp/だとします。**
+なお、Webアプリとして動かすためには、etc/local_vh.conf を参考にVirtualHostを設定してください。    
+基本は、htdocsがDocumentRootになるようにして、etc/rewrite.conf をincludeすれば動くはずです。    
+また、var/compiledに apacheが書き込めるようにしてください。
 
-/makeNewCtlAndView.php に -m でモデル名を、-p でページ名を指定します。
+
+**基本**
+
+ビューとコントローラーを作成するには、 makeNewCtlAndView.php に -m でモデル名を、-p でページ名を指定します。
 
 
 **テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する**
