@@ -24,14 +24,17 @@ Windowsでの利用は検証されていません。
 
 ZIPをダウンロードしもしくは、リポリトジをcloneして、任意のディレクトリに展開するだけです。
 
-そのほかに、
-・PHP 5.5+
-・Composer
+そのほかに
+
+* PHP 5.5+
+* Composer
+
 を利用可能にしておいてください。
 
 ## 使用方法
 
-bin以下にアプリの作成、利用のためのコマンド群があります。
+bin以下にアプリの作成、利用のためのコマンド群があります。    
+パラメータを付けないで実行すると、使い方の説明が表示されます。
 
 >$ cd bin
 >$ ./makeNewApp.php
@@ -43,7 +46,6 @@ bin以下にアプリの作成、利用のためのコマンド群がありま�
 > -r [root dir name(option)] ex)/Users/user/workspace
 >
 
-パラメータを付けないで実行すると、使い方の説明が表示されます。
 
 ### 新しいアプリを作成する
 > $ ./makeNewApp.php -a testApp -r /Users/mydir/workspace
@@ -65,9 +67,9 @@ bin以下にアプリの作成、利用のためのコマンド群がありま�
 
 インストールするライブラリは、composer.jsonを編集して調整します。
 Minアプリの動作に最低限必要なのは以下の3行です。
-"smarty/smarty": "v3.1.21",
-"validator/livr": "dev-master",
-"php-console/php-console": "3.*",
+>"smarty/smarty": "v3.1.21",
+>"validator/livr": "dev-master",
+>"php-console/php-console": "3.*",
 
 ### データベースのモデルを作成する
 
