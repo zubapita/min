@@ -36,7 +36,7 @@ ZIPをダウンロードしもしくは、リポリトジをcloneして、任意
 bin以下にアプリの作成、利用のためのコマンド群があります。    
 パラメータを付けないで実行すると、使い方の説明が表示されます。
 
->$ cd bin
+>$ cd bin    
 >$ ./makeNewApp.php
 >
 >make New Min Application.
