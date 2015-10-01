@@ -132,9 +132,9 @@ class {$className} extends DataRecord
 		$validator = new Validator($rule);
 
 		// バリデート実行
-		$result = $_->validator->validate($data);
+		$result = $validator->validate($data);
 		if (!$result) {
-			$_->errors = $_->validator->getErrors();
+			$_->errors = $validator->errors;
 		}
 		return $result;
 	}
