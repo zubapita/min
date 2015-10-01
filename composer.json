@@ -2,11 +2,6 @@
 	"require": {
 		"smarty/smarty": "v3.1.21",
 		"validator/livr": "dev-master",
-		"verot/class.upload.php": "dev-master",
-		"php-console/php-console": "3.*",
-		"phpunit/phpunit": "4.1.2",
-		"phpunit/phpunit-skeleton-generator": "2.0.*@dev",
-		"hybridauth/hybridauth": "2.4.1",
-		"jstayton/google-maps-geocoder": "dev-master",
+		"php-console/php-console": "3.*"
 	}
 }
