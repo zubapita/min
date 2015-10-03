@@ -183,7 +183,7 @@ https://github.com/koorchik/LIVR
 
 **テーブル内のデータ一覧表示や検索を目的としたビューとコントローラーを作成する**
 
->$ ./makeNewCtlAndView.php -m UsersList -p users
+>$ ./makeCtlAndView.php -m UsersList -p users
 
 コントローラーのクラスファイルが
 * controller/users/usersCtl.php
@@ -203,7 +203,7 @@ https://github.com/koorchik/LIVR
 
 **テーブルへのデータ挿入や更新を目的としたビューとコントローラーを作成する**
 
->$ ./makeNewCtlAndView.php -m UsersRecord -p users/record
+>$ ./makeCtlAndView.php -m UsersRecord -p users/record
 
 コントローラーのクラスファイルが
 * controller/users/record/usersRecordCtl.php
@@ -226,7 +226,7 @@ https://github.com/koorchik/LIVR
 
 **テーブルを使用しないビューとコントローラーを作成する**
 
->$ ./makeNewCtlAndView.php -p about
+>$ ./makeCtlAndView.php -p about
 
 コントローラーのクラスファイルが
 * controller/about/aboutCtl.php

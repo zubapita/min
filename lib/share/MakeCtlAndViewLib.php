@@ -6,7 +6,7 @@
  * -m モデル名 （必須）
  * -p ページ名  （オプション。省略時はモデル名）
  */
-class MakeNewCtlAndViewLib extends AppCtl {
+class MakeCtlAndViewLib extends AppCtl {
 	
 	public function __construct()
 	{

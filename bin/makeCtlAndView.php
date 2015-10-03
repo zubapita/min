@@ -8,7 +8,7 @@
  * -p ページ名  （オプション。省略時はモデル名）
  */
 require_once __DIR__.'/../lib/autoload.php';
-class CmdApp extends MakeNewCtlAndViewLib
+class CmdApp extends MakeCtlAndViewLib
 {
 	public function __construct()
 	{

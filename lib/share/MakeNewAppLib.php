@@ -102,7 +102,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 			chmod("$newAppRoot/bin/makeDbClassFile.php", 0755);
 			chmod("$newAppRoot/bin/makeTableClassFiles.php", 0755);
 			chmod("$newAppRoot/bin/makeModelClassFiles.php", 0755);
-			chmod("$newAppRoot/bin/makeNewCtlAndView.php", 0755);
+			chmod("$newAppRoot/bin/makeCtlAndView.php", 0755);
 			chmod("$newAppRoot/bin/test.sh", 0755);
 			chmod("$newAppRoot/bin/genTest.sh", 0755);
 			chmod("$newAppRoot/bin/backSyncToMin.sh", 0755);
