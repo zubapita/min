@@ -49,11 +49,11 @@ class {$className} extends DataRecord
 		
 		// SELECT 条件の設定
 		$_->TABLE->reset();
-		$columns = array(
+		$columns = [
 			{foreach $columns as $column}
 			'{$column['name']}',
 			{/foreach}
-		);
+		];
 		$_->TABLE->select($columns);
 		
 		// SELECTの結果取得
@@ -70,7 +70,7 @@ class {$className} extends DataRecord
 	 * TABELに行を保存する
 	 * 
 	 * @param array $data 保存するデータ
-	 * @return integer|boolean 検索結果
+	 * @return integer|boolean 保存に成功した場合はidを返す。失敗したらfalse
 	 */
 	public function set($data)
 	{
@@ -124,7 +124,7 @@ class {$className} extends DataRecord
 		$rule = [
 {foreach $columns as $column}
 {if $column['name']!='id'}
-			'{$column['name']}' => ['required', 'zen2han'],
+			'{$column['name']}' => ['required'],
 {/if}
 {/foreach}
 		];

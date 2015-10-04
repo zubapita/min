@@ -38,11 +38,11 @@ class {$className} extends DataList
 		
 		// SELECT 条件の設定
 		$_->TABLE->reset();
-		$columns = array(
+		$columns = [
 			{foreach $columns as $column}
 			'{$column['name']}',
 			{/foreach}
-		);
+		];
 		$_->TABLE->select($columns);
 		$_->setLimit($currentPage, $_->maxItemsInPage);
 		
@@ -53,7 +53,23 @@ class {$className} extends DataList
 			Console::log($_->TABLE->SQL);
 		}
 
-		// ページャの生成
+		// ページャを設定
+		$_->setPager($conditions, $currentPage)
+
+		return $list;
+	}
+
+
+	/**
+	 * ページャを設定
+	 * 
+	 * @param (array|string) $conditions 検索条件
+	 * @param integer $currentPage
+	 */
+	public function setPager($conditions, $currentPage)
+	{
+		$_ = $this;
+		
 		$pagerParams['currentPage'] = $currentPage;
 		$pagerParams['allItemsNum'] = $_->count($conditions);
 		$pagerParams['maxItemsInPage'] = $_->maxItemsInPage;
@@ -62,8 +78,6 @@ class {$className} extends DataList
 			Console::log('{$className}::PagerParams');
 			Console::log($pagerParams);
 		}
-
-		return $list;
 	}
 
 }
