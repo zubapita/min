@@ -320,12 +320,12 @@ $_->Booksにbooksテーブルのインスタンスが格納されます。
 #### テーブルへの行挿入
 >$_ = $this;    
 >$bookData = [    
->	'title' = 'ハムレット',    
->	'author = 'シェークスピア',    
->	'isbn' = '978-4102020036',    
->	'price' = 497    ,
->	'releaseDate' = '1967/9/27'    ,
->	];    
+>    'title' = 'ハムレット',    
+>    'author = 'シェークスピア',    
+>    'isbn' = '978-4102020036',    
+>    'price' = 497    ,
+>    'releaseDate' = '1967/9/27'    ,
+>    ];    
 >$result = $_->Books->saveSet($bookData);    
 
 #### テーブルからの行取得と更新
@@ -334,11 +334,11 @@ titleが'ハムレット'の行を取得します。
 
 >$_ = $this;    
 >$columns = [    
->	'id',    
->	'title',    
->	'author',    
->	'price',    
->	];    
+>    'id',    
+>    'title',    
+>    'author',    
+>    'price',    
+>    ];    
 >$condition = ['title'=>'ハムレット'];    
 >$bookData = $_->Books->select($columns)->find($condition)->fetch();    
 
@@ -355,11 +355,11 @@ $bookDataに結果行が格納されます。
 
 >$_ = $this;    
 >$columns = [    
->	'id',    
->	'title',    
->	'author',    
->	'price',    
->	];    
+>    'id',    
+>    'title',    
+>    'author',    
+>    'price',    
+>    ];    
 >$condition = [];    
 >$bookDataRows = $_->Books->select($columns)->find($condition)->fetchAll();    
 
@@ -369,7 +369,7 @@ $bookDataに結果行が格納されます。
 
 >$rows = $_->Books->select($columns)->find($condition)->getRows();    
 >while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {    
->	var_dump($row);
+>    var_dump($row);    
 >}
 
 getRows()はPDOstatementを返すので、以後はPDOのメソッドによる操作が可能になります。
@@ -377,11 +377,11 @@ getRows()はPDOstatementを返すので、以後はPDOのメソッドによる�
 #### limit、offset、order by
 >$_ = $this;    
 >$columns = [    
->	'id',    
->	'title',    
->	'author',    
->	'price',    
->	];    
+>    'id',    
+>    'title',    
+>    'author',    
+>    'price',    
+>    ];    
 >$_->Books->select($columns);    
 >$_->Books->offset(0)->limit(10)->orderBy('price DESC');    
 >$condition = [];    
@@ -402,11 +402,11 @@ ORDER BYで複数のカラムを指定するときは、以下のように指定
 
 >$_ = $this;    
 >$columns = [    
->	'id',    
->	'title',    
->	'author',    
->	'price',    
->	];    
+>    'id',    
+>    'title',    
+>    'author',    
+>    'price',    
+>    ];    
 >$_->Books->select($columns);    
 >$_->Books->->groupBy('author');    
 >$condition = [];    
@@ -431,6 +431,65 @@ GROUP BYで複数のカラムを指定するときは、以下のように指定
 INNER JOINの場合は
 
 >$_->Books->innerJoin($_->Sales)->on('books.isbn=sales.isbn');
+
+
+### モデルによるデータベース操作
+makeModelClass.phpを使うと、テーブルを操作するための2つのモデルクラスが生成されます。
+
+1. DataListクラス
+2. DataRecordクラス
+
+#### DataListクラス
+
+テーブル内の一覧の取得や検索結果の取得を行うクラスです。    
+テーブル名がbooksなら、BooksListクラスが、BooksList.php内に生成されます。    
+コントローラーから使用するときは     
+>$BookList = new BookList();    
+と記述します。必要に応じてクラスファイルがautoloadされます。    
+
+* get($conditions, $currentPage)
+
+テーブルから一覧を取得し、配列で返します。取得結果がない場合は0を返します。    
+最大取得行数はデフォルトでは10になっています。
+
+@param (array|string) $conditions 文字列もしくは配列で検索条件を指定します。    
+
+@param integer $currentPage テーブル内の全行数を最大取得行数で割った数字を指定します。    
+最大取得行数10のとき、11行〜20行を取得したいときは、$currentPage=2とします。
+
+* setMaxItemsInPage($maxitems)
+
+最大取得行数を設定します。
+
+@param integer $maxitems 最大取得行数
+
+* getMaxItemsInPage()
+
+現在の最大取得行数を返します。
+
+
+#### DataRecordクラス
+
+テーブルへの行単位の手刀、挿入、更新を行うためのクラスです。挿入、更新時はバリデートも行います。    
+テーブル名がbooksなら、BooksRecordクラスが、BooksRecord.php内に生成されます。    
+コントローラーから使用するときは     
+>$BookList = new BookList();    
+と記述します。必要に応じてクラスファイルがautoloadされます。    
+
+* get($conditions)
+
+テーブルから該当する行を取得して返します。
+
+@param (array|string) $conditions 文字列もしくは配列で検索条件を指定します。    
+
+* set($data)
+
+テーブルに行を保存します。ユニークキーが指定されていないか、指定されていてもテーブル内に存在しない場合は、新規に行を挿入します。ユニークキーがテーブルに存在する場合は、更新します。
+
+
+
+
+
 
 
 
