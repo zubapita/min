@@ -243,20 +243,6 @@ https://github.com/koorchik/LIVR
 でアクセスできます。
 
 
-
-
-以下、更新予定
-
-### Ajaxによるデータベース操作
-
-### ログインフォームの作り方
-
-### 画像のAjaxアップロード
-
-### Google Maps連動
-
-### Twitter連動
-
 ## ディレクトリ構造
 
 * bin    
@@ -374,6 +360,44 @@ $bookDataに結果行が格納されます。
 
 getRows()はPDOstatementを返すので、以後はPDOのメソッドによる操作が可能になります。
 
+#### 検索条件の記述
+
+検索の条件（Where句の条件）は、find()のパラメータとして指定します。
+
+>$bookDataRows = $_->Books->select($columns)->find($condition)->fetchAll();    
+
+
+パラメータ$conditionに記述するのですが、以下の様に文字列や配列で記述します。
+
+1. 文字列
+>$condition = "title='ハムレット'";
+
+>$condition = "price>300";
+
+2. 配列
+>$condition = ['title'=>'ハムレット'];
+
+>$condition = ['title'=>['opr'=>'=', 'val'=>'ハムレット']];
+
+
+>$condition = ['price'=>['opr'=>'>', 'val'=>300]];
+
+
+複数カラムのAND検索（OR検索はサポートしていません）
+
+>$condition = [    
+>'author'=>['opr'=>'=', 'val'=>'シェークスピア'],    
+>'price'=>['opr'=>'<', 'val'=>1000]    
+>];
+
+
+BETWEENも使えます。
+
+>$condition = ['price'=>['opr'=>'BETWEEN', 'MIN'=>300, 'MAX'=>1000]];
+
+
+1.の文字列は記述が簡単ですが、SQLが生成されるときに、プレースホルダが生成されずに条件がそのままWhere句に使われます。危険なので使わないほうがいいでしょう。
+
 #### limit、offset、order by
 >$_ = $this;    
 >$columns = [    
@@ -486,6 +510,22 @@ makeModelClass.phpを使うと、テーブルを操作するための2つのモ�
 
 テーブルに行を保存します。ユニークキーが指定されていないか、指定されていてもテーブル内に存在しない場合は、新規に行を挿入します。ユニークキーがテーブルに存在する場合は、更新します。
 
+
+
+
+以下、更新予定
+
+## アプリケーションの作成
+
+### Ajaxによるデータベース操作
+
+### ログインフォームの作り方
+
+### 画像のAjaxアップロード
+
+### Google Maps連動
+
+### Twitter連動
 
 
 
