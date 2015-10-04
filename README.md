@@ -259,32 +259,178 @@ https://github.com/koorchik/LIVR
 
 ## ディレクトリ構造
 
-* bin
+* bin    
 	アプリの作成使用する各種バッチコマンドの置き場所です。また自分でバッチコマンドを作成するための雛形もあります。
-* contoroler
+* contoroler    
 	Webアプリのコントローラーの置き場所です。コントローラーはエンドポイントであるindex.phpから起動されます。
-* etc
+* etc    
 	各種設定ファイルの置き場所です。
-* htdocs
+* htdocs    
 	ドキュメントルートです。画像ファイルやfavicon、robots.txtなど静的ファイルの置き場所です。    
 	htdocs/index.php がWebアプリの起点（エンドポイント）となり、URLに応じて各コントローラーを起動します。    
 	画像ファイルはhtdocs/img/* や htdocs/*/img/* の下に置きます。このルールはetc/rewrite.confで設定できます。
-* lib
+* lib    
 	minの動作に必要なクラスライブラリが置かれています。
-* model
+* model    
 	データベースを操作するモデルクラスの置き場所です。データベース以外のapi操作やExcel操作もモデル化してここに置きます。
-	モデル内のデータベースの操作は独自のORマッパーによる、シンプルかつキレイに操作を記述できます。
-* test
+	モデル内のデータベースの操作は独自のデータベース操作クラスにより、SQLを書かずにシンプルに操作を記述できます。
+* test    
 	テストファイルの置き場所です。
-* var
+* var    
 	一時ファイルの置き場所です。    
 	var/compiledにビューのテンプレートがコンパイルされたphpが置かれます。var/compiledはapacheから書き込み可能に設定しておく必要があります。
-* vendor
+* vendor    
 	composerによってインストールされる各種クラスライブラリの置き場所です。
-* view
+* view    
 	HTMLファイルの置き場所です。    
 	view/index.html がトップページのHTMLです。    
 	HTMLはSmartyのテンプレートファイルになっています。Smartyはif〜else文による条件分岐やforeachなどのループ、変数の計算や代入などをサポートした高機能なテンプレートクラスです。    
 	minでは、表示部分のプログラミングはSmartyとJQueryでほとんど行います。
+
+
+##  データベース操作
+
+minは以下の特徴を持つ、独自のデータベース操作クラスを内蔵しています。
+* PDOをベースにしているため、高速。
+* テーブルの操作を記述すると、内部ではプレースホルダを使用したSQLを自動生成してPDOを使ってデータベースを操作する。SQLインジェクションに強くて安全。
+* テーブル上のユニークキーを決めておけば、挿入と更新を自動判断。
+* メソッドチェインによるスマートな記述法。
+
+### テーブル操作の基本
+前提：データベース「testDB」に以下の構造を持つテーブル「books」があるとします。    
+このbooksテーブルをインスタンス化して、テーブルの操作を行います。    
+
+>CREATE TABLE `books` (    
+>  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,    
+>  `title` varchar(50) DEFAULT NULL,    
+>  `author` varchar(50) DEFAULT NULL,    
+>  `isbn` varchar(14) DEFAULT NULL,    
+>  `price` int(11) DEFAULT NULL,    
+>  `releaseDate` datetime DEFAULT NULL,    
+>  PRIMARY KEY (`id`)    
+>) ENGINE=InnoDB DEFAULT CHARSET=utf8;    
+
+#### テーブル・インスタンスの取得
+>$_ = $this;    
+>$_->DB = $_->getDB('testDB');    
+>$_->Books = $_->getTable($_->DB, 'books');    
+
+$_->Booksにbooksテーブルのインスタンスが格納されます。
+
+#### テーブルへの行挿入
+>$_ = $this;    
+>$bookData = [    
+>	'title' = 'ハムレット',    
+>	'author = 'シェークスピア',    
+>	'isbn' = '978-4102020036',    
+>	'price' = 497    ,
+>	'releaseDate' = '1967/9/27'    ,
+>	];    
+>$result = $_->Books->saveSet($bookData);    
+
+#### テーブルからの行取得と更新
+
+titleが'ハムレット'の行を取得します。
+
+>$_ = $this;    
+>$columns = [    
+>	'id',    
+>	'title',    
+>	'author',    
+>	'price',    
+>	];    
+>$condition = ['title'=>'ハムレット'];    
+>$bookData = $_->Books->select($columns)->find($condition)->fetch();    
+
+$bookDataに結果行が格納されます。
+
+>$bookData['author'] = 'ウイリアム・シェークスピア';    
+>$result = $_->Books->saveSet($bookData);    
+
+取得した行のauthorカラムが書き替えられます。    
+デフォルトではidカラムがユニークラカムとなっているため、行を更新するにはidカラムを取得しておく必要があります。    
+ユニークカラムの設定は、model/_def/(DB名)/(テーブル名).php内に記述されているので、必要に応じて書き替えられます。    
+
+#### テーブルからすべての行を取得
+
+>$_ = $this;    
+>$columns = [    
+>	'id',    
+>	'title',    
+>	'author',    
+>	'price',    
+>	];    
+>$condition = [];    
+>$bookDataRows = $_->Books->select($columns)->find($condition)->fetchAll();    
+
+
+
+1行ずつ取得したいときは、getRows()を利用します。
+
+>$rows = $_->Books->select($columns)->find($condition)->getRows();    
+>while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {    
+>	var_dump($row);
+>}
+
+getRows()はPDOstatementを返すので、以後はPDOのメソッドによる操作が可能になります。
+
+#### limit、offset、order by
+>$_ = $this;    
+>$columns = [    
+>	'id',    
+>	'title',    
+>	'author',    
+>	'price',    
+>	];    
+>$_->Books->select($columns);    
+>$_->Books->offset(0)->limit(10)->orderBy('price DESC');    
+>$condition = [];    
+>$_->Books->find($condition)->fetchAll();    
+
+ORDER BYで複数のカラムを指定するときは、以下のように指定します。
+
+1.文字列
+>$order = 'price DESC, title ASC';    
+>$_->Books->orderBy($order);    
+
+2.配列
+>$order = ['price DESC', 'title ASC'];
+>$_->Books->orderBy($order);    
+
+
+#### group by
+
+>$_ = $this;    
+>$columns = [    
+>	'id',    
+>	'title',    
+>	'author',    
+>	'price',    
+>	];    
+>$_->Books->select($columns);    
+>$_->Books->->groupBy('author');    
+>$condition = [];    
+>$_->Books->find($condition)->fetchAll();    
+
+GROUP BYで複数のカラムを指定するときは、以下のように指定します。
+
+1.文字列
+>$group = 'author, price';    
+>$_->Books->groupBy($group);    
+
+2.配列
+>$group = ['author', 'price'];    
+>$_->Books->groupBy($group);    
+
+
+#### join
+
+>$_->Sales = $_->getTable($_->DB, 'sales');    
+>$_->Books->join($_->Sales)->on('books.isbn=sales.isbn');    
+
+INNER JOINの場合は
+
+>$_->Books->innerJoin($_->Sales)->on('books.isbn=sales.isbn');
+
 
 
