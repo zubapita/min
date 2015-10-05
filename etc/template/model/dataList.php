@@ -54,7 +54,7 @@ class {$className} extends DataList
 		}
 
 		// ページャを設定
-		$_->setPager($conditions, $currentPage)
+		$_->setPager($conditions, $currentPage);
 
 		return $list;
 	}
