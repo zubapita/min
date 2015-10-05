@@ -378,8 +378,8 @@ abstract class DBAccess
 					//	     'opr'=>'BETWEEN', 'min'=>$min, 'max'=>$max,
 					//     ));
 					if (strtoupper($operator)=='BETWEEN') {
-						$min = $cond['min'];
-						$max = $cond['max'];
+						$min = $cond['MIN'];
+						$max = $cond['MAX'];
 						$tmp_conds[] = $column.' '.$operator.' ? AND ?';
 						$VALUES[] = $min;
 						$VALUES[] = $max;

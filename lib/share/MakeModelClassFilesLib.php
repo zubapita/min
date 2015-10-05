@@ -52,6 +52,11 @@ class MakeModelClassFilesLib extends AppCtl {
 				mkdir($dirPath, 0777, true);
 			}
 
+			$testDirPath = $_->APP_ROOT."/test/model/$table";
+			if(!file_exists($testDirPath)) {
+				mkdir($testDirPath, 0777, true);
+			}
+
 			//
 			// List Model
 			$columns = $DbOperator->getColumns($table);
@@ -78,6 +83,24 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "\n";
 			}
 		
+			// List Model Test
+			$filePath = $testDirPath.'/'.$className."Test.php";
+			if(file_exists($filePath)) {
+				echo "error: $filePath is exists. can not save file.\n\n";
+			} else {
+				$templateFile = $_->APP_ROOT.'/etc/template/test/model/dataListTest.php';
+				$classCode = $_->view->fetch($templateFile);
+			
+				file_put_contents($filePath, $classCode);
+			
+				echo "------------------------------\n";
+				echo "save class file $table.php\n";
+				echo "\n";
+				echo $classCode;
+				echo "\n";
+			}
+			
+		
 			// Record Model
 			$className = ucfirst($table).'Record';
 			$_->view->assign('className', $className);
@@ -87,6 +110,23 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "error: $filePath is exists. can not save file.\n\n";
 			} else {
 				$templateFile = $_->APP_ROOT.'/etc/template/model/dataRecord.php';
+				$classCode = $_->view->fetch($templateFile);
+			
+				file_put_contents($filePath, $classCode);
+			
+				echo "------------------------------\n";
+				echo "save class file $table.php\n";
+				echo "\n";
+				echo $classCode;
+				echo "\n";
+			}
+			
+			// Record Model Test
+			$filePath = $testDirPath.'/'.$className."Test.php";
+			if(file_exists($filePath)) {
+				echo "error: $filePath is exists. can not save file.\n\n";
+			} else {
+				$templateFile = $_->APP_ROOT.'/etc/template/test/model/dataRecordTest.php';
 				$classCode = $_->view->fetch($templateFile);
 			
 				file_put_contents($filePath, $classCode);
