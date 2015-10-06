@@ -1,8 +1,7 @@
 #!/usr/local/bin/php
 <?php
-//namespace Zubapita\Quicty;
 /**
- * 新規Quictyアプリを生成
+ * 新規 minアプリを生成
  */
 require_once __DIR__.'/../lib/autoload.php';
 class CmdApp extends MakeNewAppLib
