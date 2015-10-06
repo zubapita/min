@@ -187,7 +187,7 @@ class MakeModelClassFilesLib extends AppCtl {
 			mkdir($testDirPath, 0777, true);
 		}
 
-		$filePath = $testDirPath.'/'.$className."ModelTest.php";
+		$filePath = $testDirPath.'/'.$className."Test.php";
 		if(file_exists($filePath)) {
 			echo "error: $filePath is exists. can not save file.\n\n";
 		} else {
