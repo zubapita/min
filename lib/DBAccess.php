@@ -50,7 +50,14 @@ abstract class DBAccess
 	 * 行をユニークであると判断するするためのカラム
 	 */
 	protected $UNIQUE_KEY = 'id'; // 複数の場合は配列で指定 array('id','datetime',..)
-	
+
+	/**
+	 * 実行結果を保存し、呼び出し側が参照するための変数
+	 */
+	public $SQL;
+	public $SQL_HISTORY = array();
+	public $VALUES = array();
+
 	/**
 	 * インスタンス生成時にデータベース接続文字を設定
 	 * 
