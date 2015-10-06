@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__.'../../../../lib/autoload.php';
+$debugConsole = new Console;
+global $dataBridge;
+$dataBridge->dispatch_trace = true;
 class {$className}Test extends PHPUnit_Framework_TestCase
 {
 
