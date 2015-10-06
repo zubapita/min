@@ -42,14 +42,40 @@ class Console
 
 		} else {
 			Console::$debugMode = 'true';
-			//Console::log($this->C);
 			
-			global $handler;
-			$handler = PhpConsole\Handler::getInstance();
-			$handler->start(); // start handling PHP errors & exceptions
-			$handler->getConnector()->
-				setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
-			
+			if (php_sapi_name()=='cli') {
+				$APP_ROOT = dirname(__DIR__);
+				$logFile = $APP_ROOT.'/var/log/trace.log';
+				Logger::configure(array(
+					'rootLogger' => array(
+						'appenders' => array('default'),
+					),
+					'appenders' => array(
+						'default' => array(
+							'class' => 'LoggerAppenderFile',
+							'layout' => array(
+								'class' => 'LoggerLayoutPattern',
+								'params' => array(
+									'conversionPattern' => '%date [%logger] %message%newline',
+								),
+							),
+							'params' => array(
+								'file' => $logFile,
+								'append' => true,
+								
+							)
+						)
+					)
+				));
+				global $LOGGER;
+				$LOGGER = Logger::getLogger("log");
+			} else {
+				global $handler;
+				$handler = PhpConsole\Handler::getInstance();
+				$handler->start(); // start handling PHP errors & exceptions
+				$handler->getConnector()->
+					setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
+			}
 		}
 		
 	}
@@ -63,9 +89,41 @@ class Console
 	public static function log($message)
 	{
 		if (self::$debugMode) {
-			PC::db($message);
+			if (php_sapi_name()=='cli') {
+				global $LOGGER;
+				$LOGGER->info($message);
+			} else {
+				PC::db($message);
+			}
 		}
 	}
+	
+	/**
+	 * SQLのプレースホルダを値に置き換えてからメッセージ出力
+	 * 
+	 * @param string $sql プレースホルダ「?」を含むSQL
+	 * @param array $values SQLで使用する値
+	 * @return void
+	 */
+	public static function logSql($sql, $values)
+	{
+		$len = strlen($sql);
+		$i = 0;
+		while ($pos=strpos($sql, '?')) {
+			$f = substr($sql, 0, $pos);
+			$b = substr($sql, $pos+1);
+			if (is_string($values[$i])) {
+				$val = "'".$values[$i]."'";
+			} else {
+				$val = $values[$i];
+			}
+			$sql = $f.$val.$b;
+			$i++;
+		}
+		Console::log($sql);
+	}
+	
+	
 }
 
 
