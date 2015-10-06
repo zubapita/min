@@ -88,7 +88,7 @@ class {$className} extends DataRecord
 			$result = $_->TABLE->saveSet($validData);
 			if ($_->dispatch_trace) {
 				Console::log('SpotRecord::set');
-				Console::log($_->TABLE->SQL);
+				Console::logSql($_->TABLE->SQL, $_->TABLE->VALUES);
 			}
 			return $result;
 		} else {
