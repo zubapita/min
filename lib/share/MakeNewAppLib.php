@@ -62,7 +62,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				"lib"=>0755,
 				"model"=>0755,
 				"model/_def"=>0755,
-				//"model/_def/api"=>0755,
+				"model/_def/api"=>0755,
 				"model/_def/db"=>0755,
 				"model/excel"=>0755,
 				"test"=>0755,
