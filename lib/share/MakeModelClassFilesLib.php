@@ -11,7 +11,7 @@ class MakeModelClassFilesLib extends AppCtl {
 	public function __construct()
 	{
 		parent::__construct();
-		echo "\nmake  Class file from database;.\n\n";
+		echo "\nmake Model Class file.\n\n";
 	}
 	
 	function main()
@@ -20,8 +20,13 @@ class MakeModelClassFilesLib extends AppCtl {
 		$_->APP_ROOT = CmdLibs::getAppRoot(1);
 		$_->initView();
 		
+		if($pageName = cmdLibs::getParam('-p')) {
+			$_->makeBlankModel($pageName);
+			exit;
+		}
+		
 		if(!$dbname = cmdLibs::getParam('-d')) {
-			die("usage: ".cmdLibs::scriptName()." -d dbname -t tableName\n");
+			die("usage: ".cmdLibs::scriptName()." [-d dbname -t tableName] OR [-p pageName for blank model]\n");
 		} else {
 			echo "use database $dbname.\n\n";
 		}
@@ -77,7 +82,7 @@ class MakeModelClassFilesLib extends AppCtl {
 				file_put_contents($filePath, $classCode);
 			
 				echo "------------------------------\n";
-				echo "save class file $table.php\n";
+				echo "save class file $className.php\n";
 				echo "\n";
 				echo $classCode;
 				echo "\n";
@@ -94,7 +99,7 @@ class MakeModelClassFilesLib extends AppCtl {
 				file_put_contents($filePath, $classCode);
 			
 				echo "------------------------------\n";
-				echo "save class file $table.php\n";
+				echo "save class file $className"."Test.php\n";
 				echo "\n";
 				echo $classCode;
 				echo "\n";
@@ -115,7 +120,7 @@ class MakeModelClassFilesLib extends AppCtl {
 				file_put_contents($filePath, $classCode);
 			
 				echo "------------------------------\n";
-				echo "save class file $table.php\n";
+				echo "save class file $className.php\n";
 				echo "\n";
 				echo $classCode;
 				echo "\n";
@@ -132,13 +137,72 @@ class MakeModelClassFilesLib extends AppCtl {
 				file_put_contents($filePath, $classCode);
 			
 				echo "------------------------------\n";
-				echo "save class file $table.php\n";
+				echo "save class file $className"."Test.php\n";
 				echo "\n";
 				echo $classCode;
 				echo "\n";
 			}
 		
 		}
+		
+	}
+	
+	function makeBlankModel($pageName) {
+
+		$_ = $this;
+		$_->APP_ROOT = CmdLibs::getAppRoot(1);
+		$_->initView();
+		
+		$dirPath = $_->APP_ROOT."/model/$pageName";
+		if(!file_exists($dirPath)) {
+			mkdir($dirPath, 0777, true);
+		}
+
+		$className = ucfirst($pageName).'Model';
+		$_->view->assign('pageName', $pageName);
+		$_->view->assign('className', $className);
+		
+		$filePath = $dirPath.'/'.$className.".php";
+		
+		// model file
+		if(file_exists($filePath)) {
+			echo "error: $filePath is exists. can not save file.\n\n";
+		} else {
+			$templateFile = $_->APP_ROOT.'/etc/template/model/blankModel.php';
+			$classCode = $_->view->fetch($templateFile);
+		
+			file_put_contents($filePath, $classCode);
+		
+			echo "------------------------------\n";
+			echo "save class file $className.php\n";
+			echo "\n";
+			echo $classCode;
+			echo "\n";
+		}
+		// Blank Model Test
+
+
+		$testDirPath = $_->APP_ROOT."/test/model/$pageName";
+		if(!file_exists($testDirPath)) {
+			mkdir($testDirPath, 0777, true);
+		}
+
+		$filePath = $testDirPath.'/'.$className."ModelTest.php";
+		if(file_exists($filePath)) {
+			echo "error: $filePath is exists. can not save file.\n\n";
+		} else {
+			$templateFile = $_->APP_ROOT.'/etc/template/test/model/blankModelTest.php';
+			$classCode = $_->view->fetch($templateFile);
+		
+			file_put_contents($filePath, $classCode);
+		
+			echo "------------------------------\n";
+			echo "save class file $className"."Test.php\n";
+			echo "\n";
+			echo $classCode;
+			echo "\n";
+		}
+		
 		
 	}
 	
