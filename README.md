@@ -5,11 +5,13 @@ Minimam PHP Framework
 PHP 5.5以上のためのフレームワークです。
 既存の定番クラスライブラリをつなぎ合わせて、便利に使いこなすためのものです。
 クラスライブラリのインストールにはComposerを使用します。
-主に以下の3つのクラスライブラリに依存します。
+minは以下のクラスライブラリに依存します。
 * Smarty 3：テンプレートクラス
 * validator/livr：汎用バリデータクラス
-* php-console：Google Chromeのconsoleに出力できるPHPのデバッグ環境
 * PDO：データベース抽象化クラス（PHP内蔵）
+* phpunit テストフレームワーク
+* php-console：Google Chromeのconsoleに出力できるPHPのデバッグ環境
+* log4php ファイルに実行ログを記録するフレームワーク
 
 AjaxなWebアプリを簡単に作れるように、JQueryとPHPの通信をシンプルかつ確実にできるメソッドを提供します.    
 データベースのCRUDもすべてAjaxです。    
@@ -72,11 +74,6 @@ bin以下にアプリの作成、利用のためのコマンド群がありま�
 >$ cd /Users/mydir/workspace/testApp    
 >$ composer install
 
-インストールするライブラリは、composer.jsonを編集して調整します。
-Minアプリの動作に最低限必要なのは以下の3行です。
->"smarty/smarty": "v3.1.21",    
->"validator/livr": "dev-master",    
->"php-console/php-console": "3.*",
 
 ### データベースのモデルを作成する
 
@@ -510,7 +507,21 @@ makeModelClass.phpを使うと、テーブルを操作するための2つのモ�
 
 テーブルに行を保存します。ユニークキーが指定されていないか、指定されていてもテーブル内に存在しない場合は、新規に行を挿入します。ユニークキーがテーブルに存在する場合は、更新します。
 
+### モデルのテスト
 
+モデルクラスファイルを自動生成すると、同時にtest/modelディレクトリの下にphpunit用のテストファイルが作成されます。    
+booksテーブルの場合は、
+* test/model/books/BooksListTest.php （BooksListクラスのテスト）
+* test/model/books/BooksRecordTest.php （BooksRecordクラスのテスト）
+の2つのファイルが作成されます。
+
+phpunitがインストール済みならば、以下の様にコマンドラインでテストが行えます。
+
+>$ phpunit BooksListTest.php    
+>$ phpunit BooksRecordTest.php    
+
+ただし、BooksRecordTest.phpは、そのままのテストではエラーになります。    
+内部でテーブルに挿入するデータを設定する dataProvider() メソッドがあるので、適切な挿入用データを出力するように調整してください。
 
 
 以下、更新予定
