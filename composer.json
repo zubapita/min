@@ -4,6 +4,7 @@
 		"validator/livr": "dev-master",
 		"php-console/php-console": "3.*",
 		"phpunit/phpunit": "4.8.10",
+		"apache/log4php": "2.3.0",
 		"fzaninotto/faker": "v1.5.0",
 		"nesbot/carbon": "~1.18"
 	}
