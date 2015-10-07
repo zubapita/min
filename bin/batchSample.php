@@ -15,7 +15,7 @@ class CmdApp extends AppCtl
 	}
 
 	function main() {
-		CmdLibs::bannerBig('get books');
+		CmdLibs::bannerBig('Batch Sample');
 
 		$_ = $this;
 
