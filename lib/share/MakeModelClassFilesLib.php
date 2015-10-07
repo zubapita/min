@@ -20,13 +20,13 @@ class MakeModelClassFilesLib extends AppCtl {
 		$_->APP_ROOT = CmdLibs::getAppRoot(1);
 		$_->initView();
 		
-		if($pageName = cmdLibs::getParam('-p')) {
+		if($pageName = cmdLibs::getParam('-b')) {
 			$_->makeBlankModel($pageName);
 			exit;
 		}
 		
 		if(!$dbname = cmdLibs::getParam('-d')) {
-			die("usage: ".cmdLibs::scriptName()." [-d dbname -t tableName] OR [-p pageName for blank model]\n");
+			die("usage: ".cmdLibs::scriptName()." [-d dbname -t tableName] OR [-b modelName for blank model]\n");
 		} else {
 			echo "use database $dbname.\n\n";
 		}
