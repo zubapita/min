@@ -130,9 +130,10 @@ class CmdLibs
 	 * メッセージバナー（大型）を標準エラー出力に表示
 	 * 
 	 * @param string $message 表示するメッセージ
+	 * @param boolean $STDERR trueなら標準エラーに出力
 	 * @return void
 	 */
-	static function bannerBig($message)
+	static function bannerBig($message, $STDERR=true)
 	{
 		$banner = <<<EOS
 
@@ -142,16 +143,21 @@ class CmdLibs
 
 
 EOS;
-		fputs(STDERR, $banner);
+		if ($STDERR) {
+			fputs(STDERR, $banner);
+		} else {
+			echo $banner;
+		}
 	}
 
 	/**
 	 * メッセージバナー（中型）を標準エラー出力に表示
 	 * 
 	 * @param string $message 表示するメッセージ
+	 * @param boolean $STDERR trueなら標準エラーに出力
 	 * @return void
 	 */
-	static function bannerMid($message)
+	static function bannerMid($message, $STDERR=true)
 	{
 		$banner = <<<EOS
 
@@ -161,16 +167,21 @@ EOS;
 
 
 EOS;
-		fputs(STDERR, $banner);
+		if ($STDERR) {
+			fputs(STDERR, $banner);
+		} else {
+			echo $banner;
+		}
 	}
 
 	/**
 	 * メッセージバナー（小型）を標準エラー出力に表示
 	 * 
 	 * @param string $message 表示するメッセージ
+	 * @param boolean $STDERR trueなら標準エラーに出力
 	 * @return void
 	 */
-	static function bannerSmall($message)
+	static function bannerSmall($message, $STDERR=true)
 	{
 		$banner = <<<EOS
 
@@ -178,7 +189,11 @@ EOS;
 　　　
 
 EOS;
-		fputs(STDERR, $banner);
+		if ($STDERR) {
+			fputs(STDERR, $banner);
+		} else {
+			echo $banner;
+		}
 	}
 }
 
