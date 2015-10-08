@@ -78,6 +78,11 @@ abstract class AppCtl
 	static private $table_instances = array();
 
 	/**
+	 * APIの情報を保存する配列
+	 */
+	static private $api_instances = array();
+
+	/**
 	 * モデルのインスタンスを保存する配列
 	 */
 	static private $model_instances = array();
@@ -104,7 +109,7 @@ abstract class AppCtl
 
 	/**
 	 * DBをインスタンス化して返す。
-	 * 予め、model/db/ の下にDBクラスの定義ファイルを作成しておく。
+	 * 予め、model/_def/db/ の下にDBクラスの定義ファイルを作成しておく。
 	 *
 	 * @see bin/makeNewApp.php
 	 * @see bin/makeDbClassFile.php
@@ -133,7 +138,7 @@ abstract class AppCtl
 
 	/**
 	 * DB内のTABLEをインスタンス化して返す。
-	 * 予め、model/db/ の下にTABLEクラスの定義ファイルを作成しておく。
+	 * 予め、model/_def/db/ の下にTABLEクラスの定義ファイルを作成しておく。
 	 *
 	 * @see bin/makeTableClassFiles.php
 	 * @param object $db_instance DBインスタンス
@@ -162,6 +167,36 @@ abstract class AppCtl
 			}
 		}
 	}
+
+
+	/**
+	 * APIをインスタンス化して返す。
+	 * 予め、model/_def/api/ の下にAPIクラスの定義ファイルを作成しておく。
+	 *
+	 * @see bin/makeNewApp.php
+	 * @param string $apiname API名
+	 * @return (object|boolean) APIクラスのインスタンス。失敗したらfalse
+	 */
+	function getAPI($apiname)
+	{
+
+		if (isset(self::$api_instances[$apiname])) {
+			return self::$api_instances[$apiname];
+		} else {
+			$filePath = $this->APP_ROOT."/model/_def/api/$apiname.php";
+
+			if (file_exists($filePath)) {
+				if (!class_exists($apiname)) {
+					require_once $filePath;
+				}
+				self::$api_instances[$apiname] = new $apiname;
+				return self::$api_instances[$apiname];
+			} else {
+				return false;
+			}
+		}
+	}
+
 
 	/**
 	 * MODELをインスタンス化して返す。
