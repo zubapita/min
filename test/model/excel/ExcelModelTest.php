@@ -15,9 +15,10 @@ class ExcelModelTest extends PHPUnit_Framework_TestCase
 		
 		$ExcelModel = new ExcelModel();
 		
-		$condition = [];
-
-		$result = $ExcelModel->get($condition);
+		$dirPath = 'etc/template/test/etc/excel';
+		$fileName = 'Apple.xlsx';
+		
+		$result = $ExcelModel->get("$dirPath/$fileName");
 		
 		var_dump($result);
 
