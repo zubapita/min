@@ -4,7 +4,9 @@
 		"validator/livr": "dev-master",
 		"php-console/php-console": "3.*",
 		"phpunit/phpunit": "4.8.10",
+		"phpunit/phpunit-selenium": "1.4.2",
 		"apache/log4php": "2.3.0",
+		"phpoffice/phpexcel": "1.8.1",
 		"fzaninotto/faker": "v1.5.0",
 		"nesbot/carbon": "~1.18"
 	}
