@@ -1,16 +1,16 @@
 #!/bin/sh
 #
-# Back Sync to Min original Lib
+# Sync new source code from Latest Min
 #
 RSYNC_TEST="-auvzn"
 RSYNC_EXEC="-auvz"
 EXCLUDE="--exclude=.svn --exclude=.git --exclude=.editorconfig --exclude=.gitignore --exclude=var/ --exclude=tmp/"
-APP_NAME=booklover
+MIN_DIR="../../min"
 
 echo "---------------"
 echo ""
 echo "/bin/*"
-rsync ${RSYNC_TEST} ${EXCLUDE} ../bin/* ../../min/bin/
+rsync ${RSYNC_TEST} ${EXCLUDE} ${MIN_DIR}/bin/* ../bin/
 echo ""
 while : ; do
 	echo -n "Are you sure ? [y/n] : "
@@ -18,7 +18,7 @@ while : ; do
 	if [ "$answer" = "y" -o "$answer" = "Y" ] ; then
 		echo "sync"
 		echo "";
-		rsync ${RSYNC_EXEC} ${EXCLUDE} ../bin/* ../../min/bin/
+		rsync ${RSYNC_EXEC} ${EXCLUDE} ${MIN_DIR}/bin/* ../bin/
 
 		break
 	elif [ "$answer" = "n" -o "$answer" = "N" ] ; then
@@ -30,7 +30,7 @@ done
 echo "---------------"
 echo ""
 echo "/etc/template/*"
-rsync ${RSYNC_TEST} ${EXCLUDE} ../etc/template/* ../../min/etc/template/
+rsync ${RSYNC_TEST} ${EXCLUDE} ${MIN_DIR}/etc/template/* ../etc/template/
 echo ""
 while : ; do
 	echo -n "Are you sure ? [y/n] : "
@@ -38,7 +38,7 @@ while : ; do
 	if [ "$answer" = "y" -o "$answer" = "Y" ] ; then
 		echo "sync"
 		echo "";
-		rsync ${RSYNC_EXEC} ${EXCLUDE} ../etc/template/* ../../min/etc/template/
+		rsync ${RSYNC_EXEC} ${EXCLUDE} ${MIN_DIR}/etc/template/* ../etc/template/
 
 		break
 	elif [ "$answer" = "n" -o "$answer" = "N" ] ; then
@@ -50,7 +50,7 @@ done
 echo "---------------"
 echo ""
 echo "/lib/*"
-rsync ${RSYNC_TEST} ${EXCLUDE} ../lib/* ../../min/lib/
+rsync ${RSYNC_TEST} ${EXCLUDE} ${MIN_DIR}/lib/* ../lib/
 echo ""
 while : ; do
 	echo -n "Are you sure ? [y/n] : "
@@ -58,7 +58,7 @@ while : ; do
 	if [ "$answer" = "y" -o "$answer" = "Y" ] ; then
 		echo "sync"
 		echo "";
-		rsync ${RSYNC_EXEC} ${EXCLUDE} ../lib/* ../../min/lib/
+		rsync ${RSYNC_EXEC} ${EXCLUDE} ${MIN_DIR}/lib/* ../lib/
 
 		break
 	elif [ "$answer" = "n" -o "$answer" = "N" ] ; then
@@ -70,7 +70,7 @@ done
 echo "---------------"
 echo ""
 echo "/view/cmn/*"
-rsync ${RSYNC_TEST} ${EXCLUDE} ../view/cmn/* ../../min/view/cmn/
+rsync ${RSYNC_TEST} ${EXCLUDE} ${MIN_DIR}/view/cmn/* ../view/cmn/
 echo ""
 while : ; do
 	echo -n "Are you sure ? [y/n] : "
@@ -78,7 +78,7 @@ while : ; do
 	if [ "$answer" = "y" -o "$answer" = "Y" ] ; then
 		echo "sync"
 		echo "";
-		rsync ${RSYNC_EXEC} ${EXCLUDE} ../view/cmn/* ../../min/view/cmn/
+		rsync ${RSYNC_EXEC} ${EXCLUDE} ${MIN_DIR}/view/cmn/* ../view/cmn/
 
 		break
 	elif [ "$answer" = "n" -o "$answer" = "N" ] ; then
@@ -86,7 +86,6 @@ while : ; do
 		break
 	fi
 done
-
 
 
 echo ""
