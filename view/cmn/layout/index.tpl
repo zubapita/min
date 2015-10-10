@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="/cmn/css/cmn.css" type="text/css" media="screen" title="cmn.css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	{block name="head"}{/block}
-	<title>{block name="title"}{/block}|Site name</title>
+	<title>{block name="title"}{/block}</title>
 </head>
 <body>
 <div id="wrapper" class="container">
