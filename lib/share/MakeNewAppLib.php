@@ -70,6 +70,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				"test/controller"=>0755,
 				"test/model"=>0755,
 				"test/model/amazon"=>0755,
+				"test/model/excel"=>0755,
 				"var"=>0755,
 				"var/compiled"=>0777,
 				"var/log"=>0777,
