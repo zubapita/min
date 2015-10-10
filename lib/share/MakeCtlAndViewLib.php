@@ -12,6 +12,8 @@ class MakeCtlAndViewLib extends AppCtl {
 	{
 		parent::__construct();
 		CmdLibs::bannerBig( "make List Controller and View.");
+		
+		echo "LOCAL_TEST_SERVER=".$this->C['LOCAL_TEST_SERVER']."\n";
 	}
 	
 	function main()
@@ -19,6 +21,7 @@ class MakeCtlAndViewLib extends AppCtl {
 		$_ = $this;
 		$_->APP_ROOT = CmdLibs::getAppRoot(1);
 		$_->initView();
+		$_->view->assign('localTestServer', $this->C['LOCAL_TEST_SERVER']);
 		
 		// パラメータからモデル名とページ名を決定。
 		$modelName = cmdLibs::getParam('-m');
@@ -98,6 +101,7 @@ class MakeCtlAndViewLib extends AppCtl {
 					$_->genAutoList($pageName);
 					$_->genScrollAndSearch($pageName, $className);
 					$_->genLangResource($pageName);
+					$_->genListTest($pageName, $className);
 					break;
 				case 'Record':
 					$_->genRecordCtl($pageName, $className);
@@ -109,12 +113,14 @@ class MakeCtlAndViewLib extends AppCtl {
 					$_->genAutoEditForm($pageName);
 					$_->genPost($pageName, $className);
 					$_->genLangResource($pageName);
+					$_->genRecordTest($pageName, $className);
 					break;
 			}
 		} else {
 			$_->genBlankCtl($pageName, $className);
 			$_->genBlankHtml($pageName);
 			$_->genLangResource($pageName);
+			$_->genBlankTest($pageName, $className);
 		}
 	}
 	
@@ -366,4 +372,45 @@ class MakeCtlAndViewLib extends AppCtl {
 		$_->saveFile($altDelimiter=true);
 	}
 
+	/**
+	 * List表示TESTの保存
+	 * 
+	 */
+	public function genListTest($pageName, $className)
+	{
+		$_ = $this;
+		$_->dirPath = $_->APP_ROOT.'/test/controller/'.$pageName;
+		$_->filePath = $_->dirPath.'/'.$className.'CtlTest.php';
+		$_->templateFile = $_->APP_ROOT.'/etc/template/test/controller/listCtlTest.php';
+		$_->message = "save test file {$_->dirPath}/{$className}Test.php\n";
+		$_->saveFile($altDelimiter=false);
+	}
+
+	/**
+	 * List表示TESTの保存
+	 * 
+	 */
+	public function genRecordTest($pageName, $className)
+	{
+		$_ = $this;
+		$_->dirPath = $_->APP_ROOT.'/test/controller/'.$pageName;
+		$_->filePath = $_->dirPath.'/'.$className.'CtlTest.php';
+		$_->templateFile = $_->APP_ROOT.'/etc/template/test/controller/recordCtlTest.php';
+		$_->message = "save test file {$_->dirPath}/{$className}Test.php\n";
+		$_->saveFile($altDelimiter=false);
+	}
+
+	/**
+	 * Blank表示TESTの保存
+	 * 
+	 */
+	public function genBlankTest($pageName, $className)
+	{
+		$_ = $this;
+		$_->dirPath = $_->APP_ROOT.'/test/controller/'.$pageName;
+		$_->filePath = $_->dirPath.'/'.$className.'CtlTest.php';
+		$_->templateFile = $_->APP_ROOT.'/etc/template/test/controller/blankCtlTest.php';
+		$_->message = "save test file {$_->dirPath}/{$className}Test.php\n";
+		$_->saveFile($altDelimiter=false);
+	}
 }
