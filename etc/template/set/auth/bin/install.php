@@ -33,6 +33,8 @@ class CmdApp extends SetInstallLib
 			"model/_def/api"=>0755,
 			"view"=>0755,
 			"view/userauth"=>0755,
+			"view/userauth/includes"=>0755,
+			"view/userauth/js"=>0755,
 		];
 		$_->copyFiles($subdirs);
 
