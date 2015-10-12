@@ -75,7 +75,7 @@ abstract class DBAccess
 	 *
 	 * @return PDO オブジェクト
 	 */
-	protected function getPDO()
+	public function getPDO()
 	{
 		if (empty($this->PDO)) {
 			try {				
