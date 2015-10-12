@@ -25,8 +25,7 @@ class AmazonSearch extends AppCtl
 		parent::__construct();
 		$_ = $this;
 		
-		$AmazonPA = $_->getAPI('AmazonPA');
-		$_->params = $AmazonPA->getParams();
+		$_->params = AmazonApiKey::getParams();
 		$_->secretKey = $_->params['secret_key'];
 
 	}	

@@ -2,7 +2,7 @@
 /**
  * Amazon Product Advertising API
  */
-class AmazonPA() {
+class AmazonApiKey() {
 
 	public static function getParams() {
 
