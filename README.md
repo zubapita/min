@@ -1,15 +1,19 @@
 # min
-Minimam PHP Framework
+Minimam INter framework for PHP
 
 ## これは何？
-PHP 5.5以上のためのフレームワークです。
-既存の定番クラスライブラリをつなぎ合わせて、便利に使いこなすためのものです。
+PHP 5.5以上のための、Ajax Webアプリ開発のためのフレームワークです。
+開発時の手間をミニマムにすることを目標に作られています。
+* コーディングの手間を最小化：コードやテストを自動生成します。また開発者が書くコード量を最小化します。
+* 学習の手間を最小化：既存の定番クラスライブラリやツールを組み合わせることで、新しいフレームワークやツールを覚える手間を減らします。
+* 試行錯誤の最小化：テストツールやデバッグツールをフレームワークに組み込むことで、問題を把握しやすくします。
+
 クラスライブラリのインストールにはComposerを使用します。
 minは以下のクラスライブラリに依存します。
 * Smarty 3：テンプレートクラス
 * validator/livr：汎用バリデータクラス
 * PDO：データベース抽象化クラス（PHP内蔵）
-* phpunit テストフレームワーク
+* phpunit テストフレームワーク	
 * php-console：Google Chromeのconsoleに出力できるPHPのデバッグ環境
 * log4php ファイルに実行ログを記録するフレームワーク
 
@@ -22,10 +26,12 @@ Google ChromeのPHP-Consoleと組み合わせることで、デバッグが面�
 また独自の認証ライブラリを内蔵し、ログインフォームを安全・簡単に作れます。    
 
 
+
 ## 推奨環境
 
-* Mac OS X or Linux
-* Google Chrome（Web開発時）
+* OS:Mac OS X or Linux
+* Webブラウザ：Google Chrome
+* テキストエディタ：TextMate or Sublime Text
 
 Windowsでの利用は検証されていません。
 
