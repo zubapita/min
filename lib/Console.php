@@ -43,33 +43,34 @@ class Console
 		} else {
 			Console::$debugMode = 'true';
 			
-			if (php_sapi_name()=='cli') {
-				$APP_ROOT = dirname(__DIR__);
-				$logFile = $APP_ROOT.'/var/log/trace.log';
-				Logger::configure(array(
-					'rootLogger' => array(
-						'appenders' => array('default'),
-					),
-					'appenders' => array(
-						'default' => array(
-							'class' => 'LoggerAppenderFile',
-							'layout' => array(
-								'class' => 'LoggerLayoutPattern',
-								'params' => array(
-									'conversionPattern' => '%date [%logger] %message%newline',
-								),
-							),
+			$APP_ROOT = dirname(__DIR__);
+			$logFile = $APP_ROOT.'/var/log/trace.log';
+			Logger::configure(array(
+				'rootLogger' => array(
+					'appenders' => array('default'),
+				),
+				'appenders' => array(
+					'default' => array(
+						'class' => 'LoggerAppenderFile',
+						'layout' => array(
+							'class' => 'LoggerLayoutPattern',
 							'params' => array(
-								'file' => $logFile,
-								'append' => true,
-								
-							)
+								'conversionPattern' => '%date [%logger] %message%newline',
+							),
+						),
+						'params' => array(
+							'file' => $logFile,
+							'append' => true,
+							
 						)
 					)
-				));
-				global $LOGGER;
-				$LOGGER = Logger::getLogger("log");
-			} else {
+				)
+			));
+
+			global $LOGGER;
+			$LOGGER = Logger::getLogger("log");
+
+			if (php_sapi_name()!='cli') {
 				global $handler;
 				$handler = PhpConsole\Handler::getInstance();
 				$handler->start(); // start handling PHP errors & exceptions
@@ -89,12 +90,10 @@ class Console
 	public static function log($message)
 	{
 		if (self::$debugMode) {
-			if (php_sapi_name()=='cli') {
-				global $LOGGER;
-				$LOGGER->info($message);
-			} else {
-				PC::db($message);
-			}
+			PC::db($message);
+
+			global $LOGGER;
+			$LOGGER->info($message);
 		}
 	}
 	
