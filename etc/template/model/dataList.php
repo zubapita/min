@@ -21,8 +21,8 @@ class {$className} extends DataList
 		parent::__construct();
 		$_ = $this;
 
-		$_->DB = $_->getDB('{$db}');
-		$_->TABLE = $_->getTable($_->DB, '{$table}');
+		$_->DB = new {$db};
+		$_->{$table|ucfirst} = $_->getTable($_->DB, '{$table}');
 	}	
 
 	/**
@@ -37,20 +37,20 @@ class {$className} extends DataList
 		$_ = $this;
 		
 		// SELECT 条件の設定
-		$_->TABLE->reset();
+		$_->{$table|ucfirst}->reset();
 		$columns = [
 			{foreach $columns as $column}
 			'{$column['name']}',
 			{/foreach}
 		];
-		$_->TABLE->select($columns);
+		$_->{$table|ucfirst}->select($columns);
 		$_->setLimit($currentPage, $_->maxItemsInPage);
 		
 		// SELECTの結果取得
-		$list = $_->TABLE->find($conditions)->fetchAll();
+		$list = $_->{$table|ucfirst}->find($conditions)->fetchAll();
 		if ($_->dispatch_trace) {
 			Console::log('{$className}::get');
-			Console::log($_->TABLE->SQL);
+			Console::log($_->{$table|ucfirst}->SQL);
 		}
 
 		// ページャを設定

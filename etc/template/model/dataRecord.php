@@ -33,8 +33,8 @@ class {$className} extends DataRecord
 		parent::__construct();
 		$_ = $this;
 
-		$_->DB = $_->getDB('{$db}');
-		$_->TABLE = $_->getTable($_->DB, '{$table}');
+		$_->DB = new {$db};
+		$_->{$table|ucfirst} = $_->getTable($_->DB, '{$table}');
 	}	
 
 	/**
@@ -48,19 +48,19 @@ class {$className} extends DataRecord
 		$_ = $this;
 		
 		// SELECT 条件の設定
-		$_->TABLE->reset();
+		$_->{$table|ucfirst}->reset();
 		$columns = [
 			{foreach $columns as $column}
 			'{$column['name']}',
 			{/foreach}
 		];
-		$_->TABLE->select($columns);
+		$_->{$table|ucfirst}->select($columns);
 		
 		// SELECTの結果取得
-		$record = $_->TABLE->find($conditions)->fetch();
+		$record = $_->{$table|ucfirst}->find($conditions)->fetch();
 		if ($_->dispatch_trace) {
 			Console::log('{$className}::get');
-			Console::log($_->TABLE->SQL);
+			Console::log($_->{$table|ucfirst}->SQL);
 		}
 
 		return $record;
@@ -84,11 +84,11 @@ class {$className} extends DataRecord
 		
 		// データの検証と保存
 		if ($validData = $_->validate($data)) {
-			$_->TABLE->reset();
-			$result = $_->TABLE->saveSet($validData);
+			$_->{$table|ucfirst}->reset();
+			$result = $_->{$table|ucfirst}->saveSet($validData);
 			if ($_->dispatch_trace) {
 				Console::log('{$className}::set');
-				Console::logSql($_->TABLE->SQL, $_->TABLE->VALUES);
+				Console::logSql($_->{$table|ucfirst}->SQL, $_->{$table|ucfirst}->VALUES);
 			}
 			return $result;
 		} else {
