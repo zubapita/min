@@ -138,7 +138,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 		$_ = $this;
 		//$usages = array_merge($_->getAppUsage(), $_->getDbUsage());
 		$usages = $_->getAppUsage();
-		$usage = "usage: ".cmdLibs::scriptName()."\n";
+		$usage = "usage: ".CmdLibs::scriptName()."\n";
 		foreach ($usages as $switch=>$value) {
 			$usage .= ' '.$switch.' '.$value."\n";
 		}
@@ -165,12 +165,12 @@ class MakeNewAppLib extends MakeDbClassFileLib
 	{
 		$_ = $this;
 		$params = array();
-		if (!$appName = cmdLibs::getParam('-a')) {
-			die($_->usage);
+		if (!$appName = CmdLibs::getParam('-a')) {
+			die($_->getUsage());
 		} else {
 			echo "make application : $appName.\n";
 			$params['appName'] = $appName;
-			$params['rootDir'] = cmdLibs::getParam('-r');
+			$params['rootDir'] = CmdLibs::getParam('-r');
 		}
 		$params = array_merge($params, $_->getDbParams());
 
