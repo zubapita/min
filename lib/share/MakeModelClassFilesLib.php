@@ -11,32 +11,41 @@ class MakeModelClassFilesLib extends AppCtl {
 	public function __construct()
 	{
 		parent::__construct();
+		$_ = $this;
+		$_->APP_ROOT = CmdLibs::getAppRoot(1);
+		$_->initView();
 		echo "\nmake Model Class file.\n\n";
 	}
 	
 	function main()
 	{
 		$_ = $this;
-		$_->APP_ROOT = CmdLibs::getAppRoot(1);
-		$_->initView();
 		
-		if($pageName = cmdLibs::getParam('-b')) {
+		if($pageName = CmdLibs::getParam('-b')) {
 			$_->makeBlankModel($pageName);
 			exit;
 		}
 		
-		if(!$dbname = cmdLibs::getParam('-d')) {
-			die("usage: ".cmdLibs::scriptName()." [-d dbname -t tableName] OR [-b modelName for blank model]\n");
+		if(!$dbname = CmdLibs::getParam('-d')) {
+			die("usage: ".CmdLibs::scriptName()." [-d dbname -t tableName] OR [-b modelName for blank model]\n");
 		} else {
 			echo "use database $dbname.\n\n";
 		}
 		
-		if($targetTable = cmdLibs::getParam('-t')) {
+		if($targetTable = CmdLibs::getParam('-t')) {
 			echo "target table is '$targetTable'.\n\n";
 		} else {
 			echo "all tables in DB are target.\n\n";
 		}
+
+		$_->makeTableModels($dbname, $targetTable);
 		
+	}
+	
+	function makeTableModels($dbname, $targetTable)
+	{
+		$_ = $this;
+
 		if(!$DB = $_->getDB($dbname)) {
 			die("error: '$dbname' class file is not exists in ../model/db/\n");
 		}
@@ -147,7 +156,10 @@ class MakeModelClassFilesLib extends AppCtl {
 		
 	}
 	
-	function makeBlankModel($pageName) {
+	
+	
+	function makeBlankModel($pageName)
+	{
 
 		$_ = $this;
 		$_->APP_ROOT = CmdLibs::getAppRoot(1);

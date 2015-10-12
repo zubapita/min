@@ -11,26 +11,37 @@ class MakeTableClassFilesLib extends AppCtl {
 	public function __construct()
 	{
 		parent::__construct();
+		$_ = $this;
+		$_->APP_ROOT = CmdLibs::getAppRoot(1);
+		$_->initView();
 		echo "\nmake table Class file from database;.\n\n";
 	}
 	
 	function main()
 	{
 		$_ = $this;
-		$_->APP_ROOT = CmdLibs::getAppRoot(1);
-		$_->initView();
 		
-		if(!$dbname = cmdLibs::getParam('-d')) {
-			die("usage: ".cmdLibs::scriptName()." -d dbname \n");
+		if(!$dbname = CmdLibs::getParam('-d')) {
+			die("usage: ".CmdLibs::scriptName()." -d dbname \n");
 		} else {
 			echo "use database $dbname.\n\n";
 		}
 		
-		if($targetTable = cmdLibs::getParam('-t')) {
+		if($targetTable = CmdLibs::getParam('-t')) {
 			echo "target table is '$targetTable'.\n\n";
 		} else {
 			echo "all tables in DB are target.\n\n";
 		}
+		
+		$_->makeTableFiles($dbname, $targetTable);
+	
+	}
+
+
+
+	function makeTableFiles($dbname, $targetTable)
+	{
+		$_ = $this;
 		
 		if(!$DB = $_->getDB($dbname)) {
 			die("error: '$dbname' class file is not exists in ../model/db/\n");
@@ -90,5 +101,5 @@ class MakeTableClassFilesLib extends AppCtl {
 		}
 		
 	}
-	
+
 }
