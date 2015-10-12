@@ -160,13 +160,13 @@ class OauthCtl extends AjaxCtl
 			// userauthに保存
 			Console::log('save to userauth:');
 			
-			$now = date("Y-m-d H:i:s");
+			$_->now = date("Y-m-d H:i:s");
 			$data = [];
 			$data['username'] = $_->userProfile->displayName;
 			//仮パスワードを生成 パスワードログインさせる場合は、改めてパスワードを入れさせる必要がある
-			$data['password'] = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, $length);
-			$data['entryAt'] = $now;
-			$data['updateAt'] = $now;
+			$data['password'] = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 16);
+			$data['entryAt'] = $_->now;
+			$data['updateAt'] = $_->now;
 			Console::log($data);
 			$result = $_->UserauthRecord->set($data);
 			Console::log('Save to userauth result:');
@@ -181,6 +181,7 @@ class OauthCtl extends AjaxCtl
 			
 			// authProviderに保存
 			$conditions['userId'] = $userId;
+			$conditions['updateAt'] = $_->now;
 			$_->saveToAuthProvider($conditions);
 		}
 		return $userId;
@@ -232,6 +233,7 @@ class OauthCtl extends AjaxCtl
 			'userId' => $userId,
 			'provider' => $provider,
 			'hybridauthSession' => $jsonData,
+			'updateAt' => $_->now,
 		);
 		Console::log($data);
 		$result = $AuthConnectionRecord->set($data);
