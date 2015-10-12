@@ -6,7 +6,11 @@
 		"phpunit/phpunit": "4.8.10",
 		"phpunit/phpunit-selenium": "1.4.2",
 		"apache/log4php": "2.3.0",
+		"hybridauth/hybridauth": "2.5.0",
+		"j7mbo/twitter-api-php": "dev-master",
 		"phpoffice/phpexcel": "1.8.1",
+		"verot/class.upload.php": "dev-master",
+		"jstayton/google-maps-geocoder": "dev-master",
 		"fzaninotto/faker": "v1.5.0",
 		"nesbot/carbon": "~1.18"
 	}
