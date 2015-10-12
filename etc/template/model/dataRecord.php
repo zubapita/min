@@ -87,13 +87,13 @@ class {$className} extends DataRecord
 			$_->TABLE->reset();
 			$result = $_->TABLE->saveSet($validData);
 			if ($_->dispatch_trace) {
-				Console::log('SpotRecord::set');
+				Console::log('{$className}::set');
 				Console::logSql($_->TABLE->SQL, $_->TABLE->VALUES);
 			}
 			return $result;
 		} else {
 			if ($_->dispatch_trace) {
-				Console::log('SpotRecord::set Validate error.');
+				Console::log('{$className}::set Validate error.');
 				Console::log($_->errors);
 			}
 			return false;
