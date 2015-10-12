@@ -42,9 +42,12 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				"controller/cmn"=>0755,
 				"etc"=>0755,
 				"etc/template"=>0755,
+/*
 				"etc/template/bin"=>0755,
 				"etc/template/controller"=>0755,
 				"etc/template/model"=>0755,
+				"etc/template/set"=>0755,
+				"etc/template/set/auth"=>0755,
 				"etc/template/test"=>0755,
 				"etc/template/test/controller"=>0755,
 				"etc/template/test/model"=>0755,
@@ -52,6 +55,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				"etc/template/view/includes"=>0755,
 				"etc/template/view/js"=>0755,
 				"etc/template/view/lang"=>0755,
+*/
 				"htdocs"=>0755,
 				"htdocs/cmn"=>0755,
 				"htdocs/cmn/img"=>0755,
@@ -100,6 +104,11 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				}
 			}
 
+
+			$_->copySubdirs("etc/template", $newAppRoot);
+
+
+
 			$_->view->assign('APP_NAME', $params['appName']);
 			$_->view->assign('APP_ROOT', $newAppRoot);
 			$localVh = $_->view->fetch($_->APP_ROOT.'/etc/local_vh.conf');
@@ -128,6 +137,26 @@ class MakeNewAppLib extends MakeDbClassFileLib
 	} /* /main */
 
 
+	function copySubdirs($thisDir, $newAppRoot)
+	{
+		$_ = $this;
+		echo "thisDir=$thisDir\n";
+		
+		$permission = 0755;
+		$files = glob($_->APP_ROOT."/$thisDir/*");
+		foreach ($files as $filepath) {
+			if(is_dir($filepath)) {
+				$tmp = explode("/", $filepath);
+				$subdir = array_pop($tmp);
+				mkdir("$newAppRoot/$thisDir/$subdir", $permission, true);
+				$_->copySubdirs("$thisDir/$subdir", $newAppRoot);
+			} else {
+				$filename = basename($filepath);
+				copy($filepath, "$newAppRoot/$thisDir/$filename");
+			}
+		}
+		return;
+	}
 
 	/**
 	 * 使い方の文字列（usage）を返す

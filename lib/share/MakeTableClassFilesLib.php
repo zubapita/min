@@ -95,8 +95,8 @@ class MakeTableClassFilesLib extends AppCtl {
 			echo "------------------------------\n";
 			echo "save class file $table.php\n";
 			echo "\n";
-			echo $classCode;
-			echo "\n";
+			//echo $classCode;
+			//echo "\n";
 		
 		}
 		

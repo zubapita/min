@@ -93,8 +93,8 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "------------------------------\n";
 				echo "save class file $className.php\n";
 				echo "\n";
-				echo $classCode;
-				echo "\n";
+				//echo $classCode;
+				//echo "\n";
 			}
 		
 			// List Model Test
@@ -110,8 +110,8 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "------------------------------\n";
 				echo "save class file $className"."Test.php\n";
 				echo "\n";
-				echo $classCode;
-				echo "\n";
+				//echo $classCode;
+				//echo "\n";
 			}
 			
 		
@@ -131,8 +131,8 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "------------------------------\n";
 				echo "save class file $className.php\n";
 				echo "\n";
-				echo $classCode;
-				echo "\n";
+				//echo $classCode;
+				//echo "\n";
 			}
 			
 			// Record Model Test
@@ -148,8 +148,8 @@ class MakeModelClassFilesLib extends AppCtl {
 				echo "------------------------------\n";
 				echo "save class file $className"."Test.php\n";
 				echo "\n";
-				echo $classCode;
-				echo "\n";
+				//echo $classCode;
+				//echo "\n";
 			}
 		
 		}
@@ -188,8 +188,8 @@ class MakeModelClassFilesLib extends AppCtl {
 			echo "------------------------------\n";
 			echo "save class file $className.php\n";
 			echo "\n";
-			echo $classCode;
-			echo "\n";
+			//echo $classCode;
+			//echo "\n";
 		}
 		// Blank Model Test
 
@@ -211,8 +211,8 @@ class MakeModelClassFilesLib extends AppCtl {
 			echo "------------------------------\n";
 			echo "save class file $className"."Test.php\n";
 			echo "\n";
-			echo $classCode;
-			echo "\n";
+			//echo $classCode;
+			//echo "\n";
 		}
 		
 		
