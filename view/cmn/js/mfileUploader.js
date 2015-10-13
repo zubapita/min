@@ -9,7 +9,7 @@
  * @package	Min - Minimam INter framework for PHP
  * @version	0.1
  */
-function MfileFunctions()
+function MfileUploadFunctions()
 {
 
 	/**
@@ -73,10 +73,11 @@ function MfileFunctions()
 				processData: false,
 				cache: false,
 				data: formData,
-				success: function(response, status, xhr){
+				success: function(response, stat, xhr){
 					if (response.status==true) {
-						//status.setProgress(100);
+						status.setProgress(100);
 						self.success(response.data);
+						status.clear();
 					} else {
 						console.log(response);
 						self.faild(response);
@@ -139,6 +140,11 @@ function MfileFunctions()
 				sb.hide();
 			});
 		};
+		
+		this.clear = function() {
+			var sb = this.statusbar;
+			sb.hide();
+		};
 	};
 
 	/**
@@ -166,15 +172,18 @@ function MfileFunctions()
 	};
 	
 	/**
-	 * 初期化
+	 * マルチファイルアップロード初期化
 	 *
-	 * @example MFILE.init('dragArea', '/image/mfile', onArea, offArea);
+	 * @example MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/mimage/post', onArea, offArea, success);
+	 *
 	 * @param string dragAreaDomId ドラッグエリア（ファイルをドラッグ＆ドロップするdiv）のID
 	 * @param string fileBtnDomId input type="file" ボタンのID
 	 * @param string imageBtnDomId 画像アップロードボタンのID
 	 * @param string url アップロード先URL
 	 * @param function onCall ファイルがドラッグエリアに入ったときにコールバックするメソッド
 	 * @param function offCall ファイルがドラッグエリアから外れたときにコールバックするメソッド
+	 * @param function success アップロード成功時にコールバックするメソッド
+	 * @param function failed アップロード失敗時にコールバックするメソッド
 	 * @return void
 	 */
 	this.init = function(dragAreaDomId, fileBtnDomId, imageBtnDomId, url, onCall, offCall, success, failed)
@@ -258,5 +267,5 @@ function MfileFunctions()
 
 }
 
-var MFILE = new MfileFunctions();
+var MFILEUPLD = new MfileUploadFunctions();
 

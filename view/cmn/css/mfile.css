@@ -23,6 +23,8 @@
 	padding:10px 10px 10 10px;
 	margin-bottom:10px;
 	font-size:200%;
+	float:left;
+	margin-right:5px;
 }
 #mfileArea p {
 	text-align:center;
@@ -107,5 +109,5 @@
 	padding:4px 15px;
 	cursor:pointer;
 	vertical-align:top
-	}
+}
 
