@@ -170,6 +170,20 @@ model/test/UsersRecord.php は、usersテーブルにデータを挿入、更新
 https://github.com/koorchik/LIVR
 
 
+#### モデルのテスト
+
+モデルを作成すると、自動的にPHPunit用のテストファイルがtest/modelディレクトリの下に作成されます。    
+* UsersListの場合：test/model/users/UsersListTest.php
+* UsersRecordの場合：test/model/users/UsersRecordTest.php
+
+test/model/usersに移動して
+
+> $ phpunit UsersListTest.php
+
+でテストが行えます（phpunitに実行パスを通しておく必要があります）。
+テストファイルの中身を書き替えてご利用ください。
+
+
 ### Webのビューとコントローラーを作成する
 
 **前提：このWebアプリのURLをhttp://test.mysite.jp/だとします。**
@@ -244,6 +258,20 @@ https://github.com/koorchik/LIVR
 このページには
 * http://test.mysite.jp/about/
 でアクセスできます。
+
+#### コントローラーのテスト
+
+コントローラーを作成すると、自動的にPHPunit-selenium用のテストファイルがtest/controllerディレクトリの下に作成されます。    
+* UsersCtlの場合：test/controllerディレクトリの下に作成されます/users/UsersCtlTest.php
+* UsersRecordCtlの場合：test/controllerディレクトリの下に作成されます/users/UsersRecordCtlTest.php
+
+test/controller/usersに移動して
+
+> $ phpunit UsersCtlTest.php
+
+でテストが行えます（phpunitに実行パスを通して、selenium-serverとchromedriverもインストールしておく必要があります）。
+テストファイルの中身を書き替えてご利用ください。
+
 
 
 ## ディレクトリ構造
@@ -530,13 +558,28 @@ phpunitがインストール済みならば、以下の様にコマンドライ�
 内部でテーブルに挿入するデータを設定する dataProvider() メソッドがあるので、適切な挿入用データを出力するように調整してください。
 
 
+### ログインフォームのインストール
+etc/template/set/auth 以下にユーザー認証とTwitterやFacebookによるOAuth認証を行うための一式があります。    
+利用するには、まずユーザー認証を保存するデータベースを用意し、bin/install.phpを実行します。
+
+データベース名が「mindb」、ユーザー名「mindb」、パスワードなしでmysqlで作った場合
+
+> $ cd bin    
+> $ ./makeDbClassFile.php -d mindb -u mindb -s mysql    
+> $ cd etc/template/set/auth/bin    
+> $ chomod +x install.php    
+> $ ./install.php -d mindb    
+
+これで必要なモデル、ビュー、コントローラーの一式が保存され、デフォルトのヘッダにある「ログイン」メニューが使えるようになります。    
+ただし、OAuth認証を使うには、TwitterやFacebookのAPIキーを取得し、model/_def/api/以下のTwitterApiKey.phpなどにAPIキーを設定する必要があります。
+
+
 以下、更新予定
 
 ## アプリケーションの作成
 
 ### Ajaxによるデータベース操作
 
-### ログインフォームの作り方
 
 ### 画像のAjaxアップロード
 
