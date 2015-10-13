@@ -77,6 +77,9 @@ class MakeNewAppLib extends MakeDbClassFileLib
 				"test/model/excel"=>0755,
 				"var"=>0755,
 				"var/compiled"=>0777,
+				"var/files"=>0777,
+				"var/images"=>0777,
+				"var/images/uploaded"=>0777,
 				"var/log"=>0777,
 				"view"=>0755,
 				"view/cmn"=>0755,
@@ -140,7 +143,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 	function copySubdirs($thisDir, $newAppRoot)
 	{
 		$_ = $this;
-		echo "thisDir=$thisDir\n";
+		//echo "thisDir=$thisDir\n";
 		
 		$permission = 0755;
 		$files = glob($_->APP_ROOT."/$thisDir/*");
