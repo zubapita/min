@@ -90,6 +90,14 @@ class Console
 	public static function log($message)
 	{
 		if (self::$debugMode) {
+
+			if (is_array($message)) {
+				$message = 'Array['.str_replace('&',", ",urldecode(http_build_query($message))).']';
+			}
+
+			$message = strip_tags($message);
+			$message = html_entity_decode($message);
+			
 			PC::db($message);
 
 			global $LOGGER;
