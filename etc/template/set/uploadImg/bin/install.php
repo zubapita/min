@@ -33,6 +33,11 @@ class CmdApp extends SetInstallLib
 					"dir" => "view/{$pageName}",
 					"permission" => 0755,
 				],
+			"view/upload/css"=>
+			[
+				"dir" => "view/{$pageName}/css",
+				"permission" => 0755,
+			],
 			"view/upload/includes"=>
 			[
 				"dir" => "view/{$pageName}/includes",
