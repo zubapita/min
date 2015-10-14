@@ -12,9 +12,10 @@ class SetInstallLib extends AppCtl
 	
 	public function __construct()
 	{
+		parent::__construct();
 		$_ = $this;
 		CmdLibs::setDataBridge();
-		parent::__construct();
+		$_->initView();
 	}
 	
 
@@ -101,7 +102,44 @@ class SetInstallLib extends AppCtl
 				}
 			}
 		}
+		umask($oldMask);
+	}
 
+	/**
+	 * モジュールを構成するファイルを指定ディレクトリにコピーする
+	 *
+	 * @param array $subdirs
+	 */
+	public function installFiles($subdirs)
+	{
+		$_ = $this;
+
+
+		$oldMask = umask(0);
+		foreach ($subdirs as $subdir=>$tmpSet) {
+			$newdir = $tmpSet['dir'];
+			$permission = $tmpSet['permission'];
+			
+			if (!file_exists($_->APP_ROOT."/$newdir")) {
+				mkdir($_->APP_ROOT."/$newdir", $permission, true);
+			}
+			$files = glob($_->SET_ROOT."/$subdir/*");
+			if (!empty($files)) {
+				foreach ($files as $filepath) {
+					if (!is_dir($filepath)) {
+						$_->view->left_delimiter = '<!--{';
+						$_->view->right_delimiter = '}-->';
+						$fileBody = $_->view->fetch($filepath);
+						$_->view->left_delimiter = '{';
+						$_->view->right_delimiter = '}';
+						//$fileBody = file_get_contents($filepath);
+						$filename = basename($filepath);
+						file_put_contents($_->APP_ROOT."/$newdir/$filename", $fileBody);
+					}
+				}
+			}
+		}
+		umask($oldMask);
 	}
 
 	/**
