@@ -23,6 +23,7 @@ class {$ctlClassName} extends AjaxCtl
 
 		// viewの初期化
 		$_->initView();
+		$_->view->escape_html = true;
 	}
 
 	/**
