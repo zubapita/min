@@ -4,9 +4,10 @@
 	<!-- Write meta tag and link tag here. -->
 	<!-- <link rel="stylesheet" href="/cmn/css/style_name.css" type="text/css" media="screen"> -->
 	<link rel="stylesheet" href="/cmn/css/mfile.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/<!--{$pageName}-->/css/imagebox.css" type="text/css" media="screen">
 {/block}	
 
-{block name="title"}Upload{/block}
+	{block name="title"}<!--{$pageName|ucfirst}-->{/block}
 
 <!-- Ajax search form -->
 {block name="body"}
@@ -40,7 +41,7 @@
 	<script src="/cmn/js/jarty/jarty.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/cmn/js/mfileUploader.js" type="text/javascript" charset="utf-8"></script>
 
-	{include file="upload/includes/imgBox.inc"}
+	{include file="<!--{$pageName}-->/includes/imagebox.inc"}
 
 	<script type="text/javascript">
 		var onArea = function() {
@@ -55,7 +56,7 @@
 			$("#mfileImages").append( $("#imgBoxTemplate").jarty(data) );
 		};
 
-		MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/upload/post', onArea, offArea, success);
+		MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/<!--{$pageName}-->/post', onArea, offArea, success);
 		
 	</script>
 {/block}

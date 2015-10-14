@@ -7,16 +7,3 @@
 		</div>
 	{/literal}
 	</script>
-
-	<style>
-	.imageBox {
-		border :solid 1px #444;
-		margin:5px;
-		padding:5px;
-		background-color:#eee;
-		text-align:center;
-	}
-	.itemBox {
-		float:left;
-	}
-	</style>

@@ -16,7 +16,7 @@
  * max_file_uploads
  *
  */
-class UploadCtl extends AjaxCtl
+class <!--{$className}-->Ctl extends AjaxCtl
 {
 
 	/**
