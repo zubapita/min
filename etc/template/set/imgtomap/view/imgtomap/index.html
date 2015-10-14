@@ -1,0 +1,94 @@
+{extends file='cmn/layout/index.tpl'}
+
+{block name="head"}
+	<!-- Write meta tag and link tag here. -->
+	<!-- <link rel="stylesheet" href="/cmn/css/style_name.css" type="text/css" media="screen"> -->
+	<link rel="stylesheet" href="/cmn/css/mfile.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/<!--{$pageName}-->/css/imagebox.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/<!--{$pageName}-->/css/spotlist.css" type="text/css" media="screen">
+{/block}	
+
+	{block name="title"} Imgtomap{/block}
+
+<!-- Ajax search form -->
+{block name="body"}
+<div class="container">
+<div class="page-header">
+	<div class="row">
+		<div class="col-lg-12">
+		<h1><!--{$className}--></h1>
+		<section id=" ImgtomapData">
+			<div class="container">
+				<div id="mfileArea">
+					<p>アップロードするファイルをドロップ</p>
+					<p>または</p>
+					<div class="mfileBtnGroup">
+						<button id="mfileIBtn">ファイルを選択</button>
+						<input id="mfileFBtn" type="file" multiple="multiple">
+					</div>
+				</div>
+			</div>
+			<div id="mfileImages" class="container"></div>
+		</section>
+		<section id="<!--{$clsssName}-->Data">
+			<div class="conrainer">
+				<div id="map"></div>
+				<h2>スポットの詳細</h2>
+				<p>一覧からスポットを選んで「詳細」をクリックしてください</p>
+				<div id="spotDetail"></div>
+				<h2>写真の近隣のスポット一覧</h2>
+				<div id="spotList"></div>
+			</div>
+		</section>
+		</div><!-- /col-lg-12 -->
+	</div><!-- /row -->
+</div><!-- /page-header -->
+</div><!-- /container -->
+{/block}	
+
+{block name="footer"}
+	<!-- Write loading javascript tag here. -->
+	<!-- <script src="" type="text/javascript" charset="utf-8"></script> -->
+	<script src="/cmn/js/jarty/jarty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/cmn/js/mfileUploader.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=places" type="text/javascript"></script>
+	<script src="/<!--{$pageName}-->/js/placeLib.js" type="text/javascript" charset="utf-8"></script>
+
+	{include file="<!--{$pageName}-->/includes/imagebox.inc"}
+	{include file="<!--{$pageName}-->/includes/spotdetail.inc"}
+
+	<script type="text/javascript">
+		var onArea = function() {
+			$('#mfileArea').css('border', '2px solid #0B85A1');
+		};
+		var offArea = function() {
+			$('#mfileArea').css('border', '2px dotted #0B85A1');
+		};
+		var success = function(data) {
+			console.log('upload success!');
+			console.log(data);
+			$("#mfileImages").append( $("#imgBoxTemplate").jarty(data) );
+			
+			PLIB.getPlaceInfo(data.lat, data.lng);
+		};
+
+		MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/imgtomap/post', onArea, offArea, success);
+		
+		function dispDetail(placeId)
+		{
+			var request = {
+			  placeId: placeId
+			};
+
+			service.getDetails(request, function(place, status)
+			{
+	  		  if (status == google.maps.places.PlacesServiceStatus.OK) {
+				  var openPeriods = getOpenPeriods(place);
+				  place.openPeriods = openPeriods;
+				  $('#spotDetail').html( $("#spotDetailTemplate").jarty(place) );
+	  		  }
+			});
+		}
+		
+	</script>
+{/block}
