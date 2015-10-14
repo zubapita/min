@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="/<!--{$pageName}-->/css/imagebox.css" type="text/css" media="screen">
 {/block}	
 
-	{block name="title"}<!--{$pageName|ucfirst}-->{/block}
+	{block name="title"} <!--{$className}-->{/block}
 
 <!-- Ajax search form -->
 {block name="body"}
@@ -15,8 +15,8 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-lg-12">
-		<h1>Upload Data</h1>
-		<section id="UploadData">
+		<h1><!--{$className}--></h1>
+		<section id=" <!--{$className}-->Data">
 			<div class="container">
 				<div id="mfileArea">
 					<p>アップロードするファイルをドロップ</p>
