@@ -176,16 +176,19 @@ https://github.com/koorchik/LIVR
 
 #### モデルのテスト
 
-モデルを作成すると、自動的にPHPunit用のテストファイルがtest/modelディレクトリの下に作成されます。    
-* UsersListの場合：test/model/users/UsersListTest.php
-* UsersRecordの場合：test/model/users/UsersRecordTest.php
+モデルクラスファイルを自動生成すると、同時にtest/modelディレクトリの下にphpunit用のテストファイルが作成されます。    
+booksテーブルの場合は、
+* test/model/books/BooksListTest.php （BooksListクラスのテスト）
+* test/model/books/BooksRecordTest.php （BooksRecordクラスのテスト）
+の2つのファイルが作成されます。
 
-test/model/usersに移動して
+phpunitがインストール済みならば、以下の様にコマンドラインでテストが行えます（phpunitに実行パスを通しておく必要があります）。
 
-> $ phpunit UsersListTest.php
+>$ phpunit BooksListTest.php    
+>$ phpunit BooksRecordTest.php    
 
-でテストが行えます（phpunitに実行パスを通しておく必要があります）。
-テストファイルの中身を書き替えてご利用ください。
+ただし、BooksRecordTest.phpは、そのままのテストではエラーになります。    
+内部でテーブルに挿入するデータを設定する dataProvider() メソッドがあるので、適切な挿入用データを出力するように調整してください。
 
 
 ### Webのビューとコントローラーを作成する
@@ -278,35 +281,6 @@ test/controller/usersに移動して
 
 
 
-## ディレクトリ構造
-
-* bin    
-	アプリの作成使用する各種バッチコマンドの置き場所です。また自分でバッチコマンドを作成するための雛形もあります。
-* contoroler    
-	Webアプリのコントローラーの置き場所です。コントローラーはエンドポイントであるindex.phpから起動されます。
-* etc    
-	各種設定ファイルの置き場所です。
-* htdocs    
-	ドキュメントルートです。画像ファイルやfavicon、robots.txtなど静的ファイルの置き場所です。    
-	htdocs/index.php がWebアプリの起点（エンドポイント）となり、URLに応じて各コントローラーを起動します。    
-	画像ファイルはhtdocs/img/* や htdocs/*/img/* の下に置きます。このルールはetc/rewrite.confで設定できます。
-* lib    
-	minの動作に必要なクラスライブラリが置かれています。
-* model    
-	データベースを操作するモデルクラスの置き場所です。データベース以外のapi操作やExcel操作もモデル化してここに置きます。
-	モデル内のデータベースの操作は独自のデータベース操作クラスにより、SQLを書かずにシンプルに操作を記述できます。
-* test    
-	テストファイルの置き場所です。
-* var    
-	一時ファイルの置き場所です。    
-	var/compiledにビューのテンプレートがコンパイルされたphpが置かれます。var/compiledはapacheから書き込み可能に設定しておく必要があります。
-* vendor    
-	composerによってインストールされる各種クラスライブラリの置き場所です。
-* view    
-	HTMLファイルの置き場所です。    
-	view/index.html がトップページのHTMLです。    
-	HTMLはSmartyのテンプレートファイルになっています。Smartyはif〜else文による条件分岐やforeachなどのループ、変数の計算や代入などをサポートした高機能なテンプレートクラスです。    
-	minでは、表示部分のプログラミングはSmartyとJQueryでほとんど行います。
 
 
 ##  データベース操作
@@ -545,22 +519,9 @@ makeModelClass.phpを使うと、テーブルを操作するための2つのモ�
 
 テーブルに行を保存します。ユニークキーが指定されていないか、指定されていてもテーブル内に存在しない場合は、新規に行を挿入します。ユニークキーがテーブルに存在する場合は、更新します。
 
-### モデルのテスト
 
-モデルクラスファイルを自動生成すると、同時にtest/modelディレクトリの下にphpunit用のテストファイルが作成されます。    
-booksテーブルの場合は、
-* test/model/books/BooksListTest.php （BooksListクラスのテスト）
-* test/model/books/BooksRecordTest.php （BooksRecordクラスのテスト）
-の2つのファイルが作成されます。
 
-phpunitがインストール済みならば、以下の様にコマンドラインでテストが行えます。
-
->$ phpunit BooksListTest.php    
->$ phpunit BooksRecordTest.php    
-
-ただし、BooksRecordTest.phpは、そのままのテストではエラーになります。    
-内部でテーブルに挿入するデータを設定する dataProvider() メソッドがあるので、適切な挿入用データを出力するように調整してください。
-
+## 組み込み機能を利用する
 
 ### ログインフォームのインストール
 etc/template/set/auth 以下にユーザー認証とTwitterやFacebookによるOAuth認証を行うための一式があります。    
@@ -577,12 +538,60 @@ etc/template/set/auth 以下にユーザー認証とTwitterやFacebookによるO
 これで必要なモデル、ビュー、コントローラーの一式が保存され、デフォルトのヘッダにある「ログイン」メニューが使えるようになります。    
 ただし、OAuth認証を使うには、TwitterやFacebookのAPIキーを取得し、model/_def/api/以下のTwitterApiKey.phpなどにAPIキーを設定する必要があります。
 
+### 画像のAjaxアップロードのインストール
+etc/template/set/uploadImg 以下に画像のAjaxアップロードを行うための一式があります。    
+利用するには、bin/install.phpを実行すると、画像アップロードを行うコントローラとビューのセットがインストールされます（モデルは使用していません）。    
+デフォルトのページ名はuploadImgですが、-p ページ名 でページ名を指定できます。    
+URLをhttp://mydomain/imageupload/ にしたいときは、以下の様に指定します。
 
-### セキュリティ対策
+> $ cd etc/template/set/uploadImg/bin    
+> $ chomod +x install.php    
+> $ ./install.php -p imageupload    
+
+アップロードされた画像は、var/images/uploaded 以下に保存されます。    
+画像の表示は<img src="/uploaded/ファイル名">となります。uploadedの部分を書き替えたいときはコントローラ内で変更してください。    
+但し、/img/は使えません。画像のパスに/img/が含まれていると自動的にhtdocs以下の画像ファイルが表示対象になります。これはetc/rewrite.confに設定されています。    
+var/imagesは固定ですが、変更したい場合はlib/Dispatch.php内のsendImage()を書き換えてください。
+表示可能な画像の拡張子はjpeg、JPEG、jpg、JPG、png、PNG、gif、GIFです。変更したい場合はlib/Dispatch.php内のsetPathAndAction()を書き換えてください。
+
+
+
+## ディレクトリ構造
+
+* bin    
+	アプリの作成使用する各種バッチコマンドの置き場所です。また自分でバッチコマンドを作成するための雛形もあります。
+* contoroler    
+	Webアプリのコントローラーの置き場所です。コントローラーはエンドポイントであるindex.phpから起動されます。
+* etc    
+	各種設定ファイルの置き場所です。
+* htdocs    
+	ドキュメントルートです。画像ファイルやfavicon、robots.txtなど静的ファイルの置き場所です。    
+	htdocs/index.php がWebアプリの起点（エンドポイント）となり、URLに応じて各コントローラーを起動します。    
+	画像ファイルはhtdocs/img/* や htdocs/*/img/* の下に置きます。このルールはetc/rewrite.confで設定できます。
+* lib    
+	minの動作に必要なクラスライブラリが置かれています。
+* model    
+	データベースを操作するモデルクラスの置き場所です。データベース以外のapi操作やExcel操作もモデル化してここに置きます。
+	モデル内のデータベースの操作は独自のデータベース操作クラスにより、SQLを書かずにシンプルに操作を記述できます。
+* test    
+	テストファイルの置き場所です。
+* var    
+	一時ファイルの置き場所です。    
+	var/compiledにビューのテンプレートがコンパイルされたphpが置かれます。var/compiledはapacheから書き込み可能に設定しておく必要があります。
+* vendor    
+	composerによってインストールされる各種クラスライブラリの置き場所です。
+* view    
+	HTMLファイルの置き場所です。    
+	view/index.html がトップページのHTMLです。    
+	HTMLはSmartyのテンプレートファイルになっています。Smartyはif〜else文による条件分岐やforeachなどのループ、変数の計算や代入などをサポートした高機能なテンプレートクラスです。    
+	minでは、表示部分のプログラミングはSmartyとJQueryでほとんど行います。
+
+
+## セキュリティ対策
 
 フレームワークレベルで以下のセキュリティ対策を施してあります。
 
-#### クロスサイトスクリプティング(XSS)対策
+### クロスサイトスクリプティング(XSS)対策
 
 Samrtyのescape_htmlフィルタを各コントローラのコンストラクタにデフォルトで設定してあります。
 
@@ -593,37 +602,37 @@ Samrtyのescape_htmlフィルタを各コントローラのコンストラクタ
 
 > {$変数名 nofilter}
 
-#### SQLインジェクション対策
+### SQLインジェクション対策
 
 内蔵データベース操作クラスは、PDOのプレースホルダを使用しています。    
 これによって、マルチステートメントの実行などが無効化されます。
 
 
-#### クロスサイトリクエストフォージェリ（CSRF）対策
+### クロスサイトリクエストフォージェリ（CSRF）対策
 
 デフォルトで生成されるAjaxによるPOSTは、毎回トークンを埋め込んで接続元を判定しています。    
 トークンの生成にはopenssl_random_pseudo_bytes()を使用しています。
 
-#### セッションハイジャック対策
+### セッションハイジャック対策
 
 内蔵ログイン認証クラスは、ログイン時にsession_regenerate_id()を実行してセッションIDを再生成しています。
 
-#### 安全なパスワード保存
+### 安全なパスワード保存
 
 内蔵ログイン認証クラスは、パスワードのハッシュ化にpassword_hash()を使用しています。
 
-#### 安全なファイルアップロード
+### 安全なファイルアップロード
 
 内蔵のAjaxファイルアップロードは、アップロードされたファイルを公開ディレクトリに置きません。
 
+
+
+
+
 以下、更新予定
 
-## アプリケーションの作成
 
 ### Ajaxによるデータベース操作
-
-
-### 画像のAjaxアップロード
 
 ### Google Maps連動
 
