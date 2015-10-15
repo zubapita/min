@@ -17,11 +17,13 @@ class AjaxCtl extends AppCtl
 	/**
 	 * AjaxでPOSTされたデータを配列で返す
 	 *
-	 * 変数名の'-'は'_'に変換される
+	 * デフォルトではHTMLタグはエスケープされる。
+	 * 変数名の'-'は'_'に変換される。
 	 *
+	 * @param boolean $raw trueならHTMLタグをエスケープしない
 	 * @return array
 	 **/
-	function getPostedData() {
+	function getPostedData($raw=false) {
 		$postedData = array();
 	
 		if($this->C['PRODUCTION_RUN']) {
@@ -33,6 +35,9 @@ class AjaxCtl extends AppCtl
 		if(!empty($POSTS)) {
 			foreach($POSTS as $key=>$value) {
 				$regularedKey = str_replace('-','_',$key);
+				if($raw==true) {
+					$value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
+				}
 				$postedData[$regularedKey] = $value;
 			}
 		}
