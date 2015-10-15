@@ -37,6 +37,7 @@ class MakeNewAppLib extends MakeDbClassFileLib
 			copy($_->APP_ROOT.'/'.$filename, "$newAppRoot/$filename");
 
 			$subdirs = array(
+				"behavior"=>0755,
 				"bin"=>0755,
 				"controller"=>0755,
 				"controller/cmn"=>0755,
