@@ -406,8 +406,8 @@ abstract class AppCtl
 	 * @param mix $defaultValue GET変数が空|存在しない場合の初期設定値。
 	 * @return mix 取得したGET変数の値。もしくは初期設定値。
 	 */
-	function getGETNumValue($name, $defaultValue) {
-		if(isset($_GET[$name]) && !empty($_GET[$name])) {
+	function getGETNumValue($name, $defaultValue=0) {
+		if(isset($_GET[$name]) && !empty($_GET[$name]) && is_numeric($_GET[$name])) {
 			$value = $_GET[$name];
 		} else {
 			$value = $defaultValue;
@@ -422,9 +422,9 @@ abstract class AppCtl
 	 * @param mix $defaultValue GET変数が空|存在しない場合の初期設定値。
 	 * @return mix 取得したGET変数の値。もしくは初期設定値。
 	 */
-	function getGETStrValue($name, $defaultValue) {
+	function getGETStrValue($name, $defaultValue='') {
 		if(isset($_GET[$name])) {
-			$value = $_GET[$name];
+			$value = htmlspecialchars($_GET[$name], ENT_QUOTES, 'UTF-8');
 		} else {
 			$value = $defaultValue;
 		}
@@ -438,8 +438,8 @@ abstract class AppCtl
 	 * @param mix $defaultValue POST変数が空|存在しない場合の初期設定値。
 	 * @return mix 取得したPOST変数の値。もしくは初期設定値。
 	 */
-	function getPOSTNumValue($name, $defaultValue) {
-		if(isset($_POST[$name]) && !empty($_POST[$name])) {
+	function getPOSTNumValue($name, $defaultValue=0) {
+		if(isset($_POST[$name]) && !empty($_POST[$name]) && is_numeric($_POST[$name])) {
 			$value = $_POST[$name];
 		} else {
 			$value = $defaultValue;
@@ -454,9 +454,9 @@ abstract class AppCtl
 	 * @param mix $defaultValue POST変数が空|存在しない場合の初期設定値。
 	 * @return mix 取得したPOST変数の値。もしくは初期設定値。
 	 */
-	function getPOSTStrValue($name, $defaultValue) {
+	function getPOSTStrValue($name, $defaultValue='') {
 		if(isset($_POST[$name])) {
-			$value = $_POST[$name];
+			$value = htmlspecialchars($_POST[$name], ENT_QUOTES, 'UTF-8');
 		} else {
 			$value = $defaultValue;
 		}
