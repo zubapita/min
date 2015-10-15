@@ -23,27 +23,27 @@ class CmdApp extends SetInstallLib
 		$_->view->assign('className', $className);
 
 		$subdirs = [
-			"controller/upload"=>
+			"controller/imgtomap"=>
 				[
 					"dir" => "controller/{$pageName}",
 					"permission" => 0755,
 				],
-			"view/upload"=>
+			"view/imgtomap"=>
 				[
 					"dir" => "view/{$pageName}",
 					"permission" => 0755,
 				],
-			"view/upload/css"=>
+			"view/imgtomap/css"=>
+			[
+				"dir" => "view/{$pageName}/css",
+				"permission" => 0755,
+			],
+			"view/imgtomap/includes"=>
 			[
 				"dir" => "view/{$pageName}/includes",
 				"permission" => 0755,
 			],
-			"view/upload/includes"=>
-			[
-				"dir" => "view/{$pageName}/includes",
-				"permission" => 0755,
-			],
-			"view/upload/lang"=>
+			"view/imgtomap/lang"=>
 			[
 				"dir" => "view/{$pageName}/lang",
 				"permission" => 0755,
