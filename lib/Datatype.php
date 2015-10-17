@@ -12,29 +12,31 @@
  */
 abstract class Datatype
 {
-	/**
-	 * インスタンス（カラム）の値
-	 */
-	protected $value;
-	
-	/**
-	 * インスタンス（カラム）の値を返す
-	 * 
-	 * @return mix インスタンス（カラム）の値
-	 */
-	public function get() {
-		return $this->value;
-	}
-	
-	/**
-	 * インスタンス（カラム）の値をセットする
-	 * 
-	 * @param mix $value インスタンス（カラム）の値
-	 * @return mix インスタンス（カラム）の値
-	 */
-	public function set($value) {
-		return $this->value = $value;
-	}
-	
-	abstract public function isValid();
+    /**
+     * インスタンス（カラム）の値
+     */
+    protected $value;
+    
+    /**
+     * インスタンス（カラム）の値を返す
+     * 
+     * @return mix インスタンス（カラム）の値
+     */
+    public function get()
+    {
+        return $this->value;
+    }
+    
+    /**
+     * インスタンス（カラム）の値をセットする
+     * 
+     * @param mix $value インスタンス（カラム）の値
+     * @return mix インスタンス（カラム）の値
+     */
+    public function set($value)
+    {
+        return $this->value = $value;
+    }
+    
+    abstract public function isValid();
 }

@@ -11,8 +11,8 @@
  */
 class _Float extends Datatype
 {
-	
-	public function isValid() {
-		return is_numeric($this->value);
-	}	
+    public function isValid()
+    {
+        return is_numeric($this->value);
+    }
 }

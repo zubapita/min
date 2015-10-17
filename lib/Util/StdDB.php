@@ -14,4 +14,6 @@
  * 
  */
 // 
-class StdDB extends DBAccess {} 
+class StdDB extends DBAccess
+{
+}

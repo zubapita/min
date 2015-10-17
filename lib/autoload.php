@@ -25,22 +25,22 @@ require_once $APP_ROOT.'/etc/conf.php';
  */
 function autoLoadClass($class)
 {
-	$classFile = $class.'.php';
-	$appRoot = dirname(__DIR__);
-	
-	// クラスファイルを探索するディレクトリ
-	$classDirs = array(
-		'lib',
-		'model',
-		'controller',
-	);
-	
-	foreach ($classDirs as $dir) {
-		if (searchClassInDir("$appRoot/$dir", $classFile)) {
-			return true;
-		}
-	}
-	return false;
+    $classFile = $class.'.php';
+    $appRoot = dirname(__DIR__);
+    
+    // クラスファイルを探索するディレクトリ
+    $classDirs = array(
+        'lib',
+        'model',
+        'controller',
+    );
+    
+    foreach ($classDirs as $dir) {
+        if (searchClassInDir("$appRoot/$dir", $classFile)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -53,37 +53,35 @@ function autoLoadClass($class)
  */
 function searchClassInDir($dir, $classFile)
 {
-	$files = glob("$dir/*");
-	if (!empty($files)) {
-		foreach ($files as $subFilePath) {
-
-			if (is_dir($subFilePath)) {
-				if (searchClassInDir($subFilePath, $classFile)) {
-					return true;
-				}
-			} else {
-				$fileName = basename($subFilePath);
-				
-				if ($fileName==$classFile) {
-					require_once $subFilePath;
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+    $files = glob("$dir/*");
+    if (!empty($files)) {
+        foreach ($files as $subFilePath) {
+            if (is_dir($subFilePath)) {
+                if (searchClassInDir($subFilePath, $classFile)) {
+                    return true;
+                }
+            } else {
+                $fileName = basename($subFilePath);
+                
+                if ($fileName==$classFile) {
+                    require_once $subFilePath;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 /**
  * オートローディング関数を登録
  */
-spl_autoload_register( "autoLoadClass");
+spl_autoload_register("autoLoadClass");
 
 
 /**
  * バッチ実行時に$dataBridgeをセット
  */
-if(!isset($dataBridge)) {
-	CmdLibs::setDataBridge();
+if (!isset($dataBridge)) {
+    CmdLibs::setDataBridge();
 }
-

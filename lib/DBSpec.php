@@ -17,8 +17,9 @@
  * @since PHP 5.3
  * @version $Id: DBAcess.php,v 1.58 2013/12/29 $
  */
-abstract class DBSpec {
-	public static $DSN;		// 'mysql:dbname=dba_name;host=127.0.0.1';
-	public static $USER;		// 'db_user';
-	public static $PASSWORD;	// 'db_password';
+abstract class DBSpec
+{
+    public static $DSN;        // 'mysql:dbname=dba_name;host=127.0.0.1';
+    public static $USER;        // 'db_user';
+    public static $PASSWORD;    // 'db_password';
 }

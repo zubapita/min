@@ -10,11 +10,11 @@
 require_once __DIR__.'/../lib/autoload.php';
 class CmdApp extends MakeTableClassFilesLib
 {
-	public function __construct()
-	{
-		CmdLibs::setDataBridge();
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        CmdLibs::setDataBridge();
+        parent::__construct();
+    }
 }
 $CmdApp = new CmdApp();
 $CmdApp->main();

@@ -11,8 +11,8 @@
  */
 class _String extends Datatype
 {
-	
-	public function isValid() {
-		return is_string($this->value);
-	}	
+    public function isValid()
+    {
+        return is_string($this->value);
+    }
 }

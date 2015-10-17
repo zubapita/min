@@ -4,8 +4,8 @@
 <!--{foreach $columns as $column}-->
 <!--{if $column['name']!='id'}-->
 <div class="form-group">
-	<label class="sr-only" for="<!--{$className}-->-<!--{$column['name']}-->">{$l['<!--{$column['name']}-->']}</label>
-	<input type="text" class="form-control input-lg" id="<!--{$className}--><!--{ucfirst($column['name'])}-->" name="<!--{$className}--><!--{ucfirst($column['name'])}-->" placeholder="{$l['<!--{$column['name']}-->']}" value="{$v['<!--{$column['name']}-->']}" />
+    <label class="sr-only" for="<!--{$className}-->-<!--{$column['name']}-->">{$l['<!--{$column['name']}-->']}</label>
+    <input type="text" class="form-control input-lg" id="<!--{$className}--><!--{ucfirst($column['name'])}-->" name="<!--{$className}--><!--{ucfirst($column['name'])}-->" placeholder="{$l['<!--{$column['name']}-->']}" value="{$v['<!--{$column['name']}-->']}" />
 </div>
 <!--{/if}-->
 <!--{/foreach}-->

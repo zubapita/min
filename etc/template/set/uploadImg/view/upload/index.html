@@ -1,62 +1,62 @@
 {extends file='cmn/layout/index.tpl'}
 
 {block name="head"}
-	<!-- Write meta tag and link tag here. -->
-	<!-- <link rel="stylesheet" href="/cmn/css/style_name.css" type="text/css" media="screen"> -->
-	<link rel="stylesheet" href="/cmn/css/mfile.css" type="text/css" media="screen">
-	<link rel="stylesheet" href="/<!--{$pageName}-->/css/imagebox.css" type="text/css" media="screen">
-{/block}	
+    <!-- Write meta tag and link tag here. -->
+    <!-- <link rel="stylesheet" href="/cmn/css/style_name.css" type="text/css" media="screen"> -->
+    <link rel="stylesheet" href="/cmn/css/mfile.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/<!--{$pageName}-->/css/imagebox.css" type="text/css" media="screen">
+{/block}    
 
-	{block name="title"} <!--{$className}-->{/block}
+    {block name="title"} <!--{$className}-->{/block}
 
 <!-- Ajax search form -->
 {block name="body"}
 <div class="container">
 <div class="page-header">
-	<div class="row">
-		<div class="col-lg-12">
-		<h1><!--{$className}--></h1>
-		<section id=" <!--{$className}-->Data">
-			<div class="container">
-				<div id="mfileArea">
-					<p>アップロードするファイルをドロップ</p>
-					<p>または</p>
-					<div class="mfileBtnGroup">
-						<button id="mfileIBtn">ファイルを選択</button>
-						<input id="mfileFBtn" type="file" multiple="multiple">
-					</div>
-				</div>
-			</div>
-			<div id="mfileImages" class="container"></div>
-		</section>
-		</div><!-- /col-lg-12 -->
-	</div><!-- /row -->
+    <div class="row">
+        <div class="col-lg-12">
+        <h1><!--{$className}--></h1>
+        <section id=" <!--{$className}-->Data">
+            <div class="container">
+                <div id="mfileArea">
+                    <p>アップロードするファイルをドロップ</p>
+                    <p>または</p>
+                    <div class="mfileBtnGroup">
+                        <button id="mfileIBtn">ファイルを選択</button>
+                        <input id="mfileFBtn" type="file" multiple="multiple">
+                    </div>
+                </div>
+            </div>
+            <div id="mfileImages" class="container"></div>
+        </section>
+        </div><!-- /col-lg-12 -->
+    </div><!-- /row -->
 </div><!-- /page-header -->
 </div><!-- /container -->
-{/block}	
+{/block}    
 
 {block name="footer"}
-	<!-- Write loading javascript tag here. -->
-	<!-- <script src="" type="text/javascript" charset="utf-8"></script> -->
-	<script src="/cmn/js/jarty/jarty.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/cmn/js/mfileUploader.js" type="text/javascript" charset="utf-8"></script>
+    <!-- Write loading javascript tag here. -->
+    <!-- <script src="" type="text/javascript" charset="utf-8"></script> -->
+    <script src="/cmn/js/jarty/jarty.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/cmn/js/mfileUploader.js" type="text/javascript" charset="utf-8"></script>
 
-	{include file="<!--{$pageName}-->/includes/imagebox.inc"}
+    {include file="<!--{$pageName}-->/includes/imagebox.inc"}
 
-	<script type="text/javascript">
-		var onArea = function() {
-			$('#mfileArea').css('border', '2px solid #0B85A1');
-		};
-		var offArea = function() {
-			$('#mfileArea').css('border', '2px dotted #0B85A1');
-		};
-		var success = function(data) {
-			console.log('upload success!');
-			console.log(data);
-			$("#mfileImages").append( $("#imgBoxTemplate").jarty(data) );
-		};
+    <script type="text/javascript">
+        var onArea = function() {
+            $('#mfileArea').css('border', '2px solid #0B85A1');
+        };
+        var offArea = function() {
+            $('#mfileArea').css('border', '2px dotted #0B85A1');
+        };
+        var success = function(data) {
+            console.log('upload success!');
+            console.log(data);
+            $("#mfileImages").append( $("#imgBoxTemplate").jarty(data) );
+        };
 
-		MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/<!--{$pageName}-->/post', onArea, offArea, success);
-		
-	</script>
+        MFILEUPLD.init('mfileArea', 'mfileFBtn', 'mfileIBtn', '/<!--{$pageName}-->/post', onArea, offArea, success);
+        
+    </script>
 {/block}

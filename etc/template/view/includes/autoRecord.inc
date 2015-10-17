@@ -6,8 +6,8 @@
 <!--{foreach $columns as $column}-->
 <!--{if $column['name']!='id'}-->
 <tr>
-	<th>{$l['<!--{$column['name']}-->']}</th>
-	<td>{$v['<!--{$column['name']}-->']}</td>
+    <th>{$l['<!--{$column['name']}-->']}</th>
+    <td>{$v['<!--{$column['name']}-->']}</td>
 </tr>
 <!--{/if}-->
 <!--{/foreach}-->

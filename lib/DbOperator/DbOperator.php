@@ -12,43 +12,43 @@
  */
 abstract class DbOperator
 {
-	public $dbmapper;
+    public $dbmapper;
 
-	/**
-	 *  DB操作用のDBMapperを生成
-	 * @param object $DB DBSpec型のクラスインスタンス
-	 * @return void
-	 */
-	public function setDb($DB)
-	{
-		$this->dbmapper = new PseudoTable($DB);
-	}
+    /**
+     *  DB操作用のDBMapperを生成
+     * @param object $DB DBSpec型のクラスインスタンス
+     * @return void
+     */
+    public function setDb($DB)
+    {
+        $this->dbmapper = new PseudoTable($DB);
+    }
 
-	/**
-	 * DB内のテーブル名一覧を返す
-	 * @return array
-	 */
-	abstract public function getTables();
+    /**
+     * DB内のテーブル名一覧を返す
+     * @return array
+     */
+    abstract public function getTables();
 
-	/**
-	 * ターブル内のカラムの属性を返す
-	 * @param $table string
-	 * @return array
-	 */
-	abstract public function getColumns($table);
+    /**
+     * ターブル内のカラムの属性を返す
+     * @param $table string
+     * @return array
+     */
+    abstract public function getColumns($table);
 
-	/**
-	 * DBクラスのテンプレートを返す
-	 */
-	abstract public function getDbClassTemplate();
-	
-	/**
-	 * テーブルクラスのテンプレートを返す
-	 * @return string
-	 */
-	public function getTableClassTemplate()
-	{
-		$template = <<<EOS
+    /**
+     * DBクラスのテンプレートを返す
+     */
+    abstract public function getDbClassTemplate();
+    
+    /**
+     * テーブルクラスのテンプレートを返す
+     * @return string
+     */
+    public function getTableClassTemplate()
+    {
+        $template = <<<EOS
 <?php
 class {#table} extends DBMapper {
 
@@ -65,14 +65,13 @@ class {#table} extends DBMapper {
 }
 EOS;
 
-		$template = str_replace('#', '$' , $template);
-		return $template;
-	}
+        $template = str_replace('#', '$', $template);
+        return $template;
+    }
 
-	/**
-	 * DBの型とDBMapper/Datatypeの型の変換表を返す
-	 * @return $columnTypes array
-	 */
-	abstract public function getColumnTypes();
-
+    /**
+     * DBの型とDBMapper/Datatypeの型の変換表を返す
+     * @return $columnTypes array
+     */
+    abstract public function getColumnTypes();
 }

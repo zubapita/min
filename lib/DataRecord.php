@@ -13,35 +13,32 @@
  */
 abstract class DataRecord extends AppCtl
 {
+    public $DB;
+    public $TABLE;
+    
+    public $APP_ROOT;
+    
+    const MODEL_TYPE = 'Record';
+    
 
-	public $DB;	
-	public $TABLE;
-	
-	public $APP_ROOT;
-	
-	const MODEL_TYPE = 'Record';
-	
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
+    /**
+     * TABELを検索して該当する行を返す
+     * 
+     * @param (array|string) $conditions 検索条件
+     * @return array 検索結果
+     */
+    abstract public function get($conditions);
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
-	
-	/**
-	 * TABELを検索して該当する行を返す
-	 * 
-	 * @param (array|string) $conditions 検索条件
-	 * @return array 検索結果
-	 */
-	abstract public function get($conditions);
-
-	/**
-	 * TABELに行を保存する
-	 * 
-	 * @param array $data 保存するデータ
-	 * @return array 検索結果
-	 */
-	abstract public function set($data);
-	
+    /**
+     * TABELに行を保存する
+     * 
+     * @param array $data 保存するデータ
+     * @return array 検索結果
+     */
+    abstract public function set($data);
 }
-

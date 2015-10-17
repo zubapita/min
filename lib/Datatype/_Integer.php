@@ -11,8 +11,8 @@
  */
 class _Integer extends Datatype
 {
-	
-	public function isValid() {
-		return is_int($this->value);
-	}	
+    public function isValid()
+    {
+        return is_int($this->value);
+    }
 }

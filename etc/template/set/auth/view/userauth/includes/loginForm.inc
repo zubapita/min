@@ -3,12 +3,12 @@
 <form id="UserauthForm">
 <table>
 <tr>
-	<th><label>username</label></th>
-	<td><input type="text" id="Userauth-username" value="" /></td>
+    <th><label>username</label></th>
+    <td><input type="text" id="Userauth-username" value="" /></td>
 </tr>
 <tr>
-	<th><label>password</label></th>
-	<td><input type="password" id="Userauth-password" value="" /></td>
+    <th><label>password</label></th>
+    <td><input type="password" id="Userauth-password" value="" /></td>
 </tr>
 </table>
 <div class="button">

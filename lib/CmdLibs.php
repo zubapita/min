@@ -10,132 +10,131 @@
  */
 class CmdLibs
 {
-	
-	/**
-	 * 現在のMinアプリの絶対ディレクトリパス
-	 * 
-	 * @see Dispatcher::dispatch()
-	 * @see CmdLibs::setDataBridge()
-	 */
-	static $APP_ROOT;
+    /**
+     * 現在のMinアプリの絶対ディレクトリパス
+     * 
+     * @see Dispatcher::dispatch()
+     * @see CmdLibs::setDataBridge()
+     */
+    public static $APP_ROOT;
 
-	/**
-	 * アプリのrootを返す。
-	 * app_root/lib の中にCmdLibs.phpがあるときは、$depth=1
-	 * 
-	 * @param $depth int
-	 * @return absolute file path of application root
-	 */
-	static function getAppRoot($depth)
-	{
-		$dir_path = __DIR__;
-		$p = explode('/', $dir_path);
-		for ($i=1; $i<=$depth; $i++) {
-			$dmy = array_pop($p);
-		}
-		$APP_ROOT = implode('/',$p);
-		return $APP_ROOT;
-	}
+    /**
+     * アプリのrootを返す。
+     * app_root/lib の中にCmdLibs.phpがあるときは、$depth=1
+     * 
+     * @param $depth int
+     * @return absolute file path of application root
+     */
+    public static function getAppRoot($depth)
+    {
+        $dir_path = __DIR__;
+        $p = explode('/', $dir_path);
+        for ($i=1; $i<=$depth; $i++) {
+            $dmy = array_pop($p);
+        }
+        $APP_ROOT = implode('/', $p);
+        return $APP_ROOT;
+    }
 
-	/**
-	 * 指定したディレクトリの親ディレクトリを取得
-	 * 
-	 * @param string $dir ディレクトリパス
-	 * @return absolute file path of parent of application root
-	 */
-	static function getParentPath($dir)
-	{
-		$pathArray = explode('/', $dir);
-		$dmy = array_pop($pathArray);
-		$parentPath = implode('/', $pathArray);
-		return $parentPath;
-	}
+    /**
+     * 指定したディレクトリの親ディレクトリを取得
+     * 
+     * @param string $dir ディレクトリパス
+     * @return absolute file path of parent of application root
+     */
+    public static function getParentPath($dir)
+    {
+        $pathArray = explode('/', $dir);
+        $dmy = array_pop($pathArray);
+        $parentPath = implode('/', $pathArray);
+        return $parentPath;
+    }
 
 
-	/**
-	 * クラス間のデータ交換に使うDataBridgeクラスをインスタンス化し、
-	 * グローバル変数 dataBridgeに保存する。
-	 * またアプリのルートディレクトリなどを保存する
-	 * CmdLib.phpがあるディレクトリがアプリのルートの直下なら$depth=1
-	 * 
-	 * @param integer $depth=1 
-	 */
-	static function setDataBridge($depth=1)
-	{
-		global $dataBridge;
-		$dataBridge = new DataBridge;
-		$APP_ROOT = self::getAppRoot($depth);
-		$dataBridge->APP_ROOT = $APP_ROOT;
-		$dataBridge->dispatch_path = '/';
-		$dataBridge->dispatch_class = 'CmdApp';		
-		$dataBridge->dispatch_action = 'main';
-		
-		self::$APP_ROOT = $APP_ROOT;
-	}
+    /**
+     * クラス間のデータ交換に使うDataBridgeクラスをインスタンス化し、
+     * グローバル変数 dataBridgeに保存する。
+     * またアプリのルートディレクトリなどを保存する
+     * CmdLib.phpがあるディレクトリがアプリのルートの直下なら$depth=1
+     * 
+     * @param integer $depth=1 
+     */
+    public static function setDataBridge($depth=1)
+    {
+        global $dataBridge;
+        $dataBridge = new DataBridge;
+        $APP_ROOT = self::getAppRoot($depth);
+        $dataBridge->APP_ROOT = $APP_ROOT;
+        $dataBridge->dispatch_path = '/';
+        $dataBridge->dispatch_class = 'CmdApp';
+        $dataBridge->dispatch_action = 'main';
+        
+        self::$APP_ROOT = $APP_ROOT;
+    }
 
-	/**
-	 * コマンドラインの指定のパラメータの値を返す
-	 * 
-	 * @example $a = CmdLib::getParam('-a');
-	 * @param string $switch スイッチ名
-	 * @return (string|boolean) スイッチが指定されていればその値。なければfalse
-	 */
-	static function getParam($switch)
-	{
-		$argv = $_SERVER['argv'];
-		$value = false;
-		foreach ($argv as $key=>$param) {
-			if ($param==$switch) {
-				if (isset($argv[$key+1])) {
-					$value = $argv[$key+1];
-					break;
-				}
-			}
-		}
-		return $value;
-	}
+    /**
+     * コマンドラインの指定のパラメータの値を返す
+     * 
+     * @example $a = CmdLib::getParam('-a');
+     * @param string $switch スイッチ名
+     * @return (string|boolean) スイッチが指定されていればその値。なければfalse
+     */
+    public static function getParam($switch)
+    {
+        $argv = $_SERVER['argv'];
+        $value = false;
+        foreach ($argv as $key=>$param) {
+            if ($param==$switch) {
+                if (isset($argv[$key+1])) {
+                    $value = $argv[$key+1];
+                    break;
+                }
+            }
+        }
+        return $value;
+    }
 
-	/**
-	 * コマンドラインの指定のパラメータが存在するかを返す
-	 * 
-	 * @example if ($a = CmdLib::getParam('-a')) {...}
-	 * @param string $switch スイッチ名
-	 * @return boolean スイッチが指定されていればtrue。なければfalse
-	 */
-	static function checkParam($switch)
-	{
-		$argv = $_SERVER['argv'];
-		$value = false;
-		foreach ($argv as $key=>$param) {
-			if ($param==$switch) {
-				$value = true;
-				break;
-			}
-		}
-		return $value;
-	}
+    /**
+     * コマンドラインの指定のパラメータが存在するかを返す
+     * 
+     * @example if ($a = CmdLib::getParam('-a')) {...}
+     * @param string $switch スイッチ名
+     * @return boolean スイッチが指定されていればtrue。なければfalse
+     */
+    public static function checkParam($switch)
+    {
+        $argv = $_SERVER['argv'];
+        $value = false;
+        foreach ($argv as $key=>$param) {
+            if ($param==$switch) {
+                $value = true;
+                break;
+            }
+        }
+        return $value;
+    }
 
-	/**
-	 * 実行中のスクリプト名を返す
-	 * 
-	 * @return string 現在のスクリプトのファイル名
-	 */
-	static function scriptName()
-	{
-		$argv = $_SERVER['argv'];
-		return $argv[0];
-	}
+    /**
+     * 実行中のスクリプト名を返す
+     * 
+     * @return string 現在のスクリプトのファイル名
+     */
+    public static function scriptName()
+    {
+        $argv = $_SERVER['argv'];
+        return $argv[0];
+    }
 
-	/**
-	 * メッセージバナー（大型）を標準エラー出力に表示
-	 * 
-	 * @param string $message 表示するメッセージ
-	 * @param boolean $STDERR trueなら標準エラーに出力
-	 * @return void
-	 */
-	static function bannerBig($message, $STDERR=true)
-	{
-		$banner = <<<EOS
+    /**
+     * メッセージバナー（大型）を標準エラー出力に表示
+     * 
+     * @param string $message 表示するメッセージ
+     * @param boolean $STDERR trueなら標準エラーに出力
+     * @return void
+     */
+    public static function bannerBig($message, $STDERR=true)
+    {
+        $banner = <<<EOS
 
 ====*====*====*====*====*====*====*====*====*====*====*====*
 　　　$message
@@ -143,23 +142,23 @@ class CmdLibs
 
 
 EOS;
-		if ($STDERR) {
-			fputs(STDERR, $banner);
-		} else {
-			echo $banner;
-		}
-	}
+        if ($STDERR) {
+            fputs(STDERR, $banner);
+        } else {
+            echo $banner;
+        }
+    }
 
-	/**
-	 * メッセージバナー（中型）を標準エラー出力に表示
-	 * 
-	 * @param string $message 表示するメッセージ
-	 * @param boolean $STDERR trueなら標準エラーに出力
-	 * @return void
-	 */
-	static function bannerMid($message, $STDERR=true)
-	{
-		$banner = <<<EOS
+    /**
+     * メッセージバナー（中型）を標準エラー出力に表示
+     * 
+     * @param string $message 表示するメッセージ
+     * @param boolean $STDERR trueなら標準エラーに出力
+     * @return void
+     */
+    public static function bannerMid($message, $STDERR=true)
+    {
+        $banner = <<<EOS
 
 ***************************************
 　　　$message
@@ -167,33 +166,32 @@ EOS;
 
 
 EOS;
-		if ($STDERR) {
-			fputs(STDERR, $banner);
-		} else {
-			echo $banner;
-		}
-	}
+        if ($STDERR) {
+            fputs(STDERR, $banner);
+        } else {
+            echo $banner;
+        }
+    }
 
-	/**
-	 * メッセージバナー（小型）を標準エラー出力に表示
-	 * 
-	 * @param string $message 表示するメッセージ
-	 * @param boolean $STDERR trueなら標準エラーに出力
-	 * @return void
-	 */
-	static function bannerSmall($message, $STDERR=true)
-	{
-		$banner = <<<EOS
+    /**
+     * メッセージバナー（小型）を標準エラー出力に表示
+     * 
+     * @param string $message 表示するメッセージ
+     * @param boolean $STDERR trueなら標準エラーに出力
+     * @return void
+     */
+    public static function bannerSmall($message, $STDERR=true)
+    {
+        $banner = <<<EOS
 
 --- $message ---
 　　　
 
 EOS;
-		if ($STDERR) {
-			fputs(STDERR, $banner);
-		} else {
-			echo $banner;
-		}
-	}
+        if ($STDERR) {
+            fputs(STDERR, $banner);
+        } else {
+            echo $banner;
+        }
+    }
 }
-

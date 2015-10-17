@@ -6,58 +6,58 @@ $dataBridge->dispatch_trace = true;
 class {$className}Test extends PHPUnit_Framework_TestCase
 {
 
-	/*
-	 * Test ${$className}->set($data)
-	 *
-	 */
-	public function testSet() 
-	{
-		$_ = $this;
-		${$className} = new {$className}();
+    /*
+     * Test ${$className}->set($data)
+     *
+     */
+    public function testSet() 
+    {
+        $_ = $this;
+        ${$className} = new {$className}();
 
-		foreach ($_->dataProvider() as $data) {
-			$result = ${$className}->set($data);
-			$id = (integer) $result;
-			$this->assertTrue(is_int($id));
-	        $this->assertNotEquals(0, $id);
-		}
+        foreach ($_->dataProvider() as $data) {
+            $result = ${$className}->set($data);
+            $id = (integer) $result;
+            $this->assertTrue(is_int($id));
+            $this->assertNotEquals(0, $id);
+        }
     }
-	
-	
-	/*
-	 * Data Provider for testSet
-	 *
-	 */
-	public function dataProvider()
-	{
+    
+    
+    /*
+     * Data Provider for testSet
+     *
+     */
+    public function dataProvider()
+    {
 
-		// 各カラムの型にあったテストデータを設定すること！
-		$data = [
-			[
+        // 各カラムの型にあったテストデータを設定すること！
+        $data = [
+            [
 {foreach $columns as $column}
 {if {$column['name']}!='id'}
-				'{$column['name']}'=>'hoge',
+                '{$column['name']}'=>'hoge',
 {/if}
 {/foreach}
-			],
-		];
-		
-		return $data;
-	}
+            ],
+        ];
+        
+        return $data;
+    }
 
-	/*
-	 * Test ${$className}->get($condition)
-	 *
-	 */
+    /*
+     * Test ${$className}->get($condition)
+     *
+     */
     public function testGet() {
-		$_ = $this;
-		
-		${$className} = new {$className}();
-		
-		$condition = [];
+        $_ = $this;
+        
+        ${$className} = new {$className}();
+        
+        $condition = [];
 
-		$this->assertTrue(is_array(${$className}->get($condition)));
-		$this->assertNotEquals(0, count(${$className}->get($condition)));
+        $this->assertTrue(is_array(${$className}->get($condition)));
+        $this->assertNotEquals(0, count(${$className}->get($condition)));
     }
 
 }
