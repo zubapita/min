@@ -1,17 +1,25 @@
 {
-	"require": {
-		"smarty/smarty": "v3.1.21",
-		"validator/livr": "dev-master",
-		"php-console/php-console": "3.*",
-		"phpunit/phpunit": "4.8.10",
-		"phpunit/phpunit-selenium": "1.4.2",
-		"apache/log4php": "2.3.0",
-		"hybridauth/hybridauth": "2.5.0",
-		"j7mbo/twitter-api-php": "dev-master",
-		"phpoffice/phpexcel": "1.8.1",
-		"verot/class.upload.php": "dev-master",
-		"jstayton/google-maps-geocoder": "dev-master",
-		"fzaninotto/faker": "v1.5.0",
-		"nesbot/carbon": "~1.18"
-	}
+    "name": "zubapita/min",
+    "description": "Min - Minimam INter framework for PHP",
+    "keywords": ["framework", "min"],
+    "license": "BSD",
+    "type": "project",
+    "require": {
+        "smarty/smarty": "v3.1.21",
+        "validator/livr": "dev-master",
+        "php-console/php-console": "3.*",
+        "apache/log4php": "2.3.0",
+        "hybridauth/hybridauth": "2.5.0",
+        "j7mbo/twitter-api-php": "dev-master",
+        "phpoffice/phpexcel": "1.8.1",
+        "verot/class.upload.php": "dev-master",
+        "jstayton/google-maps-geocoder": "dev-master",
+        "nesbot/carbon": "~1.18",
+        "sonrisa/shorturl-service":"dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.10",
+        "phpunit/phpunit-selenium": "1.4.2",
+        "fzaninotto/faker": "v1.5.0"
+    }
 }
