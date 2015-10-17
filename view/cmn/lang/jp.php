@@ -1,5 +1,5 @@
 <?php
-return array(
-	'welcome' => 'ようこそ、',
-);
+return [
+    'welcome' => 'ようこそ、',
+];
 
