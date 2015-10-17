@@ -4,6 +4,11 @@
     "keywords": ["framework", "min"],
     "license": "BSD",
     "type": "project",
+    "autoload": {
+        "classmap": [
+            "libs/"
+        ]
+    },
     "require": {
         "smarty/smarty": "v3.1.21",
         "validator/livr": "dev-master",
