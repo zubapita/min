@@ -7,32 +7,35 @@ PHP 5.5以上のための、Ajax Webアプリ開発のためのフレームワ�
 * コーディングの手間を最小化：コードやテストを自動生成します。また開発者が書くコード量を最小化します。
 * 学習の手間を最小化：既存の定番クラスライブラリやツールを組み合わせることで、新しいフレームワークやツールを覚える手間を減らします。
 * 試行錯誤の最小化：テストツールやデバッグツールをフレームワークに組み込むことで、問題を把握しやすくします。
+* AjaxなWebアプリを簡単に作れるように、JQueryとPHPの通信をシンプルかつ確実にできるメソッドを提供します.    
+* データベースのCRUDもすべてAjaxです。    
+* Google ChromeのPHP-Consoleと組み合わせることで、デバッグが面倒なAjaxアプリ作りが楽になります。   
+* デザインにはBootstrap 3を採用しています。Bootstrap 3用のテンプレートも簡単に適用できます。
+* 独自の認証ライブラリを内蔵し、ログインフォームを安全・簡単に作れます。    
 
-クラスライブラリのインストールにはComposerを使用します。
-minは以下のクラスライブラリに依存します。
-* Smarty 3：テンプレートクラス
-* validator/livr：汎用バリデータクラス
-* PDO：データベース抽象化クラス（PHP内蔵）
-* php-console：Google Chromeのconsoleに出力できるPHPのデバッグ環境
-* log4php ファイルに実行ログを記録するフレームワーク
+### 利用クラスライブラリ
 
-以下は状況により必要になります。
-* phpunit テストフレームワーク （テスト時に必要）
-* phpunit-selenium Webブラウザ・テストフレームワーク （テスト時に必要）
+minは以下のクラスライブラリを利用しています。
 
+* "smarty/smarty"：テンプレートクラス
+* "validator/livr"：バリデータクラス
+* "php-console/php-console"：Google Chromeのconsoleに出力できるデバッグクラス
+* "apache/log4php"：ファイルに実行ログを記録するクラス
+* "hybridauth/hybridauth"：Twitter、FacebookなどによるOAuth認証クラス
+* "verot/class.upload.php"：アップロードされた画像をハンドリングするクラス
+* "phpoffice/phpexcel"：Excelワークシートを操作するクラス
+* "nesbot/carbon"：日付時間データ操作クラス
 
-AjaxなWebアプリを簡単に作れるように、JQueryとPHPの通信をシンプルかつ確実にできるメソッドを提供します.    
-データベースのCRUDもすべてAjaxです。    
-Google ChromeのPHP-Consoleと組み合わせることで、デバッグが面倒なAjaxアプリ作りが楽になります。   
+また開発時には以下を利用します。
 
-デザインにはBootstrap 3を採用しています。Bootstrap 3用のテンプレートも簡単に適用できます。
+* "phpunit/phpunit"：テストフレームワーク
+* "phpunit/phpunit-selenium"：Webブラウザ・テストフレームワーク
+* "fzaninotto/faker"：ダミーデータ生成クラス
 
-また独自の認証ライブラリを内蔵し、ログインフォームを安全・簡単に作れます。    
+### 推奨環境
 
-
-
-## 推奨環境
-
+* PHP 5.5+
+* Composer
 * OS:Mac OS X or Linux
 * Webブラウザ：Google Chrome
 * テキストエディタ：TextMate or Sublime Text
@@ -41,32 +44,13 @@ Windowsでの利用は検証されていません。
 
 ## インストール
 
-ZIPをダウンロードしもしくは、リポリトジをcloneして、任意のディレクトリに展開するだけです。
+### 1. composerによるインストール
 
-そのほかに
+> $ composer create-project zubapita/min [プロジェクト名] -s dev
 
-* PHP 5.5+
-* Composer
+### 2. ZIPをダウンロードしもしくは、リポリトジをclone
 
-を利用可能にしておいてください。
-
-## 使用方法
-
-bin以下にアプリの作成、利用のためのコマンド群があります。    
-パラメータを付けないで実行すると、使い方の説明が表示されます。
-
->$ cd bin    
->$ ./makeNewApp.php
->
->make New Min Application.
->
->usage: ./makeNewApp.php
-> -a [app name]
-> -r [root dir name(option)] ex)/Users/user/workspace
->
-
-
-### 新しいアプリを作成する
+#### 新しいminアプリ（プロジェクト）を作成する
 > $ ./makeNewApp.php -a testApp -r /Users/mydir/workspace
 >
 >make New Min Application.
@@ -83,6 +67,26 @@ bin以下にアプリの作成、利用のためのコマンド群がありま�
 
 >$ cd /Users/mydir/workspace/testApp    
 >$ composer install
+
+
+
+
+## アプリ作成手順
+
+### ヒント
+
+bin以下にアプリの作成、利用のためのコマンド群があります。    
+パラメータを付けないで実行すると、使い方の説明が表示されます。
+
+>$ cd bin    
+>$ ./makeNewApp.php
+>
+>make New Min Application.
+>
+>usage: ./makeNewApp.php
+> -a [app name]
+> -r [root dir name(option)] ex)/Users/user/workspace
+>
 
 
 ### データベースのモデルを作成する

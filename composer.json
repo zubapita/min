@@ -22,5 +22,10 @@
         "phpunit/phpunit": "4.8.10",
         "phpunit/phpunit-selenium": "1.4.2",
         "fzaninotto/faker": "v1.5.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bin/setup.sh"
+        ]
     }
 }
