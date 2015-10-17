@@ -4,11 +4,6 @@
     "keywords": ["framework", "min"],
     "license": "BSD",
     "type": "project",
-    "autoload": {
-        "classmap": [
-            "libs/"
-        ]
-    },
     "require": {
         "php": ">=5.5",
         "smarty/smarty": "v3.1.21",
@@ -27,11 +22,5 @@
         "phpunit/phpunit": "4.8.10",
         "phpunit/phpunit-selenium": "1.4.2",
         "fzaninotto/faker": "v1.5.0"
-    },
-    "archive" :{
-           "exclude" :[
-               "/vendor",
-               "/composer.lock"
-           ]
-       }
+    }
 }
