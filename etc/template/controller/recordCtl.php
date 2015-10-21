@@ -26,7 +26,7 @@ class {$ctlClassName} extends AjaxCtl
         parent::__construct();
 
         // modelの初期化
-        $_->{modelName} = new {$modelName};
+        $_->{$modelName} = new {$modelName};
         // viewの初期化
         $_->initView();
         $_->view->escape_html = true;
@@ -46,7 +46,7 @@ class {$ctlClassName} extends AjaxCtl
         // modelから出力を得る
         if($recordId) {
             $conditions = array('id'=>$recordId);
-            ${$modelName} = $_->{modelName}->get($conditions);
+            ${$modelName} = $_->{$modelName}->get($conditions);
             if (empty(${$modelName})) $_->redirect('/');
         } else {
             $_->redirect('/');
@@ -101,7 +101,7 @@ class {$ctlClassName} extends AjaxCtl
         // modelから出力を得る
         if($recordId) {
             $conditions = array('id'=>$recordId);
-            ${$modelName} = $_->{modelName}->get($conditions);
+            ${$modelName} = $_->{$modelName}->get($conditions);
 
             // modelの出力をviewに接続
             $_->view->assign('{$modelName}', ${$modelName});
@@ -143,11 +143,11 @@ class {$ctlClassName} extends AjaxCtl
         if ($_->dispatch_trace) {
             Console::log('save:');
             Console::log($data);
-            $result = $_->{modelName}->set($data);
+            $result = $_->{$modelName}->set($data);
             Console::log('Save to DB result:');
             Console::log($result);
         } else {
-            $result = $_->{modelName}->set($data);
+            $result = $_->{$modelName}->set($data);
         }
         
         // viewへmodelの更新結果を送信
@@ -157,8 +157,8 @@ class {$ctlClassName} extends AjaxCtl
         } else {
             $data['result'] = false;
             $data['message'] = "Can't save to DB.";
-            if (!empty($_->{modelName}->$errors)) {
-                $data['errors'] = $_->{modelName}->$errors;
+            if (!empty($_->{$modelName}->$errors)) {
+                $data['errors'] = $_->{$modelName}->$errors;
             }
         }
         $_->ajax->sendData($data);

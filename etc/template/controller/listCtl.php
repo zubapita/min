@@ -26,7 +26,7 @@ class {$ctlClassName} extends AjaxCtl
         parent::__construct();
 
         // modelの初期化
-        $_->{modelName} = new {$modelName};
+        $_->{$modelName} = new {$modelName};
         // viewの初期化
         $_->initView();
         $_->view->escape_html = true;
@@ -41,8 +41,8 @@ class {$ctlClassName} extends AjaxCtl
 
         // modelから出力を得る
         $conditions = array();
-        ${$modelName} = $_->{modelName}->get($conditions, $currentPage);
-        $pager = $_->{modelName}->getPager();
+        ${$modelName} = $_->{$modelName}->get($conditions, $currentPage);
+        $pager = $_->{$modelName}->getPager();
 
         // modelの出力をviewに接続
         $_->view->assign('{$modelName}', ${$modelName});
@@ -73,8 +73,8 @@ class {$ctlClassName} extends AjaxCtl
                 array('opr'=>'like', 'val'=>"%$searchKeyword%");
         }
 
-        ${$modelName} =$_->{modelName}->get($conditions, $currentPage);
-        $pager = $_->{modelName}->getPager();
+        ${$modelName} =$_->{$modelName}->get($conditions, $currentPage);
+        $pager = $_->{$modelName}->getPager();
 
         // modelの出力をviewに接続
         $_->view->assign('{$modelName}', ${$modelName});
