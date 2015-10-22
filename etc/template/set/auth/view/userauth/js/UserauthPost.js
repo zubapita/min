@@ -61,6 +61,8 @@ function UserauthPost()
             id: $('#Userauth-id').val(),
             username: $('#Userauth-username').val(),
             password: $('#Userauth-password').val(),
+            entryAt: $('#Userauth-entryAt').val(),
+            updateAt: $('#Userauth-updateAt').val(),
             token: $('#Session-token').val(),
         };
         var url = '/userauth/save';
@@ -97,6 +99,14 @@ function UserauthPost()
                 var GET = AJAX.getGETParam();
                 location.href='/userauth/edit?id='+GET['id'];
             });
+
+            if ($('#UserauthReturnButton')[0]) {
+                var returnButtonDomId = '#UserauthReturnButton';
+                $(returnButtonDomId).on('click', function ()
+                {
+                    history.back();
+                });
+            }
 
             var saveButtonDomId = '#UserauthSaveButton';
             $(saveButtonDomId).on('click', function ()

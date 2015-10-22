@@ -1,11 +1,8 @@
 <!-- userauth/includes/autoRecord.inc -->
-<div class="table">
-<table>
+<div class="table-responsive">
 {$v = $UserauthRecord}
-<tr>
-    <th>id</th>
-    <td>{$v['id']}</td>
-</tr>
+<table class="table table-striped table-hover">
+<tbody>
 <tr>
     <th>username</th>
     <td>{$v['username']}</td>
@@ -22,10 +19,14 @@
     <th>update_datetime</th>
     <td>{$v['update_datetime']}</td>
 </tr>
+</tbody>
 </table>
 <form id="UserauthEdit">
 <div class="button">
-<input type="button" id="UserauthEditButton" value="EDIT" />
+<button type="button" id="UserauthEditButton" class="btn btn-primary btn-block">{$l['edit_button']}</button>
+<button type="button" id="UserauthReturnButton" class="btn btn-default btn-block">{$l['return_button']}</button>
+<input type="hidden" id="Userauth-id" name="Userauth-id" value="{$v['id']}" />
+</form>
 </div>
 </form>
 </div>
