@@ -23,6 +23,7 @@ class {$className} extends DataList
 
         $_->DB = new {$db};
         $_->{$table|ucfirst} = $_->getTable($_->DB, '{$table}');
+        $_->TABLE = $_->{$table|ucfirst}; // 外部から参照用
     }    
 
     /**

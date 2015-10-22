@@ -35,6 +35,7 @@ class {$className} extends DataRecord
 
         $_->DB = new {$db};
         $_->{$table|ucfirst} = $_->getTable($_->DB, '{$table}');
+        $_->TABLE = $_->{$table|ucfirst};
     }    
 
     /**
