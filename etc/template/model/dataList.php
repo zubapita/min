@@ -79,6 +79,44 @@ class {$className} extends DataList
             Console::log($pagerParams);
         }
     }
+    
+    
+    /**
+     * 条件にマッチするデータが何行あるかカウントする
+     * 
+     * @param (array|string) $conditions テーブルの検索条件
+     * @return integer マッチするデータの行数
+     */
+    public function count($conditions)
+    {
+        $_ = $this;
+        
+        // SELECT 条件の設定
+        $_->{$table|ucfirst}->reset();
+        $_->{$table|ucfirst}->select(array('count(*)'));
+
+        // SELECTの結果取得
+        $results = $_->{$table|ucfirst}->find($conditions)->fetchColumn();
+
+
+        return $results;
+    }
+
+
+    /**
+     * LimitとOffsetの設定
+     * 
+     * @param integer $pageNum ページ位置
+     * @param integer $limit 最大取得行数
+     */
+    protected function setLimit($pageNum, $limit)
+    {
+        $_ = $this;
+        
+        $offset = ($pageNum - 1) * $limit;
+        $_->{$table|ucfirst}->Limit($limit)->Offset($offset);
+    }
+    
 
 }
 
