@@ -43,6 +43,10 @@ class Console
             
             $APP_ROOT = dirname(__DIR__);
             $logFile = $APP_ROOT.'/var/log/trace.log';
+            $oldMask = umask(0);
+            @chmod($logFile, 0777);
+            umask($oldMask);
+            
             Logger::configure(array(
                 'rootLogger' => array(
                     'appenders' => array('default'),
