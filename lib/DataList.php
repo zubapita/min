@@ -102,7 +102,7 @@ abstract class DataList extends AppCtl
      * @see DataList::setMaxItemsInPage()
      * @see PagerCtl::get()
      */
-    protected $maxItemsInPage = 10;
+    protected $maxItemsInPage = 20;
     
     /**
      * ページャ配列を返す
