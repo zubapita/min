@@ -3,25 +3,25 @@
 <table>
 {foreach $table_view as $row name="table_view"}
 {if $smarty.foreach.table_view.first}
-	<tr>
+    <tr>
 {foreach $row as $key=>$value}
-		<th>{$key}</th>
+        <th>{$key}</th>
 {/foreach}
-	</tr>
+    </tr>
 {/if}
-	<tr>
+    <tr>
 {foreach $row as $key=>$value}
 {if $key=='id'}
-		<td><a href="display?id={$value}">{$value}</a></td>
+        <td><a href="display?id={$value}">{$value}</a></td>
 {else}
-		<td>{$value}</td>
+        <td>{$value}</td>
 {/if}
 {/foreach}
-	</tr>
+    </tr>
 {foreachelse}
-	<tr>
-		<td>Empty.</td>
-	</tr>
+    <tr>
+        <td>Empty.</td>
+    </tr>
 {/foreach}
 </table>
 </div>
