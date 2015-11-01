@@ -9,4 +9,4 @@ CREATE TABLE `spots` (
   `phone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`kana`,`romaji`)
-) ENGINE=InnoDB ADEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
