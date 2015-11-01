@@ -5,6 +5,6 @@ CREATE TABLE `books` (
   `author` varchar(50) DEFAULT NULL,
   `isbn` varchar(50) DEFAULT NULL,
   `price` int(50) DEFAULT NULL,
-  `releaseDate` timestamp NULL DEFAULT NULL,
+  `releaseDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
