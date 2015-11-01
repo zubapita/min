@@ -82,33 +82,18 @@ function <!--{$className}-->Post()
                 var saveButtonDomId = '#<!--{$className}-->SaveButton';
                 $(saveButtonDomId).on('click', function ()
                 {
-                    $('#<!--{$className}-->Form').bootstrapValidator('validate');
+                    $('#<!--{$className}-->Form').submit();
                 });
             }
 
-            // バリデーション設定
+            // バリデートしてOKなら保存
             if ($('#<!--{$className}-->Form')[0]) {
-                $('#<!--{$className}-->Form').bootstrapValidator({
-                    onSuccess: function(e) {
-                        self.save();
-                    },
-                    feedbackIcons: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    live: 'enabled',
-                    fields: {
-<!--{foreach $columns as $column}-->
-<!--{if $column['name']!='id'}-->
-                        <!--{$className}--><!--{ucfirst($column['name'])}-->: {
-                            validators: {
-                                notEmpty: { message: '<!--{$column['name']}-->は必須です' }
-                            }
-                        },
-<!--{/if}-->
-<!--{/foreach}-->
-                    }
+                $("#<!--{$className}-->Form").validationEngine('attach', {
+                    onValidationComplete: function(form, status){
+                        if (status) {
+                          self.save();
+                        }
+                    }  
                 });
             }
 

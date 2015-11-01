@@ -12,7 +12,6 @@
 class {$className} extends DataRecord
 {
 
-
     /**
      * バリデータインスタンス格納用
      */
@@ -83,8 +82,17 @@ class {$className} extends DataRecord
             unset($data['id']);
         }
         
+        // バリデータ＆フィルタの設定
+        $rule = [
+{foreach $columns as $column}
+{if $column['name']!='id'}
+            '{$column['name']}' => ['no_check'],
+{/if}
+{/foreach}
+        ];
+         
         // データの検証と保存
-        if ($validData = $_->validate($data)) {
+        if ($validData = $_->validate($data, $rule)) {
             $_->{$table|ucfirst}->reset();
             $result = $_->{$table|ucfirst}->saveSet($validData);
             if ($_->dispatch_trace) {
@@ -105,31 +113,13 @@ class {$className} extends DataRecord
     /**
      * 行データの検証とフィルタリング
      * 
-     * バリデータ記述法
-     * Language Independent Validation Rules
-     * https://github.com/koorchik/LIVR
-     * 
-     * カスタマイズ
-     * WebbyLab/php-validator-livr
-     * https://github.com/WebbyLab/php-validator-livr
-     * 
      * @param array $data 検証するデータ
+     * @param array $rule 検証ルール
      * @return boolean|array 検証結果
      */
-    public function validate($data)
+    public function validate($data, $rule)
     {
         $_ = $this;
-        
-        
-        // 検証＆フィルタの設定
-        $rule = [
-{foreach $columns as $column}
-{if $column['name']!='id'}
-            '{$column['name']}' => ['required'],
-{/if}
-{/foreach}
-        ];
-
         $validator = new Validator($rule);
 
         // バリデート実行
@@ -140,7 +130,28 @@ class {$className} extends DataRecord
         return $result;
     }
 
-
+    /**
+     *  バリーデータ機銃サンプル
+     *
+     *  $rule = [
+     *      'name'      =>  'required',
+     *      'email'     =>  [ 'required', 'trim', 'email', 'to_lc' ],
+     *      'gender'    =>  [ 'one_of'     => ['male', 'female'] ],
+     *      'phone'     =>  [ 'max_length' => 10 ],
+     *      'password'  =>  [ 'required', ['min_length' => 10] ],
+     *      'password2' =>  [ 'equal_to_field' => 'password' ],
+     *  ];
+     *
+     * バリデータ記述法
+     * Language Independent Validation Rules
+     * https://github.com/koorchik/LIVR
+     * 
+     * カスタマイズ
+     * WebbyLab/php-validator-livr
+     * https://github.com/WebbyLab/php-validator-livr
+     * 
+     *
+     */
 
 
 }
