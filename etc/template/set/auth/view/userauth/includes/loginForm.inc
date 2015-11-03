@@ -13,7 +13,7 @@
 <div class="form-group has-feedback">
     <label class="sr-only" for="UserauthPassword">{$l['password']}</label>
     <div>
-        <input type="password" class="validate[required] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['username']}" value="" />
+        <input type="password" class="validate[required] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>

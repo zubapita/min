@@ -61,6 +61,7 @@ function UserauthPost()
             id: $('#UserauthId').val(),
             username: $('#UserauthUsername').val(),
             password: $('#UserauthPassword').val(),
+            email: $('#UserauthEmail').val(),
             entryAt: $('#UserauthEntryAt').val(),
             updateAt: $('#UserauthUpdateAt').val(),
             token: $('#Session-token').val(),
@@ -69,7 +70,11 @@ function UserauthPost()
         var success = function(data) {
             var id = data.id;
             if (id) {
-                location.href = '/userauth/?id='+id;
+                if (data.oauth=='yes') {
+                    location.href = '/oauth/continueRegist?id='+id;
+                } else {
+                    location.href = '/userauth/?id='+id;
+                }
             } else {
                 alert(data.message);
             }

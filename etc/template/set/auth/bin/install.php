@@ -39,6 +39,15 @@ class CmdApp extends SetInstallLib
         ];
         $_->copyFiles($subdirs);
 
+        $subdirs = [
+            "model/_def/db"=>
+                [
+                    "dir" => "model/_def/db/{$dbName}",
+                    "permission" => 0755,
+                ],
+        ];
+        $_->installFiles($subdirs);
+
         CmdLibs::bannerSmall('done.');
 
     }

@@ -5,5 +5,6 @@ CREATE TABLE `authProvider` (
   `provider` varchar(20) NOT NULL DEFAULT '',
   `providerId` varchar(255) NOT NULL DEFAULT '',
   `updateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userIdProvider` (`userId`,`provider`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

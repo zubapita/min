@@ -6,7 +6,11 @@ return [
     'goto_list' => '一覧を表示',
     
     'username' => 'ユーザー名',
+    'email' => 'メールアドレス',
     'password' => 'パスワード',
+    'password_confirm' => 'パスワード（確認）',
     'login' => 'ログイン',
+    
+    'user_add' => 'ユーザー登録'
     ];
 

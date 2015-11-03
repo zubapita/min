@@ -123,26 +123,74 @@ class OauthCtl extends AjaxCtl
         // 接続先SNSのユーザー情報を取得
         $_->userProfile = $adapter->getUserProfile();
         $providerId = $_->userProfile->identifier;
+        $hybridauthSession = $_->getHASessionJson();
+
         $conditions = ['provider'=>$provider, 'providerId'=>$providerId];
         $userId = $_->getUserId($conditions);
         
-        // OAuth セッションの保存
-        $_->saveToAuthConnection($userId, $provider);
-
-        // ユーザー認証状態にして元のURLに戻る
-        $conditions = ['id'=>$userId];
-        if (!$_->setUserAuth($conditions)) {
-            // ユーザー認証失敗時のデバッグ用
-            $sessionData = unserialize($_->HybridAuth->getSessionData());
-            Console::log('OauthCtl::execOauth:usrauth auth failed.');
-            Console::log($sessionData);
+        if ($userId) {
+            $_->setAuth($userId, $provider, $providerId, $hybridauthSession);
+            
+            $_->redirect($_->auth->getReferer());
+        } else {
+            // ユーザーIDがなければ、ユーザー登録へリダイレクト
+            $_SESSION['Oauth']['provider'] = $provider;
+            $_SESSION['Oauth']['providerId'] = $providerId;
+            $_SESSION['Oauth']['hybridauthSession'] = $hybridauthSession;
+            $_SESSION['Oauth']['userProfile'] = $_->userProfile;
+            
+            $_->redirect('/userauth/regist');
+            // ユーザー登録が完了すると、$_->continueRegist() に戻ってくる
         }
-        $_->redirect($_->auth->getReferer());
-
     }
 
 
+    /**
+     * ユーザー登録後、認証を続行
+     *
+     */
+    public function continueRegist()
+    {
+        $_ = $this;
+        $_->initAuth();
+        $userId = $_->getGETNumValue('id');
 
+        $provider = $_SESSION['Oauth']['provider'];
+        $providerId = $_SESSION['Oauth']['providerId'];
+        $hybridauthSession = $_SESSION['Oauth']['hybridauthSession'];
+        unset($_SESSION['Oauth']);
+        
+        $_->setAuth($userId, $provider, $providerId, $hybridauthSession);
+        
+        $_->redirect($_->auth->getReferer());
+    }
+
+
+    /*
+     * 認証状態を保存
+     * 
+     * @param integer $userId
+     * @param string $userId
+     * @param string $providerId
+     * @param string $$hybridauthSession (json)
+     * @return void
+     */
+    private function setAuth($userId, $provider, $providerId, $hybridauthSession)
+    {
+        $_ = $this;
+        
+        // authProviderに保存
+        $_->saveToAuthProvider($userId, $provider, $providerId);
+
+        // OAuth セッションの保存
+        $_->saveToAuthConnection($userId, $provider, $hybridauthSession);
+
+        // ユーザー認証状態にする
+        if (!$_->setUserAuth($userId)) {
+            Console::log('OauthCtl::execOauth:usrauth auth failed.');
+            Console::log($hybridauthSession);
+        }
+    }
 
     /*
      * ローカルアカウントのユーザーIDを取得。存在しなければ、ローカルアカウントを新規作成して紐付ける
@@ -157,32 +205,7 @@ class OauthCtl extends AjaxCtl
         if($user = $_->AuthProviderRecord->get($conditions)) {
             $userId = $user['userId'];
         } else {
-            // userauthに保存
-            Console::log('save to userauth:');
-            
-            $_->now = date("Y-m-d H:i:s");
-            $data = [];
-            $data['username'] = $_->userProfile->displayName;
-            //仮パスワードを生成 パスワードログインさせる場合は、改めてパスワードを入れさせる必要がある
-            $data['password'] = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 16);
-            $data['entryAt'] = $_->now;
-            $data['updateAt'] = $_->now;
-            Console::log($data);
-            $result = $_->UserauthRecord->set($data);
-            Console::log('Save to userauth result:');
-            Console::log($result);
-            if($result!==false) {
-                $userId = $result;
-            } else {
-                $message = "Can't save to userauth table.";
-                Console::log($message);
-                return 0;
-            }
-            
-            // authProviderに保存
-            $conditions['userId'] = $userId;
-            $conditions['updateAt'] = $_->now;
-            $_->saveToAuthProvider($conditions);
+            $userId = 0;
         }
         return $userId;
     }
@@ -193,9 +216,12 @@ class OauthCtl extends AjaxCtl
      * @param array $data ex. ['userId'=>$userId, 'provider'=>'twitter', 'providerId'=>$twitterId];
      * @return integer authProvider id
      */
-    private function saveToAuthProvider($data)
+    private function saveToAuthProvider($userId, $provider, $providerId)
     {
         $_ = $this;
+        $data['userId'] = $userId;
+        $data['provider'] = $provider;
+        $data['providerId'] = $providerId;
         
         Console::log('Save to AuthProvider:');
         Console::log($data);
@@ -207,39 +233,50 @@ class OauthCtl extends AjaxCtl
     }
 
     /*
-     * 　OAuthの接続情報を保存
+     * 　OAuthの接続情報をJSON形式で返す
      * 
-     * @param integer $userId
-     * @param string $provider ex. 'twitter' or 'facebook'
-     * @return void
+     * @return string
      */
-    private function saveToAuthConnection($userId, $provider)
+    private function getHASessionJson()
     {
         $_ = $this;
         
-        Console::log('saveToAuthConnection: userId='.$userId.' provider='.$provider);
-        
-        $AuthConnectionRecord = new AuthConnectionRecord();
         $sessionData = unserialize($_->HybridAuth->getSessionData());
         $tmpArray = array();
         foreach ($sessionData as $key=>$sValue) {
             $value = unserialize($sValue);
             $tmpArray[$key] = $value;
         }
-        $jsonData = json_encode($tmpArray);
+        
+        return json_encode($tmpArray);
+    }
+    
+    /*
+     * 　OAuthの接続情報を保存
+     * 
+     * @param integer $userId
+     * @param string $provider ex. 'twitter' or 'facebook'
+     * @return void
+     */
+    private function saveToAuthConnection($userId, $provider, $hybridauthSession)
+    {
+        $_ = $this;
+        
+        Console::log('saveToAuthConnection: userId='.$userId.' provider='.$provider);
         
         Console::log('save to AuthConnection:');
         $data = array(
             'userId' => $userId,
             'provider' => $provider,
-            'hybridauthSession' => $jsonData,
-            'updateAt' => $_->now,
+            'hybridauthSession' => $hybridauthSession,
         );
         Console::log($data);
+        $AuthConnectionRecord = new AuthConnectionRecord();
         $result = $AuthConnectionRecord->set($data);
         Console::log('Save to AuthConnection result:');
         Console::log($result);
     }
+    
     
     /*
      * ユーザーを認証された状態にセット
@@ -247,10 +284,11 @@ class OauthCtl extends AjaxCtl
      * @param array $conditions ['id'=>$userId]
      * @return boolean ユーザー認証状態を設定できたらtrue
      */
-    private function setUserAuth($conditions)
+    private function setUserAuth($userId)
     {
         $_ = $this;
         
+        $conditions = ['id'=>$userId];
         $userauthRecord = $_->UserauthRecord->get($conditions);
         
         // ログイン成功

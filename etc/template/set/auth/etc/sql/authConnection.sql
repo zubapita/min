@@ -5,5 +5,6 @@ CREATE TABLE `authConnection` (
   `provider` varchar(20) NOT NULL,
   `hybridauthSession` text NOT NULL,
   `updateAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userIdProvider` (`userId`,`provider`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

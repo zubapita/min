@@ -85,7 +85,7 @@ class UserauthCtl extends AjaxCtl
         $_->auth->setToken();
 
         // viewへの送信（表示）
-        $_->view->display($_->view_template);
+        $_->view->display('userauth/includes/logout.inc');
     }
 
 
@@ -192,6 +192,46 @@ class UserauthCtl extends AjaxCtl
         $_->view->display($_->view_template);
     }
 
+
+    /**
+     * Oauth認証した場合のユーザー登録画面表示
+     *
+     */
+    public function regist()
+    {
+        $_ = $this;
+        
+        // セキュリティ用トークンの取得
+        $_->initAuth();
+        $token = $_->auth->getToken();
+        if (empty($token)) {
+            $token = $_->auth->setToken();
+        }
+        
+        // viewへの送信（表示）
+        $_->view->display($_->view_template);
+    }
+
+    /**
+     * ユーザー登録フォーム表示
+     * （モーダルダイアログに表示用）
+     */
+    public function registForm()
+    {
+        $_ = $this;
+        
+        // セキュリティ用トークンの取得
+        $_->initAuth();
+        $token = $_->auth->getToken();
+        if (empty($token)) {
+            $token = $_->auth->setToken();
+        }
+        
+        // viewへの送信（表示）
+        $_->view->assign('token', $token);
+        $_->view->display('userauth/includes/autoRegistForm.inc');
+    }
+
     /**
      * save アクション
      *
@@ -238,9 +278,15 @@ class UserauthCtl extends AjaxCtl
             $result = $_->UserauthRecord->set($data);
         }
         
+        
         // viewへmodelの更新結果を送信
         if($result!==false) {
             $data['id'] = $result;
+            
+            // Oauth認証中ならフラグをたてる
+            if (isset($_SESSION['Oauth']['providerId'])) {
+                $data['oauth'] = 'yes';
+            }
         } else {
             $data['id'] = 0;
             $data['message'] = "Can't save to DB.";
