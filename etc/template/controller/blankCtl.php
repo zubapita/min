@@ -9,7 +9,7 @@
  * @package    Min - Minimam INter framework for PHP
  * @version    0.1
  */
-class {$ctlClassName} extends AjaxCtl
+class {$ctlClassName} extends IndexCtl
 {
 
     /**
@@ -21,9 +21,6 @@ class {$ctlClassName} extends AjaxCtl
         $_ = $this;
         parent::__construct();
 
-        // viewの初期化
-        $_->initView();
-        $_->view->escape_html = true;
     }
 
     /**

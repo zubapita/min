@@ -9,7 +9,7 @@
  * @package    Min - Minimam INter framework for PHP
  * @version    0.1
  */
-class {$ctlClassName} extends AjaxCtl
+class {$ctlClassName} extends IndexCtl
 {
     /**
      * 表示するmodelを格納する変数
@@ -27,9 +27,6 @@ class {$ctlClassName} extends AjaxCtl
 
         // modelの初期化
         $_->{$modelName} = new {$modelName};
-        // viewの初期化
-        $_->initView();
-        $_->view->escape_html = true;
     }
 
     /**
