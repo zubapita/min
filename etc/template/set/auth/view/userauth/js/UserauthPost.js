@@ -25,8 +25,8 @@ function UserauthPost()
     this.auth = function ()
     {
         var data = {
-            username: $('#Userauth-username').val(),
-            password: $('#Userauth-password').val(),
+            username: $('#UserauthUsername').val(),
+            password: $('#UserauthPassword').val(),
         };
         var url = '/userauth/auth';
         var success = function(data) {
@@ -58,11 +58,11 @@ function UserauthPost()
     this.save = function ()
     {
         var data = {
-            id: $('#Userauth-id').val(),
-            username: $('#Userauth-username').val(),
-            password: $('#Userauth-password').val(),
-            entryAt: $('#Userauth-entryAt').val(),
-            updateAt: $('#Userauth-updateAt').val(),
+            id: $('#UserauthId').val(),
+            username: $('#UserauthUsername').val(),
+            password: $('#UserauthPassword').val(),
+            entryAt: $('#UserauthEntryAt').val(),
+            updateAt: $('#UserauthUpdateAt').val(),
             token: $('#Session-token').val(),
         };
         var url = '/userauth/save';
@@ -87,6 +87,7 @@ function UserauthPost()
         $(document).ready(function()
         {
 
+            // ボタン動作設定
             var loginButtonDomId = '#UserauthLoginButton';
             $(loginButtonDomId).on('click', function ()
             {
@@ -111,8 +112,32 @@ function UserauthPost()
             var saveButtonDomId = '#UserauthSaveButton';
             $(saveButtonDomId).on('click', function ()
             {
-                self.save();
+                $('#UserauthForm').submit();
             });
+
+            // バリデートしてOKなら保存
+            if ($('#UserauthForm')[0]) {
+                $("#UserauthForm").validationEngine('attach', {
+                    onFieldSuccess: function(field) {
+                        $(field).parent().parent().removeClass('has-error');
+                        $(field).parent().parent().addClass('has-success');
+                        $(field).next().removeClass('glyphicon-remove');
+                        $(field).next().addClass('glyphicon glyphicon-ok');
+                    },
+                    onFieldFailure: function(field) {
+                        $(field).parent().parent().removeClass('has-success');
+                        $(field).parent().parent().addClass('has-error');
+                        $(field).next().removeClass('glyphicon-ok');
+                        $(field).next().addClass('glyphicon glyphicon-remove');
+                    },
+                    onValidationComplete: function(form, status){
+                        if (status) {
+                          self.save();
+                        }
+                    }  
+                });
+            }
+
 
         });
     }

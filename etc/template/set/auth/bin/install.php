@@ -35,6 +35,7 @@ class CmdApp extends SetInstallLib
             "view/userauth"=>0755,
             "view/userauth/includes"=>0755,
             "view/userauth/js"=>0755,
+            "view/userauth/lang"=>0755,
         ];
         $_->copyFiles($subdirs);
 

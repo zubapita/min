@@ -3,29 +3,41 @@
 <form id="UserauthForm">
 {$v = $UserauthRecord}
 
-<div class="form-group">
-	<label class="sr-only" for="Userauth-username">username</label>
-	<input type="text" class="form-control input-lg" id="Userauth-username" name="Userauth-username" placeholder="username" value="{$v['username']}" />
+<div class="form-group has-feedback">
+    <label class="sr-only" for="UserauthUsername">{$l['username']}</label>
+    <div>
+        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="{$v['username']}" />
+        <span class="form-control-feedback" aria-hidden="true"></span>
+    </div>
 </div>
 
-<div class="form-group">
-	<label class="sr-only" for="Userauth-password">password</label>
-	<input type="password" class="form-control input-lg" id="Userauth-password" name="Userauth-password" placeholder="password" value="" />
+<div class="form-group has-feedback">
+    <label class="sr-only" for="UserauthPassword">{$l['password']}</label>
+    <div>
+        <input type="password" class="validate[required] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
+        <span class="form-control-feedback" aria-hidden="true"></span>
+    </div>
 </div>
 
-<div class="form-group">
-	<label class="sr-only" for="Userauth-entryAt">entryAt</label>
-	<input type="text" class="form-control input-lg" id="Userauth-entryAt" name="Userauth-entryAt" placeholder="date time" value="{$v['entryAt']}" />
+<div class="form-group has-feedback">
+    <label class="sr-only" for="UserauthEntryAt">entryAt</label>
+    <div>
+        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthEntryAt" name="UserauthEntryAt" placeholder="date time" value="{$v['entryAt']}" />
+        <span class="form-control-feedback" aria-hidden="true"></span>
+    </div>
 </div>
 
-<div class="form-group">
-	<label class="sr-only" for="Userauth-updateAt">updateAt</label>
-	<input type="text" class="form-control input-lg" id="Userauth-updateAt" name="Userauth-updateAt" placeholder="date time" value="{$v['updateAt']}" />
+<div class="form-group has-feedback">
+    <label class="sr-only" for="UserauthUpdateAt">updateAt</label>
+    <div>
+        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUpdateAt" name="UserauthUpdateAt" placeholder="date time" value="{$v['updateAt']}" />
+        <span class="form-control-feedback" aria-hidden="true"></span>
+    </div>
 </div>
 
 <div class="button">
 <button type="button" id="UserauthSaveButton" class="btn btn-primary btn-block">{$l['save_button']}</button>
-<input type="hidden" id="Userauth-id" name="Userauth-id" value="{$v['id']}" />
+<input type="hidden" id="UserauthId" name="UserauthId" value="{$v['id']}" />
 <input type="hidden" id="Session-token" value="{$token}" />
 </div>
 

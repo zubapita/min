@@ -3,10 +3,14 @@
 {$v = $<!--{$modelName}-->}
 <!--{foreach $columns as $column}-->
 <!--{if $column['name']!='id'}-->
-<div class="form-group">
-    <label class="sr-only" for="<!--{$className}-->-<!--{$column['name']}-->">{$l['<!--{$column['name']}-->']}</label>
-    <input type="text" class="validate[required] text-input form-control input-lg" id="<!--{$className}--><!--{ucfirst($column['name'])}-->" name="<!--{$className}--><!--{ucfirst($column['name'])}-->" placeholder="{$l['<!--{$column['name']}-->']}" value="{$v['<!--{$column['name']}-->']}" />
+<div class="form-group has-feedback">
+    <label class="sr-only" for="<!--{$className}--><!--{ucfirst($column['name'])}-->">{$l['<!--{$column['name']}-->']}</label>
+    <div>
+        <input type="text" class="validate[required] text-input form-control input-lg" id="<!--{$className}--><!--{ucfirst($column['name'])}-->" name="<!--{$className}--><!--{ucfirst($column['name'])}-->" placeholder="{$l['<!--{$column['name']}-->']}" value="{$v['<!--{$column['name']}-->']}" />
+        <span class="form-control-feedback" aria-hidden="true"></span>
+    </div>
 </div>
+
 <!--{/if}-->
 <!--{/foreach}-->
 <button type="button" id="<!--{$className}-->SaveButton" class="btn btn-primary btn-block">{$l['save_button']}</button>

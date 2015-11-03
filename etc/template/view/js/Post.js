@@ -89,6 +89,18 @@ function <!--{$className}-->Post()
             // バリデートしてOKなら保存
             if ($('#<!--{$className}-->Form')[0]) {
                 $("#<!--{$className}-->Form").validationEngine('attach', {
+                    onFieldSuccess: function(field) {
+                        $(field).parent().parent().removeClass('has-error');
+                        $(field).parent().parent().addClass('has-success');
+                        $(field).next().removeClass('glyphicon-remove');
+                        $(field).next().addClass('glyphicon glyphicon-ok');
+                    },
+                    onFieldFailure: function(field) {
+                        $(field).parent().parent().removeClass('has-success');
+                        $(field).parent().parent().addClass('has-error');
+                        $(field).next().removeClass('glyphicon-ok');
+                        $(field).next().addClass('glyphicon glyphicon-remove');
+                    },
                     onValidationComplete: function(form, status){
                         if (status) {
                           self.save();
