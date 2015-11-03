@@ -119,6 +119,9 @@ class MakeNewAppLib extends MakeDbClassFileLib
             chmod("$newAppRoot/bin/test.sh", 0755);
             chmod("$newAppRoot/bin/genTest.sh", 0755);
             chmod("$newAppRoot/bin/backSyncToMin.sh", 0755);
+            chmod("$newAppRoot/bin/syncFromMin.sh", 0755);
+            chmod("$newAppRoot/bin/setup.sh", 0755);
+            chmod("$newAppRoot/etc/template/bin/setSample.sh", 0755);
             umask($oldMask);
         }
 
