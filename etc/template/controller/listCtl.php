@@ -37,7 +37,9 @@ class {$ctlClassName} extends IndexCtl
         $currentPage = 1;
 
         // modelから出力を得る
-        $conditions = array();
+        $conditions = [];
+        
+        $_->{$modelName}->setMaxItemsInPage(20);
         ${$modelName} = $_->{$modelName}->get($conditions, $currentPage);
         $pager = $_->{$modelName}->getPager();
 
@@ -63,13 +65,14 @@ class {$ctlClassName} extends IndexCtl
         $currentPage = $v['pageNum'];
 
         // modelから出力を得る
-        $conditions = array();
+        $conditions = [];
 
         if(!empty($searchKeyword)) {
             $conditions['{$tableName}./*検索対象カラムをここに入れる*/'] =
                 array('opr'=>'like', 'val'=>"%$searchKeyword%");
         }
 
+         $_->{$modelName}->setMaxItemsInPage(20);
         ${$modelName} =$_->{$modelName}->get($conditions, $currentPage);
         $pager = $_->{$modelName}->getPager();
 
