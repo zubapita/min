@@ -17,7 +17,33 @@
 <div id="wrapper" class="container">
 
 {block name="body"}{/block}
+
 </div><!-- /#wrapper -->
+
+{*<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">
+  Launch demo modal
+</button>*}
+
+
+<!-- Modal dialog -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalLabel">Modal title</h4>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+      <div id="modalFooter" class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {*<button type="button" class="btn btn-primary">Another Button</button>*}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Modal dialog -->
+
 
     <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

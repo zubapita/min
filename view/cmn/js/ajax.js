@@ -264,7 +264,6 @@ function AjaxFunctions()
     };
     
     
-    // Parse GET query string
     /**
      * URLのQueryストリングをパースすてGET配列を返す
      */
@@ -279,6 +278,30 @@ function AjaxFunctions()
         }
 
         return GETParam;
+    };
+    
+    /**
+     * Bootstrap3のモーダルダイアログを表示する
+     */
+    this.showModal = function (title, endPoint, callback)
+    {
+        $('#modalLabel').empty().text(title);
+        $('#modalBody').empty().load(endPoint);
+        $('#modal').modal('show');
+        $('#modal').on('hidden.bs.modal', function (e) {
+            callback();
+        })
+    };
+    
+    /**
+     * ログアウトを実行
+     */
+    this.logout = function (lang)
+    {
+        self.showModal('Logout', lang+'/userauth/logout', function() {
+            location.href = lang+'/';
+        });
+        return false;
     };
     
 
