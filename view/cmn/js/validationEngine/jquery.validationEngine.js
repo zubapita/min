@@ -48,6 +48,10 @@
 				options = methods._saveOptions(form, userOptions);
 			else
 				options = form.data('jqv');
+            
+            // backup option data for each field validation
+            var formId = $(form).attr('id');
+            $('body').data(formId+'-jqv', options);
 
 			options.validateAttribute = (form.find("[data-validation-engine*=validate]").length) ? "data-validation-engine" : "class";
 			if (options.binded) {
@@ -242,6 +246,13 @@
 			var field = $(this);
 			var form = field.closest('form, .validationEngineContainer');
 			var options = form.data('jqv');
+
+            // Get options backup data
+            if (!options) {
+                var formId = $(form).attr('id');
+                options = $('body').data(formId+'-jqv');
+            }
+
 			// No option, take default one
 			if (!options)
 				options = methods._saveOptions(form, options);
