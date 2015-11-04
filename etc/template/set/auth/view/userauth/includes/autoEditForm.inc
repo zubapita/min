@@ -4,33 +4,35 @@
 {$v = $UserauthRecord}
 
 <div class="form-group has-feedback">
-    <label class="sr-only" for="UserauthUsername">{$l['username']}</label>
+	<label class="sr-only" for="UserauthUsername">{$l['username']}</label>
     <div>
-        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="{$v['username']}" />
+	    <input type="text" class="validate[required,minSize[4],custom[onlyLetterNumber]] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>
 
 <div class="form-group has-feedback">
-    <label class="sr-only" for="UserauthPassword">{$l['password']}</label>
+	<label class="sr-only" for="UserauthEmail">{$l['email']}</label>
     <div>
-        <input type="password" class="validate[required] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
+	    <input type="text" class="validate[required,custom[email]] text-input form-control input-lg" id="UserauthEmail" name="UserauthEmail" placeholder="{$l['email']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>
 
+
 <div class="form-group has-feedback">
-    <label class="sr-only" for="UserauthEntryAt">entryAt</label>
+	<label class="sr-only" for="UserauthPassword">{$l['password']}</label>
     <div>
-        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthEntryAt" name="UserauthEntryAt" placeholder="date time" value="{$v['entryAt']}" />
+	    <input type="password" class="fvalidate[required,minSize[8]] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>
 
+
 <div class="form-group has-feedback">
-    <label class="sr-only" for="UserauthUpdateAt">updateAt</label>
+	<label class="sr-only" for="UserauthPasswordConfirm">{$l['password_confirm']}</label>
     <div>
-        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUpdateAt" name="UserauthUpdateAt" placeholder="date time" value="{$v['updateAt']}" />
+	    <input type="password" class="fvalidate[required,equals[UserauthPassword]] text-input form-control input-lg" id="UserauthPasswordConfirm" name="UserauthPasswordConfirm" placeholder="{$l['password_confirm']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>

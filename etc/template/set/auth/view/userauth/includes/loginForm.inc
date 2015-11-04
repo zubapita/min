@@ -5,7 +5,7 @@
 <div class="form-group has-feedback">
     <label class="sr-only" for="UserauthUsername">{$l['username']}</label>
     <div>
-        <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="" />
+        <input type="text" class="validate[required,custom[onlyLetterNumber]] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>

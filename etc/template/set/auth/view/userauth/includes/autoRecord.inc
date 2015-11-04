@@ -9,15 +9,11 @@
 </tr>
 <tr>
     <th>{$v['password']}</th>
-    <td>{$v['password']}</td>
+    <td>&nbsp;...&nbsp;</td>
 </tr>
 <tr>
-    <th>{$v['entryAt']}</th>
-    <td>{$v['entryAt']}</td>
-</tr>
-<tr>
-    <th>{$v['updateAt']}</th>
-    <td>{$v['updateAt']}</td>
+    <th>{$v['email']}</th>
+    <td>{$v['email']}</td>
 </tr>
 </tbody>
 </table>

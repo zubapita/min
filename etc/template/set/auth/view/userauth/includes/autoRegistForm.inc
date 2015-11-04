@@ -5,7 +5,7 @@
 <div class="form-group has-feedback">
 	<label class="sr-only" for="UserauthUsername">{$l['username']}</label>
     <div>
-	    <input type="text" class="validate[required] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="" />
+	    <input type="text" class="validate[required,minSize[4],custom[onlyLetterNumber]] text-input form-control input-lg" id="UserauthUsername" name="UserauthUsername" placeholder="{$l['username']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>
@@ -22,7 +22,7 @@
 <div class="form-group has-feedback">
 	<label class="sr-only" for="UserauthPassword">{$l['password']}</label>
     <div>
-	    <input type="password" class="fvalidate[required] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
+	    <input type="password" class="fvalidate[required,minSize[8]] text-input form-control input-lg" id="UserauthPassword" name="UserauthPassword" placeholder="{$l['password']}" value="" />
         <span class="form-control-feedback" aria-hidden="true"></span>
     </div>
 </div>
