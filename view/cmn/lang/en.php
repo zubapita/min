@@ -12,8 +12,10 @@ return [
     'welcome' => 'Welcome ',
     'login' => 'Login',
     'logout' => 'Logout',
+    'mymenu' => 'My Menu',
     'guest' => 'Guest User',
     'jp-san' => '',
+    'connectToSns' => 'Connect to Social Network',
     'loginWithRegisterdAccount' => 'Login with Regsiterd Account',
     
 ];

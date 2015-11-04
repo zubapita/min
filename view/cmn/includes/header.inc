@@ -53,7 +53,14 @@
     <ul class="nav navbar-nav navbar-right">
         {if isset($username)}
         <li><a href="#">{$l['welcome']}{$username}{$l['jp-san']}</a></li>
+        <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="mymenu">{$l['mymenu']}<span class="caret"></span></a>
+        <ul class="dropdown-menu" aria-labelledby="mymenu">
         <li><a href="#" onclick="AJAX.logout('{$lang}');">{$l['logout']}</a></li>
+            <li class="divider"></li>
+            <li><a href="{$lang}/userauth/connect">{$l['connectToSns']}</a></li>
+        </ul>
+        </li>
         {else}
         <li><a href="#">{$l['welcome']}{$l['guest']}{$l['jp-san']}</a></li>
         <li class="dropdown">

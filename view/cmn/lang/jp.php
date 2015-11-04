@@ -12,8 +12,10 @@ return [
     'welcome' => 'ようこそ、',
     'login' => 'ログイン',
     'logout' => 'ログアウト',
+    'mymenu' => 'Myメニュー',
     'guest' => 'ゲスト',
     'jp-san' => 'さん',
+    'connectToSns' => 'SNSに接続',
     'loginWithRegisterdAccount' => '登録アカウントでログイン',
     
 ];
