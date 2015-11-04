@@ -117,6 +117,43 @@
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "* 半角英数で入力してください"
                 },
+                "onlyLetterNumberSp": {
+                    "regex":/^[0-9a-zA-Z\ ]+$/,
+                    "alertText":"* 半角英数で入力してください"
+                },
+                "onlyKatakana": {
+                    "regex":/^[ァ-ヶー（）　]*$/,
+                    "alertText":"* 全角カタカナで入力してください"
+                },
+                "onlyKatakanaStrict": {
+                    "regex":/^[ァ-ヶー]*$/,
+                    "alertText":"* 全角カタカナで入力してください"
+                },
+                "katakana": {
+                    "regex":/^[ァ-ヶー0-9a-zA-Z\s]*$/,
+                    "alertText":"* 全角カタカナと半角英数で入力してください"
+                },
+                "katakanaNumber": {
+                    "regex":/^[ァ-ヶー0-9\ ]*$/,
+                    "alertText":"* 全角カタカナと半角数字で入力してください"
+                },
+                "zenkakuKatakanaNumber": {
+                    "regex":/^[ァ-ヶー０-９　]*$/,
+                    "alertText":"* 全角カタカナと全角数字で入力してください"
+                },
+                "zenkakuKatakana": {
+                    "regex":/^[ァ-ヶー（）　０-９ａ-ｚＡ-Ｚ\s]*$/,
+                    "alertText":"* 全角カタカナと全角英数で入力してください"
+                },
+                "zipcode": {
+                    "regex":/^([0-9]{3}-[0-9]{4})$/,
+                    "alertText":"* 郵便番号を入力してください"
+                },
+                "mobilephone": {
+                    "regex":/^([0-9]{3}-[0-9]{4}-[0-9]{4})$/,
+                    "alertText":"* 携帯の電話番号を入力してください"
+                },
+                
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
