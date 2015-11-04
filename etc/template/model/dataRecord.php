@@ -111,6 +111,28 @@ class {$className} extends DataRecord
     }
 
     /**
+     * TABELから行を削除
+     * 
+     * @param (array|string) $conditions 検索条件
+     * @return (integer|boolean) 削除行数|失敗の場合はfalse
+     */
+    public function delete($conditions)
+    {
+        $_ = $this;
+        
+        // 削除の実行
+        $result = $_->{$table|ucfirst}->delete($conditions);
+        if ($_->dispatch_trace) {
+            Console::log('{$table|ucfirst}::delete');
+            Console::logSql($_->{$table|ucfirst}->SQL, $_->{$table|ucfirst}->VALUES);
+        }
+
+        return $result;
+    }
+
+
+
+    /**
      * 行データの検証とフィルタリング
      * 
      * @param array $data 検証するデータ
