@@ -230,6 +230,63 @@ class UserauthCtl extends IndexCtl
     }
 
     /**
+     * SNS接続用画面を表示
+     * 
+     */
+    public function connect()
+    {
+        $_ = $this;
+        
+        $_->initAuth();
+        if (empty($_->auth->get())) {
+            return;
+        } else {
+            $user = $_->auth->getUser();
+            $userId = $user['id'];
+        }
+        
+        $AuthProviderList = new AuthProviderList;
+        $conditions = ['userId'=>$userId];
+        $list = $AuthProviderList->get($conditions, 1);
+        $authProviders = [];
+        foreach ($list as $row) {
+            $provider = $row['provider'];
+            $authProviders[$provider] = $row;
+        }
+
+        // viewへの送信（表示）
+        $_->view->assign('authProviders', $authProviders);
+        $_->view->display($_->view_template);
+    }
+
+    /**
+     * SNS接続を削除
+     * 
+     */
+    public function disconnect()
+    {
+        $_ = $this;
+        
+        $_->initAuth();
+        if (empty($_->auth->get())) {
+            return;
+        } else {
+            $user = $_->auth->getUser();
+            $userId = $user['id'];
+        }
+        
+        $provider = $_->getGETStrValue('p');
+        
+        if ($provider) {
+            $AuthProviderRecord = new AuthProviderRecord;
+            $conditions = ['userId'=>$userId, 'provider'=>$provider];
+            $result = $AuthProviderRecord->delete($conditions);
+        }
+
+        $_->redirect('/userauth/connect');
+    }
+
+    /**
      * save アクション
      *
      */

@@ -1,6 +1,6 @@
 <?php
 /**
- * ブランク表示コントローラーのテンプレート
+ * Oauth認証コントローラー
  *
  *
  * @copyright    Tomoyuki Negishi and ZubaPitaTech Y.K.
@@ -9,7 +9,7 @@
  * @package        Min - Minimam INter framework for PHP
  * @version        0.1
  */
-class OauthCtl extends AjaxCtl
+class OauthCtl extends IndexCtl
 {
 
     /**
@@ -62,6 +62,26 @@ class OauthCtl extends AjaxCtl
     }
 
     /**
+     * ログイン中のUserIdをTwitterに接続する
+     * 
+     * model/_def/api/TwitterApiKey.php にAPIのキーを設定して使ってください
+     * 
+     * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Twitter.html
+     */
+    public function connectToTwitter()
+    {
+        $_ = $this;
+        
+		// ログイン中？
+		if ($_->auth->get()) {
+            $provider = 'Twitter';
+            $_->config['providers'][$provider] = TwitterApiKey::getParams();
+            $_->connectOauth($provider, $_->config);
+		}
+        
+    }
+
+    /**
      * Facebookで認証する
      * 
      * model/_def/api/FacebookApiKey.php にAPIのキーを設定して使ってください
@@ -79,6 +99,25 @@ class OauthCtl extends AjaxCtl
     }
 
     /**
+     * ログイン中のUserIdをFacebookに接続する
+     * 
+     * model/_def/api/FacebookApiKey.php にAPIのキーを設定して使ってください
+     * 
+     * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Facebook.html
+     */
+    public function connectToFacebook()
+    {
+        $_ = $this;
+        
+		// ログイン中？
+		if ($_->auth->get()) {
+            $provider = 'Facebook';
+            $_->config['providers'][$provider] = FacebookApiKey::getParams();
+            $_->connectOauth($provider, $_->config);
+		}
+    }
+
+    /**
      * Googleで認証する
      * 
      * model/_def/api/GoogleApiKey.php にAPIのキーを設定して使ってください
@@ -93,6 +132,25 @@ class OauthCtl extends AjaxCtl
         $_->config['providers'][$provider] = GoogleApiKey::getParams();
         $_->execOauth($provider, $_->config);
 
+    }
+
+    /**
+     * ログイン中のUserIdをGoogleに接続する
+     * 
+     * model/_def/api/GoogleApiKey.php にAPIのキーを設定して使ってください
+     * 
+     * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html
+     */
+    public function connectToGoogle()
+    {
+        $_ = $this;
+        
+		// ログイン中？
+		if ($_->auth->get()) {
+            $provider = 'Google';
+            $_->config['providers'][$provider] = GoogleApiKey::getParams();
+            $_->connectOauth($provider, $_->config);
+		}
     }
 
     /**
@@ -142,6 +200,44 @@ class OauthCtl extends AjaxCtl
             $_->redirect('/userauth/regist');
             // ユーザー登録が完了すると、$_->continueRegist() に戻ってくる
         }
+    }
+
+    /**
+     * Oauth認証を実行して、ログイン中のアカウントと接続する
+     *
+     * @param string $provider ex. 'Twitter' or 'Facebook'
+     * @param array $config Hybrid_Auth config array
+     * @return void
+     */
+    private function connectOauth($provider, $config)
+    {
+        $_ = $this;
+        
+        $_->initAuth();
+        $_->auth->setReferer();
+
+        // 認証の実行（未認証の場合はここでリダイレクトされ、認証済みの場合はスルーされる）
+        try {
+            $_->HybridAuth = new Hybrid_Auth($config); 
+            $adapter = $_->HybridAuth->authenticate($provider); 
+        } catch (Exception $e) {
+            Console::log('fail to connect '.$provider.':'.$e->getMessage().'  code:'.$e->getCode());
+            
+            $_->redirect($_->auth->getReferer());
+        }
+
+        // ↓ ここから認証済みの場合の処理
+        // 接続先SNSのユーザー情報を取得
+        $_->userProfile = $adapter->getUserProfile();
+        $providerId = $_->userProfile->identifier;
+        $hybridauthSession = $_->getHASessionJson();
+
+        $user = $_->auth->getUser();
+        $userId = $user['id'];
+
+        $_->setAuth($userId, $provider, $providerId, $hybridauthSession);
+        
+        $_->redirect($_->auth->getReferer());
     }
 
 
