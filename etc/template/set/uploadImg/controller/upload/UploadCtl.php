@@ -16,7 +16,7 @@
  * max_file_uploads
  *
  */
-class <!--{$className}-->Ctl extends AjaxCtl
+class <!--{$className}-->Ctl extends IndexCtl
 {
 
     /**
@@ -29,9 +29,6 @@ class <!--{$className}-->Ctl extends AjaxCtl
         $_ = $this;
         parent::__construct();
 
-        // viewの初期化
-        $_->initView();
-        $_->view->escape_html = true;
     }
 
     /**
