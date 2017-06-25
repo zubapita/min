@@ -6,6 +6,7 @@
  * 
  */
 require_once __DIR__.'/../lib/autoload.php';
+$debugConsole = new Console;
 class CmdApp extends AppCtl
 {
     public function __construct()
@@ -24,16 +25,20 @@ class CmdApp extends AppCtl
         $_->initView();
 
         // DBオブジェクトとテーブルオブジェクトの生成
+        // DB名と同じTABLE名は使用できない
         $DB = $_->getDB('TEST');
-        $TABLE = $_->getTable($DB, 'TEST');
         
-        // データの取得と表示
-        $TABLE->reset();
-        $list = $TABLE->find()->fetchAll();
-        $_->view->assign('list', $list);
-        $template = $_->getTemplate();
+        if ($TABLE = $_->getTable($DB, 'TEST_TABLE')) {
+            
+            // データの取得と表示
+            $TABLE->reset();
+            $list = $TABLE->find()->fetchAll();
+            $_->view->assign('list', $list);
+            $template = $_->getTemplate();
 
-        echo $_->view->fetch("string:$template");
+            echo $_->view->fetch("string:$template");
+        }
+        
     }
     
     /**

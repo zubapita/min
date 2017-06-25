@@ -59,6 +59,16 @@ class Dispatcher
      */
     protected static function setPathAndAction($APP_ROOT)
     {
+        # GAE環境下ではSCRIPT_NAMRがとれないため
+        $C = appConfigure::get();
+        if ($C['IS_GAE']) {
+            if (preg_match("/(.*)\?(.*?)/", $_SERVER['REQUEST_URI'], $m)) {
+                $_SERVER['SCRIPT_NAME'] = $m[1];
+            } else {
+                $_SERVER['SCRIPT_NAME'] = $_SERVER['REQUEST_URI'];
+            }
+        }
+        
         # cssフォルダとjsフォルダのファイルはそのまま吐き出す
         if (preg_match("!^/.*/(css|js)/.*!", $_SERVER['SCRIPT_NAME'], $m)) {
             $filePath = $APP_ROOT.'/view'.$_SERVER['SCRIPT_NAME'];

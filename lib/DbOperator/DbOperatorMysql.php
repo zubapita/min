@@ -53,10 +53,14 @@ class DbOperatorMysql extends DbOperator
         $template = <<<EOS
 <?php
 class {#dbname} extends DBSpec {
-	public static #SYSTEM = '{#systemName}';
-	public static #DSN = 'mysql:dbname={#dbname};host=127.0.0.1';
-	public static #USER = '{#user}';
-	public static #PASSWORD = '{#password}';
+    public static #SYSTEM = '{#systemName}';
+{if #unixSocket=='none'}{if #portNo=='default'}{#portNo = '3306'}{/if}
+    public static #DSN = 'mysql:host={#hostIP};port={#portNo};dbname={#dbname}';
+{else}
+    public static #DSN = 'mysql:unix_socket={#unixSocket};dbname={#dbname}';
+{/if}
+    public static #USER = '{#userName}';
+    public static #PASSWORD = '{#password}';
 }
 EOS;
         $template = str_replace('#', '$', $template);

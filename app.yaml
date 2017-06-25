@@ -1,0 +1,23 @@
+runtime: php55
+api_version: 1
+
+env_variables:
+  MY_BUCKET: '-put_gae_bucket_name_here-'
+  
+handlers:
+- url: /img
+  static_dir: htdocs/img
+- url: /favicon.ico
+  static_files: htdocs/favicon.ico
+  upload: htdocs/favicon.ico
+- url: /.*
+  script: htdocs/index.php
+
+threadsafe: true
+
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: 1
+  min_pending_latency: 3000ms
+  max_pending_latency: automatic
+  

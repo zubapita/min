@@ -19,6 +19,13 @@ class Console
      * @see Console::__construct()
      */
     public static $debugMode = true;
+	
+    /**
+     * GAE（Google Apps Engine）の環境下かどうかのフラグ true or false
+     * 
+     * @see etc/conf.php
+     */
+    public static $isGAE = false;
 
     /**
      * Minアプリの設定を保存する配列
@@ -40,45 +47,52 @@ class Console
             Console::$debugMode = 'false';
         } else {
             Console::$debugMode = 'true';
+            Console::$isGAE = $this->C['IS_GAE'];
             
-            $APP_ROOT = dirname(__DIR__);
-            $logFile = $APP_ROOT.'/var/log/trace.log';
-            $oldMask = umask(0);
-            @chmod($logFile, 0777);
-            umask($oldMask);
             
-            Logger::configure(array(
-                'rootLogger' => array(
-                    'appenders' => array('default'),
-                ),
-                'appenders' => array(
-                    'default' => array(
-                        'class' => 'LoggerAppenderFile',
-                        'layout' => array(
-                            'class' => 'LoggerLayoutPattern',
-                            'params' => array(
-                                'conversionPattern' => '%date [%logger] %message%newline',
+            if (php_sapi_name() == 'cli' || !Console::$isGAE) {
+                $APP_ROOT = dirname(__DIR__);
+                $logFile = $APP_ROOT.'/var/log/trace.log';
+                $oldMask = umask(0);
+                @chmod($logFile, 0777);
+                umask($oldMask);
+            
+                Logger::configure(array(
+                    'rootLogger' => array(
+                        'appenders' => array('default'),
+                    ),
+                    'appenders' => array(
+                        'default' => array(
+                            'class' => 'LoggerAppenderFile',
+                            'layout' => array(
+                                'class' => 'LoggerLayoutPattern',
+                                'params' => array(
+                                    'conversionPattern' => '%date [%logger] %message%newline',
+                                ),
                             ),
-                        ),
-                        'params' => array(
-                            'file' => $logFile,
-                            'append' => true,
+                            'params' => array(
+                                'file' => $logFile,
+                                'append' => true,
                             
+                            )
                         )
                     )
-                )
-            ));
+                ));
 
-            global $LOGGER;
-            $LOGGER = Logger::getLogger("log");
+
+                global $LOGGER;
+                $LOGGER = Logger::getLogger("log");
+
+            }
 
             if (php_sapi_name()!='cli') {
-                global $handler;
-                $handler = PhpConsole\Handler::getInstance();
-                $handler->start(); // start handling PHP errors & exceptions
-                $handler->getConnector()->
-                    setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
+	            global $handler;
+	            $handler = PhpConsole\Handler::getInstance();
+	            $handler->start(); // start handling PHP errors & exceptions
+	            $handler->getConnector()->
+	                setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
             }
+
         }
     }
     
@@ -100,8 +114,12 @@ class Console
             
             PC::db($message);
 
-            global $LOGGER;
-            $LOGGER->info($message);
+            if (php_sapi_name() == 'cli' || !Console::$isGAE) {
+                global $LOGGER;
+                $LOGGER->info($message);
+            } else {
+                syslog(LOG_INFO, $message);
+            }
         }
     }
     

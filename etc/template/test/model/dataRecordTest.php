@@ -15,8 +15,15 @@ class {$className}Test extends PHPUnit_Framework_TestCase
         $_ = $this;
         ${$className} = new {$className}();
 
+        /*
+         * test each data from dataProvider
+         */
         foreach ($_->dataProvider() as $data) {
+            echo "data=";
+            var_dump($data);
             $result = ${$className}->set($data);
+            echo "result=";
+            var_dump($result);
             $id = (integer) $result;
             $this->assertTrue(is_int($id));
             $this->assertNotEquals(0, $id);
@@ -31,7 +38,7 @@ class {$className}Test extends PHPUnit_Framework_TestCase
     public function dataProvider()
     {
 
-        // 各カラムの型にあったテストデータを設定すること！
+        // Make sure to fit test for each column type
         $data = [
             [
 {foreach $columns as $column}
@@ -54,10 +61,30 @@ class {$className}Test extends PHPUnit_Framework_TestCase
         
         ${$className} = new {$className}();
         
+        /*
+         * $condition = [];
+         */
         $condition = [];
+        echo "condition=";
+        var_dump($condition);
+        $result = ${$className}->get($condition);
+        var_dump($result);
 
-        $this->assertTrue(is_array(${$className}->get($condition)));
-        $this->assertNotEquals(0, count(${$className}->get($condition)));
+        $this->assertTrue( is_array($result) );
+        $this->assertNotEquals(0, count($result) );
+
+        /*
+         * $condition = ['{$table}.id'=>1];
+         */
+        $condition = ['{$table}.id'=>1];
+        echo "condition=";
+        var_dump($condition);
+        $result = ${$className}->get($condition);
+        var_dump($result);
+
+        $this->assertTrue( is_array($result) );
+        $this->assertNotEquals(0, count($result) );
+
     }
 
 }

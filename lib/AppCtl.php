@@ -1,4 +1,5 @@
 <?php
+//use google\appengine\api\cloud_storage\CloudStorageTools;
 /**
  * Minアプリの基礎となるクラス
  *
@@ -127,7 +128,7 @@ abstract class AppCtl
                 if (!class_exists($dbname)) {
                     require_once $filePath;
                 }
-                self::$db_instances[$dbname] = new $dbname;
+                self::$db_instances[$dbname] = new $dbname();
                 return self::$db_instances[$dbname];
             } else {
                 return false;
@@ -147,6 +148,11 @@ abstract class AppCtl
     public function getTable($db_instance, $tableName)
     {
         $dbname = get_class($db_instance);
+        
+        if ($dbname==$tableName) {
+            Console::log("Error! : You can not use same name of DB and table. DB and table name is '$tableName'");
+            return false;
+        }
 
         if (isset(self::$table_instances[$dbname][$tableName]) &&
             is_object(self::$table_instances[$dbname][$tableName])) {
@@ -263,7 +269,26 @@ abstract class AppCtl
     {
         $this->view = new Smarty();
         $this->view->setTemplateDir($this->APP_ROOT.'/view');
-        $this->view->setCompileDir($this->APP_ROOT.'/var/compiled');
+        $this->view->addPluginsDir($this->APP_ROOT.'/view/cmn/plugins');
+        
+        if ($this->C['IS_GAE'] && php_sapi_name() != 'cli') {
+            $myBucket = $this->C['MY_BUCKET'];
+            $this->view->setCompileDir('gs://'.$myBucket.'/var/compiled');
+            $this->view->setCacheDir('gs://'.$myBucket.'/var/cache');
+        } else {
+            $this->view->setCompileDir($this->APP_ROOT.'/var/compiled');
+        }
+
+
+        if (class_exists('Memcached') || class_exists('Memcache')) {
+            require_once $this->APP_ROOT.'/vendor/smarty/smarty/libs/sysplugins/smarty_cacheresource.php';
+            require_once $this->APP_ROOT.'/vendor/smarty/smarty/libs/sysplugins/smarty_cacheresource_keyvaluestore.php';
+            require_once $this->APP_ROOT.'/vendor/smarty/smarty/demo/plugins/cacheresource.memcache.php';
+            $this->view->registerCacheResource('memcache', new Smarty_CacheResource_Memcache());
+            $this->view->caching_type = 'memcache';
+        }
+
+
         $this->view_template =
              substr($this->dispatch_path, 1).$this->dispatch_action.'.html';
 

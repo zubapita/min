@@ -54,10 +54,14 @@ class DbOperatorPgsql extends DbOperator
         $template = <<<EOS
 <?php
 class {#dbname} extends DBSpec {
-	public static #SYSTEM = '{#systemName}';
-	public static #DSN = 'pgsql:dbname={#dbname};host=127.0.0.1';
-	public static #USER = '{#user}';
-	public static #PASSWORD = '{#password}';
+    public static #SYSTEM = '{#systemName}';
+{if #unixSocket=='none'}{if #portNo=='default'}{#portNo = '5432'}{/if}
+    public static #DSN = 'pgsql:host={#hostIP};port={#portNo};dbname={#dbname}';
+{else}
+    public static #DSN = 'pgsql:unix_socket={#unixSocket};dbname={#dbname}';
+{/if}
+    public static #USER = '{#userName}';
+    public static #PASSWORD = '{#password}';
 }
 EOS;
         $template = str_replace('#', '$', $template);

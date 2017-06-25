@@ -76,6 +76,9 @@ class MakeDbClassFileLib extends AppCtl
         $dbUsages = array(
             '-d'=>'[dbname]',
             '-s'=>'[mysql|pgsql|sqlite]',
+            '-H'=>'[host IP address](default=127.0.0.1)',
+            '-P'=>'[port no](option)',
+            '-S'=>'[unix socket](option)',
             '-D'=>'[dbDir(for sqlite. From App Root.)]',
             '-u'=>'[user]',
             '-p'=>'[password](option)',
@@ -114,6 +117,31 @@ class MakeDbClassFileLib extends AppCtl
                             $params['dbDir'] = $dbDir;
                         }
                     } else {
+                        if ($hostIP = cmdLibs::getParam('-H')) {
+                            echo "use database host IP address: $hostIP.\n";
+                            $params['hostIP'] = $hostIP;
+                        } else {
+                            echo "use database host IP address:127.0.0.1.\n";
+                            $params['hostIP'] = '127.0.0.1';
+                        }
+
+                        if ($portNo = cmdLibs::getParam('-P')) {
+                            echo "use database host Port No: $portNo.\n";
+                            $params['portNo'] = $portNo;
+                        } else {
+                            echo "use database host Port No is default(MySQL=3306,PostgreSQL=5432).\n";
+                            $params['portNo'] = 'default';
+                        }
+
+                        if ($unixSocket = cmdLibs::getParam('-S')) {
+                            echo "use database UNIX Socket: $unixSocket.\n";
+                            $params['unixSocket'] = $unixSocket;
+                        } else {
+                            echo "not use database UNIX Socket.\n";
+                            $params['unixSocket'] = 'none';
+                        }
+
+
                         if (!$userName = cmdLibs::getParam('-u')) {
                             echo "Plaese set database user name.\n";
                             die($_->usage);
@@ -152,7 +180,11 @@ class MakeDbClassFileLib extends AppCtl
 
         $_->view->assign('dbname', $params['dbName']);
         $_->view->assign('systemName', $params['systemName']);
-        $_->view->assign('user', $params['userName']);
+        $_->view->assign('hostIP', $params['hostIP']);
+        $_->view->assign('hostIP', $params['hostIP']);
+        $_->view->assign('portNo', $params['portNo']);
+        $_->view->assign('unixSocket', $params['unixSocket']);
+        $_->view->assign('userName', $params['userName']);
         $_->view->assign('password', $params['password']);
         if (!empty($params['dbDir'])) {
             $_->view->assign('dbdir', $params['dbDir']);

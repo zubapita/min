@@ -652,6 +652,54 @@ abstract class DBMapper extends DBAccess implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * LEFT OUTER JOINするテーブルを指定
+     * 
+     * @param object $table_instance JOINするテーブルのインスタンス。DBMapper型。
+     * @return object 自身のクラスインスタンス（メソッドチェーン用）
+     */
+    public function leftOuterJoin($table_instance)
+    {
+        $table_name = $table_instance->TABLE;
+        $this->JOIN_NUM++;
+        $this->JOIN_TABLES[$this->JOIN_NUM] = $table_name;
+        $this->JOIN_TABLES_INSTANCE[$this->JOIN_NUM] = $table_instance;
+        $this->JOIN_DIRECTIONS[$this->JOIN_NUM] = 'LEFT OUTER';
+        return $this;
+    }
+
+    /**
+     * RIGHT OUTER JOINするテーブルを指定
+     * 
+     * @param object $table_instance JOINするテーブルのインスタンス。DBMapper型。
+     * @return object 自身のクラスインスタンス（メソッドチェーン用）
+     */
+    public function rightOuterJoin($table_instance)
+    {
+        $table_name = $table_instance->TABLE;
+        $this->JOIN_NUM++;
+        $this->JOIN_TABLES[$this->JOIN_NUM] = $table_name;
+        $this->JOIN_TABLES_INSTANCE[$this->JOIN_NUM] = $table_instance;
+        $this->JOIN_DIRECTIONS[$this->JOIN_NUM] = 'RIGHT OUTER';
+        return $this;
+    }
+
+    /**
+     * CROSS JOINするテーブルを指定
+     * 
+     * @param object $table_instance JOINするテーブルのインスタンス。DBMapper型。
+     * @return object 自身のクラスインスタンス（メソッドチェーン用）
+     */
+    public function crossJoin($table_instance)
+    {
+        $table_name = $table_instance->TABLE;
+        $this->JOIN_NUM++;
+        $this->JOIN_TABLES[$this->JOIN_NUM] = $table_name;
+        $this->JOIN_TABLES_INSTANCE[$this->JOIN_NUM] = $table_instance;
+        $this->JOIN_DIRECTIONS[$this->JOIN_NUM] = 'CROSS';
+        return $this;
+    }
+
     
     /**
      * JOINの条件を指定

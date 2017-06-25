@@ -156,6 +156,7 @@ class {$className} extends DataRecord
      *  バリーデータ機銃サンプル
      *
      *  $rule = [
+     *      'id'      =>  'no_check',
      *      'name'      =>  'required',
      *      'email'     =>  [ 'required', 'trim', 'email', 'to_lc' ],
      *      'gender'    =>  [ 'one_of'     => ['male', 'female'] ],

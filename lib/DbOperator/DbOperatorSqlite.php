@@ -55,7 +55,7 @@ class DbOperatorSqlite extends DbOperator
 class {#dbname} extends DBSpec {
 	public static #SYSTEM = '{#systemName}';
 	public static #DSN = 'sqlite:#dbDir';
-	public static #USER = '{#user}';
+	public static #USER = '{#userName}';
 	public static #PASSWORD = '{#password}';
 }
 EOS;
