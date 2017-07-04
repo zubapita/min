@@ -125,6 +125,32 @@ class CmdLibs
         return $argv[0];
     }
 
+
+    /**
+     * http POST でURLのデータを送り結果を取得する
+     * 
+     * @param string $url データ送り先エンドポイント
+     * @param mix $data 送信データ
+     * @return mix 送信先サーバが返す結果
+     */
+    public static function postData($url, $data)
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl,CURLOPT_POST, TRUE);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl,CURLOPT_COOKIEJAR, 'cookie');
+        curl_setopt($curl,CURLOPT_COOKIEFILE, 'tmp');
+        curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE);
+
+        $result = curl_exec($curl);
+        
+        return $result;
+    }
+
+
     /**
      * メッセージバナー（大型）を標準エラー出力に表示
      * 

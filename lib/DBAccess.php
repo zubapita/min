@@ -192,15 +192,20 @@ abstract class DBAccess
         $PDO = $this->getPDO();
         $CONDS = '';
         
+        $tmp_conds = array();
         $VALUES = array();
         if (is_array($this->UNIQUE_KEY)) {
             foreach ($this->UNIQUE_KEY as $key) {
-                $value = $set[$key];
-                if (empty($value)) {
-                    continue;
+                if (isset($set[$key]) && !empty($set[$key])) {
+                    $value = $set[$key];
+                    $tmp_conds[] = $key.'=?';
+                    $VALUES[] = $value;
+                } else {
+                    // 複数UNIQUE_KEYのうちひとつでも足りない場合は、条件文を破棄してinsert
+                    $tmp_conds = array();
+                    $VALUES = array();
+                    break;
                 }
-                $tmp_conds[] = $key.'=?';
-                $VALUES[] = $value;
             }
             if (!empty($tmp_conds)) {
                 $CONDS = implode(' AND ', $tmp_conds);
@@ -231,8 +236,9 @@ abstract class DBAccess
                 if (is_array($this->UNIQUE_KEY)) {
                     $CONDS = array();
                     foreach ($this->UNIQUE_KEY as $key) {
-                        $value = $set[$key];
-                        if (empty($value)) {
+                        if (isset($set[$key]) && !empty($set[$key])) {
+                            $value = $set[$key];
+                        } else {
                             continue;
                         }
                         $CONDS[$key] = array('opr'=>'=','val'=>$value);
@@ -268,8 +274,11 @@ abstract class DBAccess
         if (!empty($CONDS)) {
             $sql .= " WHERE $CONDS";
         }
-
         $stmt = $PDO->prepare($sql);
+
+        $this->SQL = $sql;
+        $this->SQL_HISTORY[date('Y-m-d H:i:s')] = $sql;
+        $this->VALUES = $VALUES;
 
         try {
             $PDO->beginTransaction();
@@ -384,17 +393,42 @@ abstract class DBAccess
             foreach ($conditions as $column=>$cond) {
                 if (is_array($cond)) {
                     $operator = $cond['opr'];
-                    
                     // ex) $conditions = array('column'=>array(
                     //	     'opr'=>'BETWEEN', 'min'=>$min, 'max'=>$max,
                     //     ));
                     if (strtoupper($operator)=='BETWEEN') {
-                        $min = $cond['MIN'];
-                        $max = $cond['MAX'];
+                        if (isset($cond['MIN'])) {
+                            $min = $cond['MIN'];
+                        } elseif (isset($cond['min'])) {
+                            $min = $cond['min'];
+                        } else {
+                            Console::log('DBAccess::buildCondition::missing MIN for BETWEEEN');
+                            return false;
+                        }
+
+                        if (isset($cond['MAX'])) {
+                            $max = $cond['MAX'];
+                        } elseif (isset($cond['max'])) {
+                            $max = $cond['max'];
+                        } else {
+                            Console::log('DBAccess::buildCondition::missing MAX for BETWEEEN');
+                            return false;
+                        }
                         $tmp_conds[] = $column.' '.$operator.' ? AND ?';
                         $VALUES[] = $min;
                         $VALUES[] = $max;
                     
+                    // ex) $conditions = array('column'=>array(
+                    //	     'opr'=>'IN', 'val'=>$val,
+                    //     ));
+                    } elseif (strtoupper($operator)=='IN') {
+                        $tmpAry = explode(',' ,$cond['val']);
+                        $inClause = substr(str_repeat(',?', count($tmpAry)), 1);
+                        $tmp_conds[] = $column.' '.$operator.' ('.$inClause.')';
+                        foreach ($tmpAry as $inVal) {
+                            $VALUES[] = $inVal;
+                        }
+
                     // ex) $conditions = array('column'=>array(
                     //	     'opr'=>'=', 'val'=>$val,
                     //     ));

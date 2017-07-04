@@ -89,8 +89,7 @@ class Console
 	            global $handler;
 	            $handler = PhpConsole\Handler::getInstance();
 	            $handler->start(); // start handling PHP errors & exceptions
-	            $handler->getConnector()->
-	                setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
+	            $handler->getConnector()->setSourcesBasePath($_SERVER['DOCUMENT_ROOT']);
             }
 
         }
@@ -112,14 +111,19 @@ class Console
             $message = strip_tags($message);
             $message = html_entity_decode($message);
             
-            PC::db($message);
-
-            if (php_sapi_name() == 'cli' || !Console::$isGAE) {
-                global $LOGGER;
-                $LOGGER->info($message);
+            if (php_sapi_name() == 'cli') {
+                echo "Console::log::";
+                var_dump($message);
             } else {
-                syslog(LOG_INFO, $message);
+                PC::db($message);
             }
+        }
+
+        if (php_sapi_name() == 'cli' || !Console::$isGAE) {
+            global $LOGGER;
+            $LOGGER->info($message);
+        } else {
+            syslog(LOG_INFO, $message);
         }
     }
     

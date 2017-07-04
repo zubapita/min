@@ -85,9 +85,9 @@ class {$className} extends DataRecord
         // バリデータ＆フィルタの設定
         $rule = [
 {foreach $columns as $column}
-{if $column['name']!='id'}
+{* if $column['name']!='id' *}
             '{$column['name']}' => ['no_check'],
-{/if}
+{* /if *}
 {/foreach}
         ];
          

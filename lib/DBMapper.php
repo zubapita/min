@@ -154,7 +154,9 @@ abstract class DBMapper extends DBAccess implements IteratorAggregate
     protected function setColumns($set)
     {
         foreach ($this->COLUMNS as $name=>$datatype) {
-            $this->INSTANCES[$name]->set($set[$name]);
+            if (isset($set[$name])) {
+                $this->INSTANCES[$name]->set($set[$name]);
+            }
         }
     }
 

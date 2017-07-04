@@ -34,6 +34,10 @@ function autoLoadClass($class)
         'model',
         'controller',
     );
+    $C = appConfigure::get();
+    if ($C['PRODUCTION_RUN']==false) {
+        $classDirs[] = 'test';
+    }
     
     foreach ($classDirs as $dir) {
         if (searchClassInDir("$appRoot/$dir", $classFile)) {

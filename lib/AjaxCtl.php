@@ -56,7 +56,7 @@ class AjaxCtl extends AppCtl
     public function sendJson($data)
     {
         $jsonValue = json_encode($data);
-        header('Content-Type: text/javascript; charset=utf-8');
+        header('Content-Type: application/json; charset=utf-8');
         echo $jsonValue;
         return true;
     }
